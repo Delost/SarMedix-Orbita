@@ -1,0 +1,1397 @@
+/* ÓRBITA / global component authority.
+ * Data annotations decouple appearance from functional classes and selectors.
+ * !important is restricted to shared controls that had inline/legacy !important
+ * declarations. Visibility, positioning of overlays and business states remain
+ * owned by the original views. All visual rules are screen-only. */
+.orbit-table-caption {
+    display: none;
+}
+
+@media screen {
+    :root {
+        --orbit-ink: #173654;
+        --orbit-muted: #4d6580;
+        --orbit-blue: #285ed4;
+        --orbit-line: #c4d5ec;
+        --orbit-paper: #fff;
+        --orbit-soft: #edf3fc;
+        --orbit-dark: #112e50;
+        --orbit-radius: 14px;
+        --orbit-shadow: 0 12px 34px #183c7012;
+        --orbit-fast: 160ms;
+        --orbit-ease: cubic-bezier(.2,.7,.2,1);
+    }
+
+    :is(.sm-app,.sm-standalone) {
+        color: var(--orbit-ink);
+        font-family: "Segoe UI",system-ui,sans-serif;
+    }
+
+        :is(.sm-app,.sm-standalone) *, :is(.sm-app,.sm-standalone) *::before, :is(.sm-app,.sm-standalone) *::after {
+            box-sizing: border-box;
+        }
+    /* One semantic family for every annotated action, including navigation links. */
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] [data-orbit-action][data-orbit-action]:where(:not([data-orbit-action="navigation"])) {
+        --action-bg: linear-gradient(130deg,#326fe4,#2253bd);
+        --action-ink: #fff;
+        --action-line: #245ac7;
+        background: var(--action-bg) !important;
+        color: var(--action-ink) !important;
+        border: 1px solid var(--action-line) !important;
+        border-radius: 10px !important;
+        min-height: 42px;
+        max-width: 100%;
+        padding: 10px 16px !important;
+        font: 600 14px/1.4 "Segoe UI",system-ui,sans-serif !important;
+        text-decoration: none !important;
+        text-align: center;
+        vertical-align: middle;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        cursor: pointer;
+        box-shadow: inset 0 1px #ffffff24,0 3px 10px #183e7310 !important;
+        transition: box-shadow var(--orbit-fast),filter var(--orbit-fast),border-color var(--orbit-fast) !important;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] [data-orbit-action][data-orbit-action="secondary"] {
+        --action-bg: #f1f6ff !important;
+        --action-ink: #254e85 !important;
+        --action-line: #b9cdeb !important;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] [data-orbit-action][data-orbit-action="quiet"] {
+        --action-bg: #fff !important;
+        --action-ink: #3c597c !important;
+        --action-line: #cedbed !important;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] [data-orbit-action][data-orbit-action="warning"] {
+        --action-bg: #fff2d7 !important;
+        --action-ink: #7a4c09 !important;
+        --action-line: #dcb879 !important;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] [data-orbit-action][data-orbit-action="danger"] {
+        --action-bg: #a82d49 !important;
+        --action-ink: #fff !important;
+        --action-line: #92203a !important;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] [data-orbit-action][data-orbit-action="icon"] {
+        --action-bg: #edf4ff !important;
+        --action-ink: #315e9a !important;
+        --action-line: #bdd0ec !important;
+        padding: 9px !important;
+        min-width: 42px;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] [data-orbit-action][data-orbit-action]:hover:not(:disabled):not([aria-disabled="true"]) {
+        filter: brightness(.96);
+        box-shadow: 0 0 0 3px #347be71a,0 6px 14px #173f7918 !important;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] [data-orbit-action][data-orbit-action]:active:not(:disabled) {
+        filter: brightness(.9);
+        box-shadow: inset 0 2px 4px #14355925 !important;
+    }
+
+    body :is([data-orbit-action],input,select,textarea,a,[tabindex]):focus-visible {
+        outline: 3px solid #3277df !important;
+        outline-offset: 3px !important;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] [data-orbit-action][data-orbit-action]:is(:disabled,[aria-disabled="true"]) {
+        opacity: .5 !important;
+        cursor: not-allowed;
+        filter: saturate(.5);
+        box-shadow: none !important;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] [data-orbit-action][data-orbit-action][aria-busy="true"] {
+        cursor: progress;
+        border-style: dashed !important;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] [data-orbit-action][data-orbit-action].pagina-activa, body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] [data-orbit-action][data-orbit-action].activo {
+        --action-bg: #204e98 !important;
+        --action-ink: #fff !important;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .sidebar [data-orbit-action="navigation"] {
+        border-radius: 10px;
+        border: 1px solid transparent;
+        transition: background var(--orbit-fast),border-color var(--orbit-fast);
+    }
+
+        body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .sidebar [data-orbit-action="navigation"]:hover {
+            background: #71a1ef1c;
+            border-color: #89b4f34d;
+        }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .sidebar [data-orbit-action]:focus-visible {
+        outline-color: #a9d8ff !important;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .sidebar .sidebar-cabecera.activo {
+        box-shadow: inset 3px 0 #9ac8ff;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .barra-layout {
+        border-bottom: 1px solid #b9cbe5;
+        background: linear-gradient(105deg,#fff,#f4f8ff);
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .usuario-layout {
+        padding: 6px 8px;
+        border: 1px solid #d6e2f2;
+        border-radius: 14px;
+        background: #ffffffab;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .footer-layout {
+        border-top: 1px solid #cfdded;
+        background: #eaf1fb;
+        color: #526c8c;
+    }
+    /* Full input vocabulary: applies outside forms too (filters and scanners). */
+    body.sm-app[data-sm-family][data-sm-screen] :is(input:not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]),select,textarea),
+    body.sm-standalone :is(input,select,textarea) {
+        max-width: 100%;
+        min-width: 0;
+        border: 1px solid #afc5e2;
+        border-radius: 10px;
+        background: #fbfdff;
+        color: #203f63;
+        font-family: inherit;
+        font-size: 15px;
+        line-height: 1.5;
+        padding: 11px 13px;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(input,select,textarea):focus {
+        border-color: #3978d9;
+        box-shadow: 0 0 0 4px #3978d916;
+    }
+    /* Search fields with an icon and a bordered shell must not draw a second rectangle.
+    Keep this specific: standalone search inputs still use the normal Orbit input style. */
+    body.sm-app[data-sm-family][data-sm-screen] :is(.controlados-buscador,.buscador-con-icono,.busqueda-con-icono,.search-box) > :is(input[type="text"],input[type="search"]),
+    body.sm-app[data-sm-family][data-sm-screen] :is(div,label):has(> :is(svg,i,span) ~ input:is([type="search"],[placeholder*="busc" i],[id*="busc" i])) > input:is([type="search"],[placeholder*="busc" i],[id*="busc" i]) {
+        flex: 1 1 auto;
+        min-width: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        outline: 0 !important;
+        outline-offset: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.controlados-buscador,.buscador-con-icono,.busqueda-con-icono,.search-box):focus-within,
+    body.sm-app[data-sm-family][data-sm-screen] :is(div,label):has(> :is(svg,i,span) ~ input:is([type="search"],[placeholder*="busc" i],[id*="busc" i])):focus-within {
+        border-color: #3978d9;
+        box-shadow: 0 0 0 3px #3978d916;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(input,select,textarea):disabled {
+        background: #e9eef5;
+        color: #536780;
+        cursor: not-allowed;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] input[readonly] {
+        background: #edf3fc;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(input[type="checkbox"],input[type="radio"]) {
+        accent-color: #2c67cb;
+        width: 19px;
+        height: 19px;
+        flex: none;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] input[type="file"]::file-selector-button {
+        background: #e4edfb;
+        color: #244d84;
+        border: 1px solid #b9cceb;
+        border-radius: 7px;
+        padding: 8px 12px;
+        margin-right: 10px;
+        font: inherit;
+        cursor: pointer;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] textarea {
+        resize: vertical;
+        min-height: 110px;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.estado-activo,.badge-activo,.estado-normal) {
+        background: #e2f2eb;
+        color: #205d49;
+        border: 1px solid #b0d6c7;
+        border-radius: 6px;
+        padding: 4px 8px;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.estado-inactivo,.estado-sin-stock) {
+        background: #e8edf4;
+        color: #465b74;
+        border: 1px solid #bdcbdd;
+        border-radius: 6px;
+        padding: 4px 8px;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.estado-vencido,.alerta-vencido) {
+        border-left: 3px solid #b13350;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.estado-proximo,.alerta-proximo,.alerta-stock) {
+        border-left: 3px solid #ae741c;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.mensaje,.mensaje-error,.mensaje-exito,.validacion-caliente,.estado-codigo,.resultado) {
+        border-radius: 12px;
+        line-height: 1.55;
+        overflow-wrap: anywhere;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.mensaje-error,.resultado.error,.mc-error-general) {
+        border-left: 4px solid #b33251;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.mensaje-exito,.resultado.exito) {
+        border-left: 4px solid #2b8669;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.sin-registros,.sin-usuarios,.sin-stock,.sin-programaciones,.sin-salidas,.vacio,.inventario-vacio,.ubicaciones-vacio,.controlados-sin-resultados-contenido) {
+        border: 1px dashed #b0c7e5;
+        background: linear-gradient(160deg,#f4f8ff,#fff);
+        border-radius: 18px;
+        padding: 28px;
+        text-align: center;
+        color: #4b6687;
+    }
+    /* Real structural forms. No reordering, hiding, additional steps or fields. */
+    .orbit-eyebrow {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 1.8px;
+        font-weight: 750;
+        color: #50749e;
+        line-height: 1.6;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] main .orbit-editor-heading {
+        width: 100%;
+        max-width: 1180px;
+        margin: 0 auto 20px;
+        padding: 10px 0 18px;
+        border-bottom: 1px solid #c1d3ec;
+    }
+
+    .orbit-editor-heading h1 {
+        margin: 8px 0 0;
+        color: #173d69;
+        font-size: clamp(28px,3vw,40px);
+        font-weight: 600;
+        letter-spacing: -1px;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] main form.formulario-principal:has(.orbit-identity-grid,.orbit-product-grid) {
+        max-width: 1180px;
+        border-radius: 22px;
+        border: 1px solid #bed0e9;
+        padding: 26px;
+        box-shadow: var(--orbit-shadow);
+    }
+
+    .orbit-identity-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        gap: 28px;
+        align-items: start;
+    }
+
+    .orbit-product-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 1fr;
+        gap: 24px;
+        align-items: start;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.orbit-identity-grid,.orbit-product-grid) fieldset, .orbit-role-fields {
+        min-width: 0;
+        border: 0;
+        padding: 0;
+        margin: 0;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.orbit-identity-grid,.orbit-product-grid,.orbit-role-fields) legend {
+        float: none;
+        width: auto;
+        margin: 0 0 20px;
+        font-size: 17px;
+        font-weight: 650;
+        color: #244e7c;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .orbit-identity-grid .orbit-credentials {
+        padding: 22px;
+        border: 1px solid #c2d4ee;
+        border-radius: 16px;
+        background: radial-gradient(ellipse at top right,#d3e2fb,transparent 70%),#eef4fd;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .orbit-product-content {
+        padding: 20px !important;
+        background: #e9f1fc;
+        border-radius: 16px;
+        border: 1px solid #bed0e9 !important;
+    }
+
+        body.sm-app[data-sm-family][data-sm-screen] .orbit-product-content .seccion-inventario {
+            border: 0;
+            padding: 0;
+            background: none;
+        }
+
+    .orbit-product-identity > div {
+        margin-bottom: 18px;
+    }
+
+    .orbit-product-grid label {
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    .orbit-product-grid :is(input:not([type="hidden"]),select) {
+        width: 100%;
+    }
+
+    .orbit-form-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 12px;
+        margin-top: 22px;
+        padding-top: 18px;
+        border-top: 1px solid #d1dfef;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .orbit-form-actions > button {
+        width: auto;
+        min-width: 190px;
+        margin: 0;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .orbit-form-actions .contenedor-volver {
+        margin: 0;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.contenedor-crear-rol,.contenedor-editar-rol) {
+        display: grid;
+        grid-template-columns: minmax(220px,.7fr) minmax(0,1.3fr);
+        column-gap: 30px;
+        max-width: 1100px !important;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.titulo-crear-rol,.titulo-editar-rol,.descripcion-crear-rol,.descripcion-editar-rol) {
+        grid-column: 1;
+        text-align: left;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.tarjeta-crear-rol,.tarjeta-editar-rol) {
+        grid-column: 2;
+        grid-row: 1 / 5;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.volver-rol,.volver-editar-rol) {
+        grid-column: 1;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .orbit-permission-workbench {
+        display: grid;
+        grid-template-columns: 260px minmax(0,1fr);
+        gap: 20px;
+    }
+
+    .orbit-permission-intro {
+        grid-column: 1;
+        padding: 22px;
+        border-radius: 16px;
+        background: #173b63;
+        color: #e1edff;
+    }
+
+        .orbit-permission-intro h2 {
+            background: none;
+            box-shadow: none;
+            color: #fff;
+            font-size: 25px;
+            margin: 12px 0;
+            padding: 0;
+        }
+
+        .orbit-permission-intro .orbit-eyebrow {
+            color: #aacaf2;
+        }
+
+    body.sm-app[data-sm-family][data-sm-screen] .orbit-permission-workbench > form:first-of-type {
+        grid-column: 1;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .orbit-permission-workbench > form:last-of-type:not(:first-of-type) {
+        grid-column: 2;
+        grid-row: 1 / 5;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .orbit-permission-workbench > :is(.acciones-rol,.confirmacion) {
+        grid-column: 1;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .permisos {
+        grid-template-columns: repeat(auto-fit,minmax(min(240px,100%),1fr));
+        gap: 10px;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .permiso {
+        padding: 16px;
+    }
+    /* Access is a split welcome portal, not a decorated legacy card. */
+    body.sm-app[data-sm-family][data-sm-screen][data-sm-family="access"] main .orbit-access {
+        width: min(1040px,100%);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        border-radius: 24px;
+        background: #fff;
+        border: 1px solid #5d80ae;
+        box-shadow: 0 24px 70px #06162e44;
+        overflow: hidden;
+        margin: auto;
+    }
+
+    .orbit-access-brand {
+        padding: 36px;
+        background: radial-gradient(ellipse at 0 0,#3976b952,transparent 65%),#112e50;
+        color: #d9e9ff;
+    }
+
+        .orbit-access-brand .orbit-eyebrow {
+            color: #afd1ff;
+        }
+
+        .orbit-access-brand h1 {
+            font-size: clamp(28px,3vw,39px);
+            font-weight: 500;
+            line-height: 1.2;
+            letter-spacing: -.8px;
+            color: #fff;
+            margin: 20px 0 12px;
+        }
+
+        .orbit-access-brand p {
+            font-size: 14px;
+            color: #b9d1ef;
+        }
+
+    .orbit-access-art {
+        height: 180px;
+        width: 180px;
+        margin: 18px auto;
+        position: relative;
+    }
+
+        .orbit-access-art .sm-orbit-instrument {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .orbit-access-art .sm-instrument-halo {
+            position: absolute;
+            inset: 3%;
+            border-radius: 50%;
+            background: radial-gradient(circle,#578ff433,transparent 68%);
+        }
+
+        .orbit-access-art .sm-instrument-ring {
+            position: absolute;
+            border: 1px solid #8dbfff55;
+            border-radius: 50%;
+        }
+
+        .orbit-access-art .sm-ring-outer {
+            inset: 4%;
+            border-style: dashed;
+        }
+
+        .orbit-access-art .sm-ring-middle {
+            inset: 17%;
+            border-top: 2px solid #a4d4ff;
+            transform: rotate(-35deg);
+        }
+
+        .orbit-access-art .sm-ring-inner {
+            inset: 28%;
+            background: radial-gradient(circle at 30% 15%,#bddcff20,#1e497522);
+            box-shadow: inset 0 1px #b7dbff55,0 0 35px #5597ff16;
+        }
+
+        .orbit-access-art .sm-instrument-axis {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            border-top: 1px solid #91c4ff22;
+            transform: rotate(-35deg);
+        }
+
+        .orbit-access-art .sm-instrument-satellite {
+            position: absolute;
+            left: 18%;
+            top: 19%;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #b2deff;
+            box-shadow: 0 0 0 6px #69aaff16,0 0 24px #9acaff;
+        }
+
+    .orbit-access-fields {
+        min-width: 0;
+        padding: 32px;
+        align-self: center;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] main .orbit-access-fields h2 {
+        color: #22476f;
+        background: none;
+        padding: 0;
+        border: 0;
+        box-shadow: none;
+        font-size: 27px;
+        margin: 0 0 16px;
+    }
+
+        body.sm-app[data-sm-family][data-sm-screen] main .orbit-access-fields h2::before, body.sm-app[data-sm-family][data-sm-screen] main .orbit-access-fields h2::after {
+            content: none;
+        }
+
+    body.sm-app[data-sm-family][data-sm-screen] main .orbit-access-fields form {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        background: transparent;
+        border: 0;
+    }
+
+    .orbit-access-fields > p {
+        color: #536d8e;
+        font-size: 14px;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen][data-sm-screen="NuevaContrasena"] .contenedor-recuperacion {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        max-width: 1040px;
+        min-height: 0;
+        padding: 0;
+        border-radius: 24px;
+        overflow: hidden;
+        background: #fff;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen][data-sm-screen="NuevaContrasena"] .tarjeta-recuperacion {
+        border: 0;
+        box-shadow: none;
+        text-align: left;
+        border-radius: 0;
+    }
+    /* Movements: editable route on the left, review dock on the right. */
+    body.sm-app[data-sm-family][data-sm-screen] :is(.salida-pagina,.extra-pagina,.traslado-pagina) :is(.grid,.traslado-grid) {
+        display: grid;
+        grid-template-columns: minmax(0,1.3fr) minmax(250px,.8fr);
+        gap: 24px;
+        align-items: start;
+    }
+
+    .orbit-movement-input {
+        min-width: 0;
+        padding: 10px;
+    }
+
+        .orbit-movement-input > .orbit-eyebrow {
+            margin-bottom: 18px;
+        }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.salida-pagina,.extra-pagina,.traslado-pagina) :is(.grid,.traslado-grid) > div:last-child {
+        background: #173b64;
+        color: #e3efff;
+        border: 1px solid #547dac;
+        border-radius: 18px;
+        padding: 24px;
+    }
+
+        body.sm-app[data-sm-family][data-sm-screen] :is(.salida-pagina,.extra-pagina,.traslado-pagina) :is(.grid,.traslado-grid) > div:last-child :is(h2,strong) {
+            color: #fff;
+        }
+
+        body.sm-app[data-sm-family][data-sm-screen] :is(.salida-pagina,.extra-pagina,.traslado-pagina) :is(.grid,.traslado-grid) > div:last-child :is(p,small) {
+            color: #c7dcf6;
+        }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.salida-pagina,.extra-pagina,.traslado-pagina) :is(.resumen,.resumen-item) {
+        border-color: #8cadd44d;
+        background: #244c78;
+        color: #e1efff;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.salida-pagina,.extra-pagina,.traslado-pagina) .resumen h2 {
+        color: #f1f7ff;
+        background: none;
+        border: 0;
+        box-shadow: none;
+        padding: 0;
+        width: auto;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.salida-pagina,.extra-pagina,.traslado-pagina) .resumen-destacado {
+        background: #315c8b;
+        color: #fff;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen][data-sm-screen="BajaInventario"] .orbit-movement-input {
+        border-top: 3px solid #a7435e;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen][data-sm-screen="SalidaExtraordinaria"] .orbit-movement-input {
+        border-top: 3px solid #b0863c;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen][data-sm-screen="TrasladarStock"] .orbit-movement-input {
+        border-top: 3px solid #3e7cc7;
+    }
+    /* Scanner has its own work station; original autofocus/Enter handling stays. */
+    body.sm-app[data-sm-family][data-sm-screen] .scan-panel {
+        display: grid;
+        grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+        gap: 24px;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .orbit-scan-station {
+        padding: 28px;
+        background: #edf4ff;
+        border-right: 1px solid #c5d6ed;
+    }
+
+        .orbit-scan-station .orbit-eyebrow {
+            margin-bottom: 20px;
+        }
+
+    body.sm-app[data-sm-family][data-sm-screen] .scan-panel form {
+        padding: 0;
+        margin: 0;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .scan-caja {
+        padding: 0;
+        background: transparent;
+        border: 0;
+    }
+
+    .orbit-scan-feedback {
+        padding: 28px 28px 0 0;
+        min-width: 0;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .scan-panel .scan-acciones {
+        grid-column: 1 / -1;
+        margin: 0;
+        padding: 0 24px 24px;
+        flex-wrap: wrap;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .resultado-grid {
+        gap: 12px;
+    }
+    /* Historical query consoles and dense ledger surfaces. */
+    body.sm-app[data-sm-family][data-sm-screen] :is([data-sm-screen="HistorialUsuarios"],[data-sm-screen="HistorialProductos"]) {
+        color: inherit;
+    }
+    /* Consultas de historiales: la consola completa se coloca SOBRE el listado.
+    Los formularios siguen en el mismo DOM; solo cambia su distribucion CSS. */
+    body.sm-app[data-sm-family][data-sm-screen] .historial-card:has(> .orbit-query-console) {
+        display: grid;
+        grid-template-columns: minmax(0,1fr);
+        gap: 16px;
+        align-items: start;
+    }
+
+        body.sm-app[data-sm-family][data-sm-screen] .historial-card:has(> .orbit-query-console) > * {
+            grid-column: 1 / -1;
+            grid-row: auto;
+            min-width: 0;
+            width: 100%;
+        }
+
+        body.sm-app[data-sm-family][data-sm-screen] .historial-card:has(> .orbit-query-console) > .historial-titulo {
+            grid-column: 1 / -1;
+        }
+
+    .orbit-query-console {
+        grid-column: 1 / -1;
+        grid-row: auto;
+        width: 100%;
+        min-width: 0;
+        padding: 18px 20px;
+        background: #e8f0fc;
+        border: 1px solid #bed1ed;
+        border-radius: 18px;
+        align-self: start;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .orbit-query-console .historial-herramientas {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: flex-end;
+        margin: 14px 0 0;
+        padding: 0;
+        border: 0;
+        box-shadow: none;
+        background: transparent;
+        gap: 12px 16px;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .orbit-query-console form {
+        display: flex;
+        flex: 1 1 430px;
+        flex-flow: row wrap;
+        align-items: flex-end;
+        width: auto;
+        min-width: 0;
+        gap: 10px;
+        margin: 0;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .orbit-query-console .filtro-busqueda {
+        flex: 2 1 250px;
+        width: auto;
+        min-width: 0;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .orbit-query-console .filtro-campo {
+        flex: 1 1 165px;
+        width: auto;
+        min-width: 0;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .orbit-query-console :is(input,select) {
+        width: 100%;
+        min-width: 0;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .orbit-query-console :is(button,a) {
+        flex: 0 0 auto;
+        width: auto;
+        min-width: 106px;
+    }
+
+    .orbit-sector-query {
+        display: grid;
+        grid-template-columns: 210px minmax(0,1fr);
+        gap: 20px;
+        align-items: center;
+        margin: 18px 0;
+        padding: 20px;
+        background: #eaf1fc;
+        border-radius: 16px;
+        border: 1px solid #c2d3eb;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .orbit-sector-query .filtro {
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        background: transparent;
+        flex-wrap: wrap;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] table[data-orbit-table] th {
+        font-size: 11px;
+        letter-spacing: .4px;
+        padding: 13px 14px;
+        background: #e5eefb;
+        color: #36597f;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] table[data-orbit-table] td {
+        padding: 13px 14px;
+        font-size: 13px;
+        line-height: 1.55;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] table[data-orbit-table] tbody tr:last-child td {
+        border-bottom: 0;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] table[data-orbit-table] td:first-child {
+        font-weight: 600;
+        color: #23466e;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] table[data-orbit-table] td [data-orbit-action] {
+        font-size: 12px !important;
+        padding: 8px 11px !important;
+        min-height: 38px;
+    }
+
+    .orbit-table-caption {
+        display: table-caption;
+        caption-side: top;
+        text-align: left;
+        padding: 18px;
+        background: #173b63;
+        color: #e5efff;
+        font-size: 13px;
+        letter-spacing: .3px;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen][data-sm-screen="Productos"] .productos-grid {
+        grid-template-columns: repeat(auto-fit,minmax(min(360px,100%),1fr));
+        gap: 16px;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen][data-sm-screen="Productos"] .producto-card {
+        display: grid;
+        grid-template-columns: 100px minmax(0,1fr);
+        align-items: stretch;
+        overflow: hidden;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen][data-sm-screen="Productos"] .producto-imagen {
+        height: auto;
+        min-height: 150px;
+        width: 100%;
+        border-bottom: 0;
+        border-right: 1px solid #d2dfef;
+        font-size: 36px;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen][data-sm-screen="Productos"] .producto-foto {
+        width: 100%;
+        height: 130px;
+        padding: 10px;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen][data-sm-screen="Productos"] .producto-info {
+        padding: 18px;
+        min-width: 0;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen][data-sm-screen="Productos"] .producto-nombre {
+        font-size: 18px;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen][data-sm-screen="Productos"] .producto-codigo {
+        padding-top: 10px;
+        margin-top: 10px;
+        border-top: 1px dashed #bfd1eb;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .inventario-resumen {
+        display: grid;
+        grid-template-columns: repeat(4,minmax(0,1fr));
+        gap: 12px;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .inventario-resumen-card {
+        padding: 18px;
+        border-radius: 12px;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .inventario-resumen-numero {
+        font-size: 30px;
+    }
+
+    .orbit-turno-fields {
+        border: 0;
+        padding: 0;
+        margin: 0;
+        flex: 1 1 100%;
+        min-width: 0;
+    }
+
+        .orbit-turno-fields legend {
+            float: none;
+            width: auto;
+            font-size: 14px;
+            font-weight: 650;
+            color: #315982;
+            margin-bottom: 14px;
+        }
+
+    .orbit-error-panel {
+        width: min(860px,100%);
+        margin: 0 auto;
+        padding: 32px;
+        border: 1px solid #c3d4e9;
+        border-left: 4px solid #a93c57;
+        border-radius: 20px;
+        background: #fff;
+        box-shadow: var(--orbit-shadow);
+    }
+
+        .orbit-error-panel h1 {
+            font-size: 36px;
+            margin-top: 14px;
+        }
+
+        .orbit-error-panel h2 {
+            font-size: 24px;
+            background: none;
+            border: 0;
+            padding: 0;
+            box-shadow: none;
+        }
+
+        .orbit-error-panel p {
+            line-height: 1.7;
+            overflow-wrap: anywhere;
+        }
+
+    .orbit-inline-error {
+        width: min(1180px,100%);
+        margin: 16px auto;
+        padding: 18px 22px;
+        border: 1px solid #dfaab6;
+        border-left: 4px solid #b33251;
+        border-radius: 12px;
+        background: #fff1f4;
+        color: #862c42;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.historial-herramientas,.controlados-herramientas,.ubicaciones-herramientas,.filtro-turno) {
+        border: 1px solid #c4d6ed;
+        background: #eaf1fc;
+        border-radius: 16px;
+    }
+    /* Sector atlas, preserving contextual menus and state-dependent actions. */
+    body.sm-app[data-sm-family][data-sm-screen] .ubicaciones-grid {
+        grid-template-columns: repeat(auto-fit,minmax(min(320px,100%),1fr));
+        gap: 20px;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .ubicacion-card {
+        border: 1px solid #b7cdeb;
+        border-radius: 20px;
+        overflow: visible;
+        box-shadow: var(--orbit-shadow);
+        background: linear-gradient(145deg,#fff,#f4f8ff);
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .ubicacion-card-cabecera {
+        border-bottom: 1px solid #dae5f4;
+        padding: 22px;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .ubicacion-menu {
+        border-radius: 12px;
+        border-color: #c1d3eb;
+        box-shadow: 0 14px 32px #17375c25;
+    }
+
+        body.sm-app[data-sm-family][data-sm-screen] .ubicacion-menu [data-orbit-action] {
+            width: 100%;
+            text-align: left;
+            margin: 3px 0;
+        }
+
+    body.sm-app[data-sm-family][data-sm-screen] .ubicacion-card-agregar {
+        border: 1px dashed #7faae4;
+        background: #e8f1fe;
+        color: #2b568a;
+    }
+
+    .orbit-sector-intro {
+        padding: 16px;
+        border-radius: 12px;
+        background: #173e69;
+        color: #d5e7ff;
+        margin-bottom: 18px;
+    }
+
+        .orbit-sector-intro .orbit-eyebrow {
+            color: #a4c8fa;
+        }
+
+        .orbit-sector-intro p {
+            margin: 6px 0 0;
+            color: #e2efff !important;
+        }
+    /* Modals use common decisions and purpose-specific body composition. */
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] [data-orbit-dialog="surface"] {
+        border: 1px solid #a8c2e5;
+        border-top: 3px solid #4f86da;
+        border-radius: 22px;
+        padding: 28px;
+        background: linear-gradient(145deg,#fff,#f1f6ff);
+        box-shadow: 0 30px 100px #07152a55;
+        max-width: calc(100vw - 32px);
+        max-height: calc(100dvh - 32px);
+        overflow-y: auto;
+    }
+
+        body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] [data-orbit-dialog="surface"]:is(.modal-contenido,.modal-contenido-sesion,.mcc-modal) {
+            width: min(560px,100%);
+            text-align: left;
+        }
+
+        body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] [data-orbit-dialog="surface"] :is(.modal-icono,.mcc-icono) {
+            margin: 0 0 16px;
+            border-radius: 13px;
+            background: #e2edff;
+            color: #315fa1;
+            border: 1px solid #b1caed;
+        }
+
+        body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] [data-orbit-dialog="surface"] :is(.modal-botones,.modal-botones-sesion,.mcc-botones,.mc-botones,.ubicacion-confirmacion-pie) {
+            padding-top: 18px;
+            margin-top: 20px;
+            border-top: 1px solid #c9d9ed;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 10px;
+        }
+
+        body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] [data-orbit-dialog="surface"] :is(h2,.modal-titulo,.mcc-titulo) {
+            color: #204873;
+            text-align: left;
+            font-size: 25px;
+            font-weight: 650;
+        }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .ubicacion-modal-fondo {
+        align-items: center;
+        justify-content: flex-end;
+        padding: 16px;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .ubicacion-modal {
+        width: min(560px,100%);
+        border-radius: 20px;
+    }
+
+    body #modalConfirmacionUbicacion {
+        justify-content: center;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .mc-modal {
+        display: grid;
+        grid-template-columns: minmax(220px,.85fr) minmax(0,1.15fr);
+        gap: 18px 26px;
+        width: min(920px,100%);
+        position: relative;
+    }
+
+        body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .mc-modal .mc-cabecera {
+            grid-column: 1;
+            padding: 24px;
+            border-radius: 16px;
+            background: #173b62;
+            color: #e6f1ff;
+        }
+
+            body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .mc-modal .mc-cabecera :is(h2,p) {
+                color: #edf5ff;
+            }
+
+        body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .mc-modal .mc-info {
+            grid-column: 1;
+            grid-row: 2;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .mc-modal .mc-error-general {
+            grid-column: 1 / -1;
+        }
+
+    .orbit-controlled-form {
+        grid-column: 2;
+        grid-row: 1 / 4;
+        padding-top: 20px;
+        min-width: 0;
+    }
+
+        .orbit-controlled-form > .orbit-eyebrow {
+            margin-bottom: 18px;
+        }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .mc-modal .mc-cerrar {
+        position: absolute;
+        right: 12px;
+        top: 12px;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .controlados-tabla-contenedor {
+        border-top: 3px solid #446a98;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .controlados-info {
+        border-left: 4px solid #395d8b;
+    }
+    /* Notification tray: live counters and original opening logic retained. */
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .alertas-panel {
+        width: min(430px,calc(100vw - 28px));
+        max-height: calc(100dvh - 120px);
+        overflow-y: auto;
+        border: 1px solid #aac4e6;
+        border-radius: 20px;
+        background: #f7faff;
+        box-shadow: 0 22px 60px #112d5333;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .alertas-panel-cabecera {
+        background: linear-gradient(120deg,#16395f,#255b91);
+        color: #e7f3ff;
+        padding: 22px;
+    }
+
+        body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .alertas-panel-cabecera :is(h3,.alertas-panel-etiqueta) {
+            color: #e7f3ff;
+        }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .alertas-resumen {
+        padding: 14px;
+        gap: 8px;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .alertas-resumen-item {
+        border-radius: 10px;
+        padding: 12px 8px;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .alertas-listado {
+        padding: 0 12px 12px;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .alertas-item {
+        border-radius: 12px;
+        margin-bottom: 8px;
+        background: #fff;
+    }
+    /* Module entrances are spacious navigation surfaces, not stretched buttons. */
+    body.sm-app[data-sm-family][data-sm-screen] .submenu-grid {
+        grid-template-columns: repeat(auto-fit,minmax(min(280px,100%),1fr));
+        gap: 18px;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .submenu-card {
+        display: grid;
+        grid-template-columns: 54px minmax(0,1fr);
+        gap: 10px 18px;
+        min-height: 170px;
+        padding: 24px;
+        border-radius: 18px;
+    }
+
+        body.sm-app[data-sm-family][data-sm-screen] .submenu-card .submenu-icono {
+            grid-row: 1 / 4;
+            margin: 0;
+        }
+
+        body.sm-app[data-sm-family][data-sm-screen] .submenu-card :is(.submenu-card-titulo,.submenu-card-descripcion,.submenu-card-flecha) {
+            grid-column: 2;
+        }
+
+        body.sm-app[data-sm-family][data-sm-screen] .submenu-card:hover {
+            border-color: #719fdf;
+        }
+    /* Compact reports toolbar only; printed geometry is never selected. */
+    body.sm-standalone {
+        background: #edf3fb;
+    }
+
+        body.sm-standalone :is(.acciones,.barra-acciones,.toolbar) {
+            padding: 16px;
+            border: 1px solid #c0d2ea;
+            border-radius: 14px;
+            background: #fff;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+    body.sm-app[data-sm-family][data-sm-screen] .filtro-turno {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: end;
+        gap: 16px;
+    }
+
+        body.sm-app[data-sm-family][data-sm-screen] .filtro-turno > div {
+            min-width: 0;
+        }
+
+    .orbit-access, .orbit-editor-heading, .orbit-query-console, .orbit-sector-query {
+        animation: orbit-enter 220ms var(--orbit-ease) both;
+    }
+
+    @keyframes orbit-enter {
+        from {
+            opacity: .85;
+            transform: translateY(5px);
+        }
+
+        to {
+            opacity: 1;
+            transform: none;
+        }
+    }
+}
+
+@media screen and (max-width:1100px) {
+    body.sm-app[data-sm-family][data-sm-screen] .orbit-permission-workbench {
+        grid-template-columns: 1fr;
+    }
+
+        body.sm-app[data-sm-family][data-sm-screen] .orbit-permission-workbench > * {
+            grid-column: 1 !important;
+            grid-row: auto !important;
+        }
+
+    body.sm-app[data-sm-family][data-sm-screen] .orbit-query-console .historial-herramientas {
+        align-items: stretch;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .orbit-query-console form {
+        flex: 1 1 100%;
+    }
+}
+
+@media screen and (max-width:760px) {
+    body.sm-app[data-sm-family][data-sm-screen] main .orbit-access, body.sm-app[data-sm-family][data-sm-screen][data-sm-screen="NuevaContrasena"] .contenedor-recuperacion {
+        grid-template-columns: 1fr;
+    }
+
+    .orbit-access-brand {
+        padding: 24px;
+    }
+
+        .orbit-access-brand .orbit-access-art {
+            display: none;
+        }
+
+        .orbit-access-brand h1 {
+            font-size: 28px;
+        }
+
+    .orbit-access-fields {
+        padding: 24px;
+    }
+
+    .orbit-identity-grid, .orbit-product-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.contenedor-crear-rol,.contenedor-editar-rol) {
+        display: block;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] :is(.salida-pagina,.extra-pagina,.traslado-pagina) :is(.grid,.traslado-grid) {
+        grid-template-columns: 1fr;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .scan-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .orbit-scan-feedback {
+        padding: 0 24px;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .orbit-query-console {
+        padding: 16px;
+    }
+
+        body.sm-app[data-sm-family][data-sm-screen] .orbit-query-console .historial-herramientas,
+        body.sm-app[data-sm-family][data-sm-screen] .orbit-query-console form {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        body.sm-app[data-sm-family][data-sm-screen] .orbit-query-console :is(.filtro-busqueda,.filtro-campo,button,a) {
+            flex: none;
+            width: 100%;
+        }
+
+    .orbit-sector-query {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .mc-modal {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+
+        body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .mc-modal :is(.mc-cabecera,.mc-info,.orbit-controlled-form,.mc-error-general) {
+            grid-column: 1;
+            grid-row: auto;
+        }
+
+        body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] .mc-modal .mc-cabecera {
+            margin-top: 30px;
+        }
+
+    .orbit-form-actions > * {
+        flex: 1 1 100%;
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .inventario-resumen {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+
+    body.sm-app[data-sm-family][data-sm-screen] .alertas-panel {
+        position: fixed;
+        top: 100px;
+        right: 14px;
+        left: auto;
+    }
+}
+
+@media (prefers-reduced-motion:reduce) {
+    body *, body *::before, body *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+
+    body:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] [data-orbit-action][data-orbit-action] {
+        transition: none !important;
+    }
+}
+
+.sm-motion-paused *, .sm-motion-paused *::before, .sm-motion-paused *::after {
+    animation: none !important;
+    transition: none !important;
+}
+
+body.sm-motion-paused:is(.sm-app,.sm-standalone)[data-sm-family][data-sm-screen] [data-orbit-action][data-orbit-action] {
+    transition: none !important;
+}

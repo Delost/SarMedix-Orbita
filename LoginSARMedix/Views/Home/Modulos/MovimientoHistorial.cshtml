@@ -1,0 +1,359 @@
+﻿@* SM-ORBITA-METADATA *@
+@{ ViewData["SmScreen"] = "ModuloMovimientoHistorial"; ViewData["SmFamily"] = "movements"; }
+@using Microsoft.AspNetCore.Http
+
+@{
+    ViewData["Title"] = "Movimientos e Historial";
+
+    ViewData["TituloBarra"] =
+        "Seleccione Historial";
+
+
+    // =========================================================
+    // OBTENER PERMISOS DEL USUARIO
+    // =========================================================
+
+    string permisosTexto =
+        Context.Session.GetString("Permisos") ?? "";
+
+
+    var permisos =
+        permisosTexto
+            .Split(
+                '|',
+                StringSplitOptions.RemoveEmptyEntries
+            )
+            .ToList();
+
+
+    Func<string, bool> TienePermiso =
+        permiso =>
+            permisos.Any(
+                p => p.Equals(
+                    permiso,
+                    StringComparison.OrdinalIgnoreCase
+                )
+            );
+
+
+    // =========================================================
+    // PERMISOS DE LOS HISTORIALES
+    // =========================================================
+
+    bool puedeConsultarHistorial =
+        TienePermiso(
+            "Consultar historial"
+        );
+
+
+    bool puedeGestionarUsuarios =
+        TienePermiso(
+            "Gestionar usuarios y permisos"
+        );
+}
+
+
+<style>
+
+    /* CONTENEDOR */
+
+    .submenu-contenedor {
+        width: 90%;
+        max-width: 1100px;
+        margin: 5px auto;
+        text-align: center;
+    }
+
+
+
+    /* TITULO */
+
+    .submenu-titulo {
+        margin: 0;
+        color: #087bc2;
+        font-size: 32px;
+        font-weight: 700;
+    }
+
+
+    .submenu-descripcion {
+        margin: 8px 0 35px;
+        color: #5f7180;
+        font-size: 16px;
+    }
+
+
+
+    /* TARJETAS */
+
+    .submenu-grid {
+        display: grid;
+        grid-template-columns: repeat( auto-fit, minmax(260px, 1fr) );
+        gap: 25px;
+    }
+
+
+    .submenu-card {
+        min-height: 190px;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 14px;
+        color: #17324d;
+        text-align: center;
+        text-decoration: none;
+        box-shadow: 0 7px 20px rgba(28, 65, 95, 0.15);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+
+        .submenu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 30px rgba(15, 91, 150, 0.25);
+            color: #17324d;
+        }
+
+
+
+    /* ICONO */
+
+    .submenu-icono {
+        margin-bottom: 12px;
+        font-size: 42px;
+    }
+
+
+
+    /* TITULO TARJETA */
+
+    .submenu-card-titulo {
+        margin-bottom: 8px;
+        color: #087bc2;
+        font-size: 21px;
+        font-weight: 700;
+    }
+
+
+    .submenu-card p {
+        margin: 0;
+        color: #687b89;
+        font-size: 14px;
+    }
+
+
+
+    /* BOTON VOLVER */
+
+    .volver-contenedor {
+        margin-top: 35px;
+        text-align: center;
+    }
+
+
+    .btn-volver-submenu {
+        display: inline-block;
+        padding: 11px 20px;
+        background: #0b8f9c;
+        color: white;
+        border-radius: 7px;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+
+        .btn-volver-submenu:hover {
+            background: #087580;
+            color: white;
+        }
+
+
+
+    /* RESPONSIVE */
+
+    @@media (max-width: 900px) {
+
+        .submenu-grid {
+            grid-template-columns: 1fr;
+        }
+
+
+        .submenu-contenedor {
+            width: 94%;
+        }
+    }
+
+
+    @@media (max-width: 600px) {
+
+        .submenu-titulo {
+            font-size: 27px;
+        }
+
+
+        .submenu-card {
+            min-height: 170px;
+            padding: 25px;
+        }
+
+
+        .submenu-icono {
+            font-size: 38px;
+        }
+    }
+
+</style>
+
+
+
+<section class="submenu-contenedor">
+
+
+    <!-- TITULO -->
+
+    <div class="submenu-titulo">
+
+        Movimientos e Historial
+
+    </div>
+
+
+    <p class="submenu-descripcion">
+
+        Seleccione una opción para consultar
+        la trazabilidad del sistema.
+
+    </p>
+
+
+
+    <!-- TARJETAS -->
+
+    <div class="submenu-grid">
+
+
+        @if (puedeConsultarHistorial)
+        {
+
+            <!-- HISTORIAL GENERAL -->
+
+            <a asp-controller="Home"
+               asp-action="Historial"
+               class="submenu-card" data-orbit-action="navigation">
+
+
+                <div class="submenu-icono"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-history-log" /></svg></div>
+
+
+                <div class="submenu-card-titulo">
+
+                    Historial General
+
+                </div>
+
+
+                <p>
+
+                    Consultar todas las acciones
+                    registradas en SARMedix.
+
+                </p>
+
+
+            </a>
+
+        }
+
+
+
+        @if (puedeGestionarUsuarios)
+        {
+
+            <!-- HISTORIAL DE USUARIOS -->
+
+            <a asp-controller="Home"
+               asp-action="HistorialUsuarios"
+               class="submenu-card" data-orbit-action="navigation">
+
+
+                <div class="submenu-icono"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-user-history" /></svg></div>
+
+
+                <div class="submenu-card-titulo">
+
+                    Historial de Usuarios
+
+                </div>
+
+
+                <p>
+
+                    Consultar cambios, creación,
+                    edición y gestión de usuarios.
+
+                </p>
+
+
+            </a>
+
+        }
+
+
+
+        @if (puedeConsultarHistorial)
+        {
+
+            <!-- HISTORIAL DE PRODUCTOS -->
+
+            <a asp-controller="Home"
+               asp-action="HistorialProductos"
+               class="submenu-card" data-orbit-action="navigation">
+
+
+                <div class="submenu-icono"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-product-history" /></svg></div>
+
+
+                <div class="submenu-card-titulo">
+
+                    Historial de Productos
+
+                </div>
+
+
+                <p>
+
+                    Consultar cambios realizados
+                    en productos y lotes.
+
+                </p>
+
+
+            </a>
+
+        }
+
+
+    </div>
+
+
+
+    <!-- VOLVER -->
+
+    <div class="volver-contenedor">
+
+
+        <a asp-controller="Home"
+           asp-action="Modulos"
+           class="btn-volver-submenu" data-orbit-action="secondary">
+
+            ← Volver a módulos
+
+        </a>
+
+
+    </div>
+
+
+</section>

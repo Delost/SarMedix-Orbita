@@ -1,0 +1,1102 @@
+[
+  {
+    "view": "LoginSARMedix/Views/Home/AccesoDenegado.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Modulos\" class=\"btn-volver\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/BajaInventario.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"MovimientoHistorial\" class=\"btn volver\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/BajaInventario.cshtml",
+    "kind": "danger",
+    "control": "<button type=\"submit\" id=\"btnBaja\" class=\"btn confirmar\" disabled>"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Bienvenida.cshtml",
+    "kind": "secondary",
+    "control": "<button class=\"sm-motion-toggle\" type=\"button\" aria-pressed=\"false\" aria-label=\"Pausar efectos ambientales\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Bienvenida.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"UsuariosPermisos\" class=\"modulo habilitado sm-module-people\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Bienvenida.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Productos\" class=\"modulo habilitado sm-module-products\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Bienvenida.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"MovimientoHistorial\" class=\"modulo habilitado sm-module-movements\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Bienvenida.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"MedicamentosControlados\" class=\"modulo habilitado sm-module-controlled\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearLote.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" id=\"btnModoScanner\" class=\"btn-modo activo\" onclick=\"cambiarModo('scanner')\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearLote.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" id=\"btnModoManual\" class=\"btn-modo\" onclick=\"cambiarModo('manual')\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearLote.cshtml",
+    "kind": "quiet",
+    "control": "<button type=\"button\" class=\"btn-buscar-codigo\" onclick=\"buscarProductoEscaneado()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearLote.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"submit\" id=\"btnRegistrarEntrada\" class=\"btn-registrar-entrada\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearLote.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Lotes\" class=\"btn-volver-inventario\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearLote.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"button\" class=\"btn-modal-si\" onclick=\"registrarLote()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearLote.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-modal-no\" onclick=\"cerrarConfirmacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearLote.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-modal-cancelar\" onclick=\"cancelarRegistro()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearProducto.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"submit\" id=\"btnRegistrarProducto\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearProducto.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Productos\" class=\"btn-volver-productos\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearProducto.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"button\" class=\"btn-modal-si\" onclick=\"registrarProducto()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearProducto.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-modal-no\" onclick=\"cerrarConfirmacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearProducto.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-modal-cancelar\" onclick=\"cancelarRegistro()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearRol.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"submit\" class=\"btn-guardar-rol\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearRol.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"RolesPermisos\" class=\"btn-volver-rol\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearRol.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"button\" class=\"btn-modal-si\" onclick=\"crearRol()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearRol.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-modal-no\" onclick=\"cerrarConfirmacionRol()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearRol.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-modal-cancelar\" onclick=\"cancelarCreacionRol()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearUsuario.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"submit\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearUsuario.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"UsuariosPermisos\" class=\"btn-volver-usuarios\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearUsuario.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"button\" class=\"btn-modal-si\" onclick=\"crearUsuario()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearUsuario.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-modal-no\" onclick=\"cerrarConfirmacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/CrearUsuario.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-modal-cancelar\" onclick=\"cancelarCreacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Dosificaciones.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"submit\" class=\"btn-principal\" id=\"btnCrearDosif\" disabled>"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Dosificaciones.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"EntregaDosificacion\" class=\"btn-scan\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Dosificaciones.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"submit\" class=\"btn-reimprimir\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/EditarLote.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"submit\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/EditarLote.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Lotes\" class=\"btn-volver-listado\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/EditarLote.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Productos\" class=\"btn-volver-productos\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/EditarLote.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"button\" class=\"btn-modal-si\" onclick=\"actualizarLote()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/EditarLote.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-modal-no\" onclick=\"cerrarConfirmacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/EditarLote.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-modal-cancelar\" onclick=\"cancelarEdicion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/EditarProducto.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"submit\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/EditarProducto.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"ListadoProductos2\" class=\"btn-volver-listado\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/EditarProducto.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Productos\" class=\"btn-volver-productos\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/EditarProducto.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"button\" class=\"btn-modal-si\" onclick=\"actualizarProducto()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/EditarProducto.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-modal-no\" onclick=\"cerrarConfirmacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/EditarProducto.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-modal-cancelar\" onclick=\"cancelarEdicion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/EditarRol.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"submit\" class=\"btn-guardar-rol\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/EditarRol.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"RolesPermisos\" asp-route-idRol=\"@Model.id_rol\" class=\"btn-volver-rol\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/EditarUsuario.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"submit\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/EditarUsuario.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Usuarios\" class=\"btn-volver\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/EntregaDosificacion.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"button\" id=\"btnProcesarScan\" class=\"btn-procesar-scan\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/EntregaDosificacion.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"HistorialSalidasTurno\" class=\"btn-historial-turno\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/EntregaDosificacion.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Dosificaciones\" class=\"btn-volver\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Historial.cshtml",
+    "kind": "quiet",
+    "control": "<button type=\"submit\" class=\"btn-buscar\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Historial.cshtml",
+    "kind": "quiet",
+    "control": "<button type=\"submit\" class=\"btn-aplicar-filtros\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Historial.cshtml",
+    "kind": "quiet",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Historial\" asp-route-buscar=\"@buscarActual\" class=\"btn-limpiar-filtros\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Historial.cshtml",
+    "kind": "quiet",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Historial\" asp-route-pagina=\"@(ViewBag.PaginaActual - 1)\" asp-route-buscar=\"@buscarActual\" asp-route-filtro=\"@filtroActual\" asp-route-periodo=\"@periodoActual\" class=\"pagina-boton\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Historial.cshtml",
+    "kind": "quiet",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Historial\" asp-route-pagina=\"@i\" asp-route-buscar=\"@buscarActual\" asp-route-filtro=\"@filtroActual\" asp-route-periodo=\"@periodoActual\" class=\"pagina-boton @(i == ViewBag.PaginaActual ? \"pagina-activa\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Historial.cshtml",
+    "kind": "quiet",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Historial\" asp-route-pagina=\"@(ViewBag.PaginaActual + 1)\" asp-route-buscar=\"@buscarActual\" asp-route-filtro=\"@filtroActual\" asp-route-periodo=\"@periodoActual\" class=\"pagina-boton\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Historial.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"MovimientoHistorial\" class=\"btn-volver\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialProductos.cshtml",
+    "kind": "quiet",
+    "control": "<button type=\"submit\" class=\"btn-buscar\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialProductos.cshtml",
+    "kind": "quiet",
+    "control": "<button type=\"submit\" class=\"btn-aplicar-filtros\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialProductos.cshtml",
+    "kind": "quiet",
+    "control": "<a asp-controller=\"Home\" asp-action=\"HistorialProductos\" asp-route-buscar=\"@buscarActual\" class=\"btn-limpiar-filtros\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialProductos.cshtml",
+    "kind": "quiet",
+    "control": "<a asp-controller=\"Home\" asp-action=\"HistorialProductos\" asp-route-pagina=\"@(ViewBag.PaginaActual - 1)\" asp-route-buscar=\"@buscarActual\" asp-route-filtro=\"@filtroActual\" asp-route-periodo=\"@periodoActual\" class=\"pagina-boton\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialProductos.cshtml",
+    "kind": "quiet",
+    "control": "<a asp-controller=\"Home\" asp-action=\"HistorialProductos\" asp-route-pagina=\"@i\" asp-route-buscar=\"@buscarActual\" asp-route-filtro=\"@filtroActual\" asp-route-periodo=\"@periodoActual\" class=\"pagina-boton @(i == ViewBag.PaginaActual ? \"pagina-activa\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialProductos.cshtml",
+    "kind": "quiet",
+    "control": "<a asp-controller=\"Home\" asp-action=\"HistorialProductos\" asp-route-pagina=\"@(ViewBag.PaginaActual + 1)\" asp-route-buscar=\"@buscarActual\" asp-route-filtro=\"@filtroActual\" asp-route-periodo=\"@periodoActual\" class=\"pagina-boton\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialProductos.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"MovimientoHistorial\" class=\"btn-volver\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialSalidasTurno.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"EntregaDosificacion\" class=\"btn-volver-scan\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialSalidasTurno.cshtml",
+    "kind": "quiet",
+    "control": "<button type=\"submit\" class=\"btn-aplicar\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialSalidasTurno.cshtml",
+    "kind": "quiet",
+    "control": "<button type=\"button\" class=\"preset\" data-inicio=\"08:00\" data-fin=\"00:00\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialSalidasTurno.cshtml",
+    "kind": "quiet",
+    "control": "<button type=\"button\" class=\"preset\" data-inicio=\"08:00\" data-fin=\"20:00\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialSalidasTurno.cshtml",
+    "kind": "quiet",
+    "control": "<button type=\"button\" class=\"preset\" data-inicio=\"20:00\" data-fin=\"08:00\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialSalidasTurno.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"InformeSalidasTurno\" asp-route-fecha=\"@Model.fecha.ToString(\"yyyy-MM-dd\")\" asp-route-horaInicio=\"@Model.hora_inicio\" asp-route-horaFin=\"@Model.hora_fin\" target=\"_blank\" class=\"btn-informe\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialSectores.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"submit\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialUsuarios.cshtml",
+    "kind": "quiet",
+    "control": "<button type=\"submit\" class=\"btn-buscar\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialUsuarios.cshtml",
+    "kind": "quiet",
+    "control": "<button type=\"submit\" class=\"btn-aplicar-filtros\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialUsuarios.cshtml",
+    "kind": "quiet",
+    "control": "<a asp-controller=\"Home\" asp-action=\"HistorialUsuarios\" asp-route-buscar=\"@buscarActual\" class=\"btn-limpiar-filtros\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialUsuarios.cshtml",
+    "kind": "quiet",
+    "control": "<a asp-controller=\"Home\" asp-action=\"HistorialUsuarios\" asp-route-pagina=\"@(ViewBag.PaginaActual - 1)\" asp-route-buscar=\"@buscarActual\" asp-route-filtro=\"@filtroActual\" asp-route-periodo=\"@periodoActual\" class=\"pagina-boton\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialUsuarios.cshtml",
+    "kind": "quiet",
+    "control": "<a asp-controller=\"Home\" asp-action=\"HistorialUsuarios\" asp-route-pagina=\"@i\" asp-route-buscar=\"@buscarActual\" asp-route-filtro=\"@filtroActual\" asp-route-periodo=\"@periodoActual\" class=\"pagina-boton @(i == ViewBag.PaginaActual ? \"pagina-activa\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialUsuarios.cshtml",
+    "kind": "quiet",
+    "control": "<a asp-controller=\"Home\" asp-action=\"HistorialUsuarios\" asp-route-pagina=\"@(ViewBag.PaginaActual + 1)\" asp-route-buscar=\"@buscarActual\" asp-route-filtro=\"@filtroActual\" asp-route-periodo=\"@periodoActual\" class=\"pagina-boton\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/HistorialUsuarios.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"MovimientoHistorial\" class=\"btn-volver\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/ImprimirDosificacion.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Dosificaciones\" class=\"btn-volver\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/ImprimirDosificacion.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"button\" class=\"btn-print\" onclick=\"window.print()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Index.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"submit\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Index.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"RecuperarContrasena\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/InformeSalidasTurno.cshtml",
+    "kind": "secondary",
+    "control": "<a href=\"javascript:history.back();\" class=\"btn-volver\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/InformeSalidasTurno.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"DescargarInformeSalidasTurno\" asp-route-fecha=\"@Model.fecha.ToString(\"yyyy-MM-dd\")\" asp-route-horaInicio=\"@Model.hora_inicio\" asp-route-horaFin=\"@Model.hora_fin\" class=\"btn-descargar\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/InformeSalidasTurno.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"button\" class=\"btn-imprimir\" onclick=\"window.print()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/InventarioUbicacion.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Ubicaciones\" class=\"inventario-volver\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/ListadoEliminarUsuarios.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"submit\" class=\"btn-reactivar\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/ListadoEliminarUsuarios.cshtml",
+    "kind": "danger",
+    "control": "<button type=\"submit\" class=\"btn-eliminar\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/ListadoEliminarUsuarios.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Usuarios\" class=\"btn-listado\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/ListadoEliminarUsuarios.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"UsuariosPermisos\" class=\"btn-volver-usuarios\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/ListadoEliminarUsuarios.cshtml",
+    "kind": "warning",
+    "control": "<button type=\"button\" class=\"btn-modal-si\" onclick=\"realizarAccion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/ListadoEliminarUsuarios.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-modal-no\" onclick=\"cerrarConfirmacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/ListadoEliminarUsuarios.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-modal-cancelar\" onclick=\"cancelarAccion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Lotes.cshtml",
+    "kind": "primary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"CrearLote\" class=\"btn-nuevo-lote\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Lotes.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"ListadoProductos2\" class=\"btn-listado-productos\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Lotes.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Productos\" class=\"btn-volver-productos\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Lotes.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"EditarLote\" asp-route-idLote=\"@lote.id_lote\" class=\"btn-editar\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/MedicamentosControlados.cshtml",
+    "kind": "quiet",
+    "control": "<button type=\"button\" class=\"controlados-btn-buscar\" onclick=\"buscarMedicamentosControlados()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/MedicamentosControlados.cshtml",
+    "kind": "quiet",
+    "control": "<button type=\"button\" class=\"controlados-btn-aplicar\" onclick=\"aplicarFiltroControlados()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/MedicamentosControlados.cshtml",
+    "kind": "quiet",
+    "control": "<button type=\"button\" class=\"controlados-btn-limpiar\" onclick=\"limpiarFiltroControlados()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/MedicamentosControlados.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"controlados-btn-lotes\" onclick=\"alternarLotesControlado( @medicamento.id_producto, this )\" aria-expanded=\"false\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/MedicamentosControlados.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"button\" class=\"controlados-btn-movimiento controlados-btn-entrada\" data-id-lote=\"@lote.id_lote\" data-tipo=\"Entrada\" data-medicamento=\"@(medicamento.nombre ?? \"\")\" data-lote=\"@(lote.numero_lote ?? \"\")\" data-stock=\"@lote.cantidad_actual\" onclick=\"abrirModalMovimiento(this)\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/MedicamentosControlados.cshtml",
+    "kind": "warning",
+    "control": "<button type=\"button\" class=\"controlados-btn-movimiento controlados-btn-salida\" data-id-lote=\"@lote.id_lote\" data-tipo=\"Salida\" data-medicamento=\"@(medicamento.nombre ?? \"\")\" data-lote=\"@(lote.numero_lote ?? \"\")\" data-stock=\"@lote.cantidad_actual\" onclick=\"abrirModalMovimiento(this)\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/MedicamentosControlados.cshtml",
+    "kind": "warning",
+    "control": "<button type=\"button\" class=\"controlados-btn-movimiento controlados-btn-salida\" disabled>"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/MedicamentosControlados.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"controlados-btn-movimiento controlados-btn-historial\" onclick=\"alternarHistorialLote( @lote.id_lote, this )\" aria-expanded=\"false\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/MedicamentosControlados.cshtml",
+    "kind": "icon",
+    "control": "<button type=\"button\" class=\"mc-cerrar\" onclick=\"cerrarModalMovimiento()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/MedicamentosControlados.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"mc-btn-cancelar\" onclick=\"cerrarModalMovimiento()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/MedicamentosControlados.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"submit\" id=\"btnConfirmarMovimiento\" class=\"mc-btn-confirmar\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/MedicamentosControlados.cshtml",
+    "kind": "warning",
+    "control": "<button type=\"button\" class=\"mcc-btn mcc-btn-si\" onclick=\"confirmarMovimientoControlado()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/MedicamentosControlados.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"mcc-btn mcc-btn-no\" onclick=\"cerrarConfirmacionMovimiento()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/MedicamentosControlados.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"mcc-btn mcc-btn-cancelar\" onclick=\"cancelarConfirmacionMovimiento()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/MovimientoHistorial.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Historial\" class=\"submenu-card\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/MovimientoHistorial.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"HistorialUsuarios\" class=\"submenu-card\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/MovimientoHistorial.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"HistorialProductos\" class=\"submenu-card\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/MovimientoHistorial.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Modulos\" class=\"btn-volver-submenu\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/Productos.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"CrearProducto\" class=\"submenu-card\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/Productos.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"ListadoProductos2\" class=\"submenu-card\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/Productos.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Lotes\" class=\"submenu-card\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/Productos.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Modulos\" class=\"btn-volver-submenu\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/UsuariosPermisos.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"CrearUsuario\" class=\"submenu-card\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/UsuariosPermisos.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Usuarios\" class=\"submenu-card\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/UsuariosPermisos.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"ListadoEliminarUsuarios\" class=\"submenu-card\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/UsuariosPermisos.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"RolesPermisos\" class=\"submenu-card\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Modulos/UsuariosPermisos.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Modulos\" class=\"btn-volver-submenu\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/NuevaContrasena.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"submit\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/NuevaContrasena.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Index\" class=\"volver-login\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Productos.cshtml",
+    "kind": "primary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"CrearProducto\" class=\"btn-nuevo-producto\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Productos.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" id=\"btnMedicamentos\" class=\"selector-btn activo\" onclick=\"mostrarTipo('medicamentos')\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Productos.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" id=\"btnInsumos\" class=\"selector-btn\" onclick=\"mostrarTipo('insumos')\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Productos.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"EditarProducto\" asp-route-idProducto=\"@producto.id_producto\" class=\"producto-card\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Productos.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"EditarProducto\" asp-route-idProducto=\"@producto.id_producto\" class=\"producto-card\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Productos.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Productos\" class=\"btn-volver-productos\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/RecuperarContrasena.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"submit\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/RecuperarContrasena.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Index\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/RolesInactivos.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"submit\" class=\"btn-reactivar\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/RolesInactivos.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"RolesPermisos\" class=\"btn-volver-roles\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/RolesInactivos.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"button\" class=\"btn-modal-si\" onclick=\"reactivarRol()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/RolesInactivos.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-modal-no\" onclick=\"cerrarConfirmacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/RolesInactivos.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-modal-cancelar\" onclick=\"cancelarReactivacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/RolesPermisos.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"RolesInactivos\" class=\"btn-inactivos\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/RolesPermisos.cshtml",
+    "kind": "primary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"CrearRol\" class=\"btn-crear-rol\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/RolesPermisos.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"EditarRol\" asp-route-idRol=\"@idRol\" class=\"btn-editar\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/RolesPermisos.cshtml",
+    "kind": "warning",
+    "control": "<button type=\"button\" class=\"btn-desactivar\" onclick=\"mostrarConfirmacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/RolesPermisos.cshtml",
+    "kind": "warning",
+    "control": "<button type=\"submit\" class=\"btn-confirmar\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/RolesPermisos.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-cancelar\" onclick=\"ocultarConfirmacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/RolesPermisos.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"submit\" class=\"btn-guardar\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/RolesPermisos.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"UsuariosPermisos\" class=\"btn-volver\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/SalidaExtraordinaria.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"MovimientoHistorial\" class=\"btn volver\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/SalidaExtraordinaria.cshtml",
+    "kind": "warning",
+    "control": "<button type=\"submit\" id=\"btnExtra\" class=\"btn confirmar\" disabled>"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/TrasladarStock.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"MovimientoHistorial\" class=\"btn-volver\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/TrasladarStock.cshtml",
+    "kind": "warning",
+    "control": "<button type=\"submit\" id=\"btnTrasladar\" class=\"btn-trasladar\" disabled>"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Ubicaciones.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"button\" class=\"btn-agregar-ubicacion\" onclick=\"abrirModalUbicacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Ubicaciones.cshtml",
+    "kind": "icon",
+    "control": "<button type=\"button\" class=\"ubicacion-menu\" onclick=\"alternarMenuUbicacion(this)\" title=\"Opciones\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Ubicaciones.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"ubicacion-menu-opcion\" data-id=\"@ubicacion.id_ubicacion\" data-nombre=\"@ubicacion.nombre_sector\" data-tipo=\"@ubicacion.tipo_sector\" onclick=\"abrirModalEditarUbicacion(this)\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Ubicaciones.cshtml",
+    "kind": "warning",
+    "control": "<button type=\"button\" class=\"ubicacion-menu-opcion ubicacion-menu-opcion-inactivar\" data-accion=\"inactivar\" data-nombre=\"@ubicacion.nombre_sector\" onclick=\"abrirModalConfirmacionUbicacion(this)\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Ubicaciones.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"button\" class=\"ubicacion-menu-opcion ubicacion-menu-opcion-reactivar\" data-accion=\"reactivar\" data-nombre=\"@ubicacion.nombre_sector\" onclick=\"abrirModalConfirmacionUbicacion(this)\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Ubicaciones.cshtml",
+    "kind": "danger",
+    "control": "<button type=\"button\" class=\"ubicacion-menu-opcion ubicacion-menu-opcion-eliminar\" data-accion=\"eliminar\" data-nombre=\"@ubicacion.nombre_sector\" onclick=\"abrirModalConfirmacionUbicacion(this)\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Ubicaciones.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"InventarioUbicacion\" asp-route-idUbicacion=\"@ubicacion.id_ubicacion\" class=\"btn-ver-inventario\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Ubicaciones.cshtml",
+    "kind": "navigation",
+    "control": "<button type=\"button\" class=\"ubicacion-card ubicacion-card-agregar\" onclick=\"abrirModalUbicacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Ubicaciones.cshtml",
+    "kind": "icon",
+    "control": "<button type=\"button\" class=\"ubicacion-modal-cerrar\" onclick=\"cerrarModalUbicacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Ubicaciones.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-ubicacion-cancelar\" onclick=\"cerrarModalUbicacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Ubicaciones.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"button\" class=\"btn-ubicacion-guardar\" data-accion=\"crear\" data-formulario=\"formAgregarUbicacion\" onclick=\"abrirConfirmacionFormularioUbicacion(this)\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Ubicaciones.cshtml",
+    "kind": "icon",
+    "control": "<button type=\"button\" class=\"ubicacion-modal-cerrar\" onclick=\"cerrarModalEditarUbicacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Ubicaciones.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-ubicacion-cancelar\" onclick=\"cerrarModalEditarUbicacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Ubicaciones.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"button\" class=\"btn-ubicacion-guardar\" data-accion=\"editar\" data-formulario=\"formEditarUbicacion\" onclick=\"abrirConfirmacionFormularioUbicacion(this)\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Ubicaciones.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-confirmacion-cancelar\" onclick=\"cerrarModalConfirmacionUbicacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Ubicaciones.cshtml",
+    "kind": "warning",
+    "control": "<button type=\"button\" id=\"btnConfirmarAccionUbicacion\" class=\"btn-confirmacion-aceptar\" onclick=\"confirmarAccionUbicacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Usuarios.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"EditarUsuario\" asp-route-idUsuario=\"@usuario.id_usuario\" class=\"btn-editar\" onclick=\"return confirmarEditar(this)\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Usuarios.cshtml",
+    "kind": "warning",
+    "control": "<button type=\"submit\" class=\"btn-desactivar\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Usuarios.cshtml",
+    "kind": "quiet",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Usuarios\" asp-route-pagina=\"@(ViewBag.PaginaActual - 1)\" class=\"pagina-boton\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Usuarios.cshtml",
+    "kind": "quiet",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Usuarios\" asp-route-pagina=\"@i\" class=\"pagina-boton @(i == ViewBag.PaginaActual ? \"pagina-activa\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Usuarios.cshtml",
+    "kind": "quiet",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Usuarios\" asp-route-pagina=\"@(ViewBag.PaginaActual + 1)\" class=\"pagina-boton\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Usuarios.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"ListadoEliminarUsuarios\" class=\"btn-inactivos\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Usuarios.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"UsuariosPermisos\" class=\"btn-volver-usuarios\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Usuarios.cshtml",
+    "kind": "warning",
+    "control": "<button type=\"button\" class=\"btn-modal-si\" onclick=\"realizarAccion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Usuarios.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-modal-no\" onclick=\"cerrarConfirmacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/Usuarios.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-modal-cancelar\" onclick=\"cerrarConfirmacion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/VerificarCodigo.cshtml",
+    "kind": "primary",
+    "control": "<button type=\"submit\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Home/VerificarCodigo.cshtml",
+    "kind": "secondary",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Index\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/Components/Alertas/Default.cshtml",
+    "kind": "icon",
+    "control": "<button type=\"button\" class=\"alertas-boton\" id=\"botonAlertasSarmedix\" onclick=\"alternarAlertasSarmedix(event)\" aria-label=\"Ver alertas\" aria-expanded=\"false\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/Components/Alertas/Default.cshtml",
+    "kind": "navigation",
+    "control": "<a href=\"@alerta.UrlDestino\" class=\"alertas-item alertas-item-enlace @claseTipo\" title=\"@alerta.TextoDestino\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Layout.cshtml",
+    "kind": "navigation",
+    "control": "<a class=\"sm-skip\" href=\"#sm-main\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Layout.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Modulos\" class=\"logo-layout\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Layout.cshtml",
+    "kind": "secondary",
+    "control": "<button class=\"sm-motion-control\" type=\"button\" data-sm-motion-control aria-pressed=\"false\" aria-label=\"Pausar efectos visuales\" hidden>"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Layout.cshtml",
+    "kind": "warning",
+    "control": "<button type=\"button\" class=\"btn-cerrar-layout\" onclick=\"abrirConfirmacionCerrarSesion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Layout.cshtml",
+    "kind": "warning",
+    "control": "<button type=\"button\" class=\"btn-sesion-si\" onclick=\"confirmarCerrarSesion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Layout.cshtml",
+    "kind": "secondary",
+    "control": "<button type=\"button\" class=\"btn-sesion-no\" onclick=\"cerrarConfirmacionCerrarSesion()\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"UsuariosPermisos\" class=\"sidebar-modulo-enlace\" title=\"Ir a Usuarios y Permisos\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<button type=\"button\" class=\"sidebar-toggle\" onclick=\"alternarSubmenu(this)\" aria-label=\"Mostrar submódulos de Usuarios y Permisos\" aria-expanded=\"false\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"CrearUsuario\" class=\"sidebar-subopcion @(accionActual == \"CrearUsuario\" ? \"activo\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Usuarios\" class=\"sidebar-subopcion @(accionActual == \"Usuarios\" || accionActual == \"EditarUsuario\" ? \"activo\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"RolesPermisos\" class=\"sidebar-subopcion @(accionActual == \"RolesPermisos\" || accionActual == \"CrearRol\" || accionActual == \"EditarRol\" || accionActual == \"RolesInactivos\" ? \"activo\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"ListadoEliminarUsuarios\" class=\"sidebar-subopcion @(accionActual == \"ListadoEliminarUsuarios\" ? \"activo\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Productos\" class=\"sidebar-modulo-enlace\" title=\"Ir a Productos\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<button type=\"button\" class=\"sidebar-toggle\" onclick=\"alternarSubmenu(this)\" aria-label=\"Mostrar submódulos de Productos\" aria-expanded=\"false\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"CrearProducto\" class=\"sidebar-subopcion @(accionActual == \"CrearProducto\" ? \"activo\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"ListadoProductos2\" class=\"sidebar-subopcion @(accionActual == \"ListadoProductos2\" || accionActual == \"EditarProducto\" ? \"activo\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Lotes\" class=\"sidebar-modulo-enlace\" title=\"Ir a Inventario\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<button type=\"button\" class=\"sidebar-toggle\" onclick=\"alternarSubmenu(this)\" aria-label=\"Mostrar submódulos de Inventario\" aria-expanded=\"false\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Lotes\" class=\"sidebar-subopcion @(accionActual == \"Lotes\" || accionActual == \"EditarLote\" ? \"activo\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"MovimientoHistorial\" class=\"sidebar-modulo-enlace\" title=\"Ir a Movimientos\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<button type=\"button\" class=\"sidebar-toggle\" onclick=\"alternarSubmenu(this)\" aria-label=\"Mostrar submódulos de Movimientos\" aria-expanded=\"false\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"CrearLote\" class=\"sidebar-subopcion @(accionActual == \"CrearLote\" ? \"activo\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"TrasladarStock\" class=\"sidebar-subopcion @(accionActual == \"TrasladarStock\" || accionActual == \"RegistrarTraslado\" ? \"activo\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Dosificaciones\" class=\"sidebar-subopcion @(accionActual == \"Dosificaciones\" || accionActual == \"GuardarDosificacionProgramada\" || accionActual == \"ImprimirDosificacion\" ? \"activo\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"EntregaDosificacion\" class=\"sidebar-subopcion @(accionActual == \"EntregaDosificacion\" || accionActual == \"ProcesarEntregaDosificacion\" ? \"activo\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"BajaInventario\" class=\"sidebar-subopcion @(accionActual == \"BajaInventario\" || accionActual == \"RegistrarBajaInventario\" ? \"activo\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"SalidaExtraordinaria\" class=\"sidebar-subopcion @(accionActual == \"SalidaExtraordinaria\" || accionActual == \"RegistrarSalidaExtraordinaria\" ? \"activo\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"HistorialSalidasTurno\" class=\"sidebar-subopcion @(accionActual == \"HistorialSalidasTurno\" || accionActual == \"InformeSalidasTurno\" ? \"activo\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Historial\" class=\"sidebar-subopcion @(accionActual == \"Historial\" ? \"activo\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"HistorialUsuarios\" class=\"sidebar-subopcion @(accionActual == \"HistorialUsuarios\" ? \"activo\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"HistorialProductos\" class=\"sidebar-subopcion @(accionActual == \"HistorialProductos\" ? \"activo\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"HistorialSectores\" class=\"sidebar-subopcion @(accionActual == \"HistorialSectores\" ? \"activo\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"MedicamentosControlados\" class=\"sidebar-modulo-enlace\" title=\"Ir a Medicamentos Controlados\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<button type=\"button\" class=\"sidebar-toggle\" onclick=\"alternarSubmenu(this)\" aria-label=\"Mostrar submódulos de Medicamentos Controlados\" aria-expanded=\"false\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"MedicamentosControlados\" class=\"sidebar-subopcion @(accionActual == \"MedicamentosControlados\" ? \"activo\" : \"\")\">"
+  },
+  {
+    "view": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "kind": "navigation",
+    "control": "<a asp-controller=\"Home\" asp-action=\"Ubicaciones\" class=\"sidebar-modulo-enlace\" title=\"Ir a Sectores\">"
+  }
+]

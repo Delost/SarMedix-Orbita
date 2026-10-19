@@ -1,0 +1,48 @@
+﻿@* SM-ORBITA-METADATA *@
+@{ ViewData["SmScreen"] = "VerificarCodigo"; ViewData["SmFamily"] = "access"; }
+@{
+    ViewData["Title"] = "Verificar código";
+}
+
+<section class="orbit-access"><aside class="orbit-access-brand"><span class="orbit-eyebrow">SARMedix / ÓRBITA 2.0</span><div class="orbit-access-art" aria-hidden="true"><partial name="_OrbitInstrument" /></div><h1>Todo conectado.<br />Mejor cuidado.</h1><p>Tu espacio de trabajo farmacéutico.</p></aside><div class="orbit-access-fields"><h2>Verificar código</h2>
+
+<p>
+    Ingresa el código de 6 dígitos
+    enviado a tu correo electrónico.
+</p>
+
+
+@if (ViewBag.Mensaje != null)
+{
+    <p>
+        @ViewBag.Mensaje
+    </p>
+}
+
+
+<form asp-controller="Home"
+      asp-action="VerificarCodigo"
+      method="post" data-orbit-form="VerificarCodigo">
+
+    <label>
+        Código de recuperación
+    </label>
+
+    <input type="text"
+           name="codigo"
+           maxlength="6"
+           required />
+
+    <button type="submit" data-orbit-action="primary">
+        Verificar código
+    </button>
+
+</form></div></section>
+
+
+<a asp-controller="Home"
+   asp-action="Index" data-orbit-action="secondary">
+
+    Volver al inicio de sesión
+
+</a>

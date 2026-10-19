@@ -1,0 +1,691 @@
+﻿@* SM-ORBITA-METADATA *@
+@{ ViewData["SmScreen"] = "Bienvenida"; ViewData["SmFamily"] = "home"; }
+@{
+    ViewData["Title"] = "Seleccione Módulo";
+
+    ViewData["TituloBarra"] =
+        "Seleccione Módulo";
+
+
+    var permisos =
+        ViewBag.Permisos as List<string>
+        ?? new List<string>();
+
+
+
+    bool permisoUsuarios =
+        permisos.Any(
+            p => p.Equals(
+                "Crear usuario",
+                StringComparison.OrdinalIgnoreCase
+            )
+        )
+        ||
+        permisos.Any(
+            p => p.Equals(
+                "Gestionar usuarios y permisos",
+                StringComparison.OrdinalIgnoreCase
+            )
+        );
+
+
+
+    bool permisoProductos =
+        permisos.Any(
+            p => p.Equals(
+                "Consultar productos",
+                StringComparison.OrdinalIgnoreCase
+            )
+        )
+        ||
+        permisos.Any(
+            p => p.Equals(
+                "Registrar productos",
+                StringComparison.OrdinalIgnoreCase
+            )
+        )
+        ||
+        permisos.Any(
+            p => p.Equals(
+                "Gestionar productos",
+                StringComparison.OrdinalIgnoreCase
+            )
+        );
+
+
+
+    bool permisoMovimientos =
+        permisos.Any(
+            p => p.Equals(
+                "Registrar movimientos",
+                StringComparison.OrdinalIgnoreCase
+            )
+        )
+        ||
+        permisos.Any(
+            p => p.Equals(
+                "Consultar historial",
+                StringComparison.OrdinalIgnoreCase
+            )
+        )
+        ||
+        permisos.Any(
+            p => p.Equals(
+                "Gestionar movimientos",
+                StringComparison.OrdinalIgnoreCase
+            )
+        );
+
+
+
+    bool permisoControlados =
+        permisos.Any(
+            p => p.Equals(
+                "Gestionar medicamentos controlados",
+                StringComparison.OrdinalIgnoreCase
+            )
+        );
+}
+
+
+
+<style>
+
+    /* AJUSTE DE ESTA PANTALLA */
+
+    main[role="main"] {
+        padding:
+            0 !important;
+
+        justify-content:
+            flex-start;
+
+        align-items:
+            stretch;
+    }
+
+
+
+    /* FONDO DE MODULOS */
+
+    .pagina-modulos {
+        width: 100%;
+
+        min-height:
+            calc(100vh - 144px);
+
+        display: flex;
+
+        flex-direction: column;
+
+        background:
+            #f1f5fb;
+    }
+
+
+
+    /* MENSAJE DE NAVEGACION */
+
+    .contenedor-advertencia {
+        width: 100%;
+
+        display: flex;
+
+        justify-content: center;
+
+        position: relative;
+
+        z-index: 20;
+    }
+
+
+    .mensaje-advertencia {
+        width:
+            calc(100% - 80px);
+
+        max-width: 1160px;
+
+        margin-top: 18px;
+
+        padding:
+            13px 18px;
+
+        display: none;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 11px;
+
+        background:
+            #fff3cd;
+
+        border:
+            1px solid
+            #ffda6a;
+
+        border-radius: 9px;
+
+        color: #664d03;
+
+        font-size: 15px;
+
+        font-weight: 600;
+
+        text-align: center;
+
+        box-shadow:
+            0 4px 12px
+            rgba(120, 90, 0, 0.10);
+
+        opacity: 1;
+
+        transition:
+            opacity 0.5s ease;
+    }
+
+
+    .advertencia-icono {
+        width: 25px;
+
+        height: 25px;
+
+        flex-shrink: 0;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background:
+            #ffc107;
+
+        color:
+            #5c4500;
+
+        font-size: 16px;
+
+        font-weight: 800;
+    }
+
+
+
+    /* CONTENIDO */
+
+    .contenido-modulos {
+        width: 100%;
+
+        max-width: 1240px;
+
+        margin:
+            0 auto;
+
+        padding:
+            55px 40px 70px;
+
+        flex: 1;
+    }
+
+
+
+    /* GRILLA */
+
+    .modulos {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 34px;
+    }
+
+
+
+    /* TARJETAS */
+
+    .modulo {
+        position: relative;
+
+        height: 300px;
+
+        overflow: hidden;
+
+        border-radius: 14px;
+
+        background:
+            white;
+
+        box-shadow:
+            0 7px 20px
+            rgba(28, 65, 95, 0.13);
+
+        transition:
+            transform 0.22s ease,
+            box-shadow 0.22s ease;
+
+        text-decoration: none;
+
+        color: inherit;
+    }
+
+
+    .modulo.habilitado:hover {
+        transform:
+            scale(1.035);
+
+        box-shadow:
+            0 15px 32px
+            rgba(15, 91, 150, 0.25);
+
+        z-index: 5;
+
+        cursor: pointer;
+    }
+
+
+    .modulo-titulo {
+        display: none;
+    }
+
+
+
+    /* IMAGENES */
+
+    .modulo-imagen {
+        position: relative;
+
+        width: 100%;
+
+        height: 100%;
+
+        background-size:
+            cover;
+
+        background-position:
+            center center;
+
+        background-repeat:
+            no-repeat;
+    }
+
+
+    .imagen-movimientos {
+        background-position:
+            center 78%;
+    }
+
+
+    .imagen-controlados {
+        background-position:
+            center 78%;
+    }
+
+
+
+    /* RESPONSIVE */
+
+    @@media (max-width: 1200px) {
+
+        .modulos {
+            grid-template-columns:
+                1fr;
+        }
+
+
+        .contenido-modulos {
+            padding:
+                35px 20px;
+        }
+
+
+        .modulo-imagen,
+        .imagen-movimientos,
+        .imagen-controlados {
+            background-position:
+                center top;
+        }
+
+
+        .mensaje-advertencia {
+            width:
+                calc(100% - 40px);
+        }
+
+    }
+
+
+
+    @@media (max-width: 600px) {
+
+        .contenido-modulos {
+            padding:
+                25px 15px;
+        }
+
+
+        .modulo {
+            height: 230px;
+        }
+
+
+        .modulos {
+            gap: 20px;
+        }
+
+    }
+
+</style>
+
+
+
+<div class="pagina-modulos">
+
+
+    <!-- MENSAJE AL INTENTAR VOLVER -->
+
+    <div class="contenedor-advertencia">
+
+
+        <div id="mensajeNavegacion"
+             class="mensaje-advertencia">
+
+
+            <span class="advertencia-icono">
+
+                !
+
+            </span>
+
+
+            <span>
+
+                Debe cerrar sesión para volver
+                a la pantalla de inicio de sesión.
+
+            </span>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- MODULOS -->
+
+    <section class="contenido-modulos">
+        <div class="sm-intro-line">
+            <span class="sm-eyebrow">TU ESPACIO DE TRABAJO</span>
+            <span class="sm-context-label">Gestión farmacéutica / Inicio</span>
+        </div>
+        <section class="sm-hero" aria-labelledby="sm-welcome-title">
+            <div class="sm-aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="sm-hero-copy">
+                <span class="sm-hero-label"><span></span> SARMedix · Conectados al cuidado</span>
+                <h1 id="sm-welcome-title">Todo conectado.<br /><em>Mejor cuidado.</em></h1>
+                <p>Personas, medicamentos y movimientos.<br />Un mismo espacio para cuidar cada detalle.</p>
+                <div class="sm-hero-foot"><span class="sm-line"></span> Precisión en cada paso.</div>
+                <div class="sm-principles" aria-label="Principios de SARMedix"><span>01 <strong>Conectar</strong></span><span>02 <strong>Controlar</strong></span><span>03 <strong>Cuidar</strong></span></div>
+            </div>
+            <partial name="_OrbitalMark" />
+            <button class="sm-motion-toggle" type="button" aria-pressed="false" aria-label="Pausar efectos ambientales" data-orbit-action="secondary">Pausar efectos</button>
+        </section>
+        <div class="sm-section-heading"><div><span class="sm-eyebrow">EXPLORA SARMedix</span><h2>¿Por dónde empezamos?</h2></div><p>Selecciona un módulo para continuar.</p></div>
+
+
+        <div class="modulos">
+
+
+
+            <!-- USUARIOS Y PERMISOS -->
+
+            @if (permisoUsuarios)
+            {
+                <a asp-controller="Home"
+                   asp-action="UsuariosPermisos"
+                   class="modulo habilitado sm-module-people" data-orbit-action="navigation">
+                    <div class="sm-module-top" aria-hidden="true"><span class="sm-module-icon"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-users" /></svg></span><span>01 / EQUIPO</span><span class="sm-module-arrow">↗</span></div>
+
+
+                    <div class="modulo-titulo">
+
+                        Usuarios y Permisos
+                        <span class="sm-module-description">Personas y accesos, en perfecta sintonía.</span>
+
+                    </div>
+
+
+                    <div class="modulo-imagen"
+                         style="
+                            background-image:
+                            url('/images/modulos/usuarios-permisos.jpg');
+                         ">
+
+                    </div>
+
+
+                </a>
+            }
+
+
+
+            <!-- PRODUCTOS -->
+
+            @if (permisoProductos)
+            {
+                <a asp-controller="Home"
+                   asp-action="Productos"
+                   class="modulo habilitado sm-module-products" data-orbit-action="navigation">
+                    <div class="sm-module-top" aria-hidden="true"><span class="sm-module-icon"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-products" /></svg></span><span>02 / EXISTENCIAS</span><span class="sm-module-arrow">↗</span></div>
+
+
+                    <div class="modulo-titulo">
+
+                        Productos
+                        <span class="sm-module-description">Cada producto. Cada lote. Todo en su lugar.</span>
+
+                    </div>
+
+
+                    <div class="modulo-imagen"
+                         style="
+                            background-image:
+                            url('/images/modulos/productos.jpg');
+                         ">
+
+                    </div>
+
+
+                </a>
+            }
+
+
+
+            <!-- MOVIMIENTOS E HISTORIAL -->
+
+            @if (permisoMovimientos)
+            {
+                <a asp-controller="Home"
+                   asp-action="MovimientoHistorial"
+                   class="modulo habilitado sm-module-movements" data-orbit-action="navigation">
+                    <div class="sm-module-top" aria-hidden="true"><span class="sm-module-icon"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-movements" /></svg></span><span>03 / TRAZABILIDAD</span><span class="sm-module-arrow">↗</span></div>
+
+
+                    <div class="modulo-titulo">
+
+                        Movimientos e Historial
+                        <span class="sm-module-description">La historia completa de cada movimiento.</span>
+
+                    </div>
+
+
+                    <div class="
+                        modulo-imagen
+                        imagen-movimientos"
+                         style="
+                            background-image:
+                            url('/images/modulos/movimientos.jpg');
+                         ">
+
+                    </div>
+
+
+                </a>
+            }
+
+
+
+            <!-- MEDICAMENTOS CONTROLADOS -->
+
+            @if (permisoControlados)
+            {
+                <a asp-controller="Home"
+                   asp-action="MedicamentosControlados"
+                   class="modulo habilitado sm-module-controlled" data-orbit-action="navigation">
+                    <div class="sm-module-top" aria-hidden="true"><span class="sm-module-icon"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-controlled" /></svg></span><span>04 / CONTROL</span><span class="sm-module-arrow">↗</span></div>
+
+
+                    <div class="modulo-titulo">
+
+                        Medicamentos Controlados
+                        <span class="sm-module-description">Control dedicado para un cuidado preciso.</span>
+
+                    </div>
+
+
+                    <div class="
+                        modulo-imagen
+                        imagen-controlados"
+                         style="
+                            background-image:
+                            url('/images/modulos/controlados.jpg');
+                         ">
+
+                    </div>
+
+
+                </a>
+            }
+
+
+        </div>
+
+
+        <div class="sm-workspace-note"><span aria-hidden="true">✧</span> Tu espacio se adapta a los permisos de tu perfil.</div>
+    </section>
+
+
+</div>
+
+
+
+<script>
+
+    let temporizadorAdvertencia;
+
+
+
+    // MOSTRAR MENSAJE AMARILLO
+
+    function mostrarAdvertenciaNavegacion() {
+
+        const mensaje =
+            document.getElementById(
+                "mensajeNavegacion"
+            );
+
+
+        if (!mensaje) {
+
+            return;
+
+        }
+
+
+        mensaje.style.display =
+            "flex";
+
+
+        mensaje.style.opacity =
+            "1";
+
+
+        clearTimeout(
+            temporizadorAdvertencia
+        );
+
+
+        temporizadorAdvertencia =
+            setTimeout(
+                function () {
+
+                    mensaje.style.opacity =
+                        "0";
+
+
+                    setTimeout(
+                        function () {
+
+                            mensaje.style.display =
+                                "none";
+
+                        },
+                        500
+                    );
+
+                },
+                4000
+            );
+
+    }
+
+
+
+    // IMPEDIR VOLVER AL LOGIN
+
+    history.pushState(
+        null,
+        "",
+        window.location.href
+    );
+
+
+    window.addEventListener(
+        "popstate",
+        function () {
+
+            history.pushState(
+                null,
+                "",
+                window.location.href
+            );
+
+
+            mostrarAdvertenciaNavegacion();
+
+        }
+    );
+
+
+
+    // CONTROL DE CACHE DEL NAVEGADOR
+
+    window.addEventListener(
+        "pageshow",
+        function (evento) {
+
+            if (evento.persisted) {
+
+                window.location.reload();
+
+            }
+
+        }
+    );
+
+</script>

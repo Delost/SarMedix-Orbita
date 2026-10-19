@@ -1,0 +1,284 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/css/site.css"><link rel="stylesheet" href="/css/sidebar.css"><link rel="stylesheet" href="/css/sarmedix-ui.css"><link rel="stylesheet" href="/css/sarmedix-orbita-v2.css"><link rel="stylesheet" href="/css/sarmedix-system.css"><link rel="stylesheet" href="/css/sarmedix-structural.css"><link rel="stylesheet" href="/css/sarmedix-refinement.css"><body class="sm-app" data-sm-screen="EditarUsuario" data-sm-family="users"><div style="padding:10px;background:#fff;color:#385575;font:13px system-ui">Vista estática sin datos · EditarUsuario · Formularios desconectados</div><main role="main" id="sm-main" style="width:100%;padding:24px;display:block">﻿
+
+
+
+
+<header class="orbit-editor-heading"><span class="orbit-eyebrow">ÓRBITA / PERSONAS</span><h1>Editar usuario</h1></header>
+
+<form
+     
+      method="post"
+      class="formulario-principal" data-orbit-form="EditarUsuario">
+
+    <input
+           type="hidden" />
+
+
+    <div class="orbit-identity-grid"><fieldset><legend>01 · Identidad personal</legend><div class="grupo-campo">
+
+        <label for="nombre">
+            Nombre
+        </label>
+
+        <input
+               autocomplete="off" />
+
+    </div>
+
+
+    <div class="grupo-campo">
+
+        <label for="apellido">
+            Apellido
+        </label>
+
+        <input
+               autocomplete="off" />
+
+    </div>
+
+
+    <div class="grupo-campo">
+
+        <label for="email">
+            Correo electrónico
+        </label>
+
+        <input
+               type="email"
+               autocomplete="off" />
+
+    </div>
+
+
+    <div class="grupo-campo">
+
+        <label for="rut">
+            RUT
+        </label>
+
+        <input
+               maxlength="10"
+               autocomplete="off"
+               />
+
+    </div>
+
+
+    </fieldset><fieldset class="orbit-credentials"><legend>02 · Perfil de acceso</legend><div class="grupo-campo">
+
+        <label for="id_rol">
+            Rol
+        </label>
+
+        <select>
+
+            <option value="1">
+                Administrador
+            </option>
+
+            <option value="2">
+                TENS
+            </option>
+
+            <option value="3">
+                Enfermera
+            </option>
+
+            <option value="4">
+                Auxiliar
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div class="grupo-campo">
+
+        <label for="nombre_usuario">
+            Nombre de usuario
+        </label>
+
+        <input
+               autocomplete="off" />
+
+    </div>
+
+
+    </fieldset></div><div class="orbit-form-actions"><button type="submit" data-orbit-action="primary">
+
+        Actualizar usuario
+
+    </button>
+
+
+    <div class="contenedor-volver">
+
+        <a
+          
+           class="btn-volver" data-orbit-action="secondary">
+
+            ← Volver al listado
+
+        </a>
+
+    </div>
+
+</div></form>
+
+
+
+
+
+<style>
+
+    .grupo-campo {
+        width: 100%;
+        margin-bottom: 18px;
+    }
+
+
+    .grupo-campo label {
+        display: block;
+        width: 100%;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+
+
+    /* INPUTS */
+
+    .formulario-principal input:not([type="hidden"]) {
+        display: block !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        height: 54px !important;
+
+        padding: 0 16px !important;
+
+        margin: 0 !important;
+
+        border: 1px solid #b8cfe0 !important;
+        border-radius: 10px !important;
+
+        background-color: #ffffff !important;
+
+        font-size: 16px !important;
+        font-family: inherit !important;
+
+        box-sizing: border-box !important;
+
+        outline: none !important;
+
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+
+    /* SELECT DEL ROL */
+
+    .formulario-principal select {
+        display: block !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        height: 54px !important;
+
+        padding: 0 16px !important;
+
+        margin: 0 !important;
+
+        border: 1px solid #b8cfe0 !important;
+        border-radius: 10px !important;
+
+        background-color: #ffffff !important;
+
+        font-size: 16px !important;
+        font-family: inherit !important;
+
+        box-sizing: border-box !important;
+
+        outline: none !important;
+    }
+
+
+    /* FOCUS */
+
+    .formulario-principal input:not([type="hidden"]):focus,
+    .formulario-principal select:focus {
+        border-color: #1198a5 !important;
+
+        box-shadow:
+            0 0 0 3px
+            rgba(17, 152, 165, 0.15) !important;
+    }
+
+
+    /* BOTON ACTUALIZAR */
+
+    .formulario-principal button[type="submit"] {
+        width: 100%;
+
+        min-height: 48px;
+
+        border: none;
+
+        border-radius: 8px;
+
+        background-color: #1198a5;
+
+        color: white;
+
+        font-size: 16px;
+        font-weight: 600;
+
+        cursor: pointer;
+    }
+
+
+    .formulario-principal button[type="submit"]:hover {
+        background-color: #0d8490;
+    }
+
+
+    /* BOTON VOLVER */
+
+    .contenedor-volver {
+        display: flex;
+        justify-content: center;
+
+        margin-top: 25px;
+        margin-bottom: 20px;
+    }
+
+
+    .btn-volver {
+        display: inline-block;
+
+        padding: 12px 22px;
+
+        background-color: #1198a5;
+
+        color: white;
+
+        border-radius: 7px;
+
+        text-decoration: none;
+
+        font-weight: 600;
+    }
+
+
+    .btn-volver:hover {
+        background-color: #0d8490;
+        color: white;
+    }
+
+</style>
+
+
+</main><link rel="stylesheet" href="/css/sarmedix-global.css"><script>document.addEventListener("submit",e=>e.preventDefault());document.querySelectorAll("a").forEach(a=>a.removeAttribute("href"));</script></body></html>

@@ -1,0 +1,263 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/css/site.css"><link rel="stylesheet" href="/css/sidebar.css"><link rel="stylesheet" href="/css/sarmedix-ui.css"><link rel="stylesheet" href="/css/sarmedix-orbita-v2.css"><link rel="stylesheet" href="/css/sarmedix-system.css"><link rel="stylesheet" href="/css/sarmedix-structural.css"><link rel="stylesheet" href="/css/sarmedix-refinement.css"><body class="sm-app" data-sm-screen="NuevaContrasena" data-sm-family="access"><div style="padding:10px;background:#fff;color:#385575;font:13px system-ui">Vista estática sin datos · NuevaContrasena · Formularios desconectados</div><main role="main" id="sm-main" style="width:100%;padding:24px;display:block">﻿
+
+
+
+<div class="contenedor-recuperacion">
+
+    <aside class="orbit-access-brand"><span class="orbit-eyebrow">ÓRBITA / ACCESO</span><h1>Un nuevo acceso.<br />El mismo cuidado.</h1><div class="orbit-access-art" aria-hidden="true">@* Decorative orbital instrument; no clinical status or simulated measurements. *@
+<div class="sm-orbit-instrument" aria-hidden="true">
+    <span class="sm-instrument-halo"></span>
+    <span class="sm-instrument-ring sm-ring-outer"></span>
+    <span class="sm-instrument-ring sm-ring-middle"></span>
+    <span class="sm-instrument-ring sm-ring-inner"></span>
+    <span class="sm-instrument-axis"></span>
+    <span class="sm-instrument-satellite"></span>
+</div>
+</div></aside><div class="tarjeta-recuperacion">
+
+        <h2>
+            Nueva contraseña
+        </h2>
+
+        <p class="subtitulo">
+            Ingresa y confirma tu nueva contraseña.
+        </p>
+
+
+        
+
+
+        <form
+             
+              method="post"
+              class="formulario-recuperacion" data-orbit-form="NuevaContrasena">
+
+            <div class="grupo-campo">
+
+                <label for="nuevaContrasena">
+                    Nueva contraseña
+                </label>
+
+                <input type="password"
+                       name="nuevaContrasena"
+                       id="nuevaContrasena"
+                       placeholder="Ingresa tu nueva contraseña"
+                       required />
+
+            </div>
+
+
+            <div class="grupo-campo">
+
+                <label for="confirmarContrasena">
+                    Confirmar contraseña
+                </label>
+
+                <input type="password"
+                       name="confirmarContrasena"
+                       id="confirmarContrasena"
+                       placeholder="Repite tu nueva contraseña"
+                       required />
+
+            </div>
+
+
+            <button type="submit" data-orbit-action="primary">
+                Cambiar contraseña
+            </button>
+
+        </form>
+
+
+        <a
+          
+           class="volver-login" data-orbit-action="secondary">
+
+            ← Volver al inicio de sesión
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<style>
+
+    .contenedor-recuperacion {
+        min-height: 75vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 30px 20px;
+    }
+
+
+    .tarjeta-recuperacion {
+        width: 100%;
+        max-width: 480px;
+
+        background-color: rgba(255, 255, 255, 0.96);
+
+        border-radius: 18px;
+
+        padding: 35px;
+
+        box-shadow:
+            0 12px 35px
+            rgba(0, 59, 100, 0.18);
+
+        text-align: center;
+    }
+
+
+    .tarjeta-recuperacion h2 {
+        margin: 0;
+
+        color: #003b64;
+
+        font-size: 30px;
+        font-weight: 700;
+    }
+
+
+    .subtitulo {
+        margin-top: 10px;
+        margin-bottom: 28px;
+
+        color: #60758a;
+
+        font-size: 16px;
+    }
+
+
+    .grupo-campo {
+        width: 100%;
+
+        margin-bottom: 20px;
+
+        text-align: left;
+    }
+
+
+    .grupo-campo label {
+        display: block;
+
+        margin-bottom: 8px;
+
+        color: #003b64;
+
+        font-weight: 600;
+    }
+
+
+    .grupo-campo input {
+        width: 100%;
+        height: 54px;
+
+        padding: 0 16px;
+
+        border:
+            1px solid #b8cfe0;
+
+        border-radius: 10px;
+
+        background-color: #ffffff;
+
+        font-size: 16px;
+
+        box-sizing: border-box;
+
+        outline: none;
+
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+
+    .grupo-campo input:focus {
+        border-color: #1198a5;
+
+        box-shadow:
+            0 0 0 3px
+            rgba(17, 152, 165, 0.15);
+    }
+
+
+    .formulario-recuperacion button {
+        width: 100%;
+
+        min-height: 50px;
+
+        margin-top: 5px;
+
+        border: none;
+
+        border-radius: 9px;
+
+        background-color: #1198a5;
+
+        color: white;
+
+        font-size: 16px;
+        font-weight: 600;
+
+        cursor: pointer;
+
+        transition:
+            background-color 0.2s ease,
+            transform 0.1s ease;
+    }
+
+
+    .formulario-recuperacion button:hover {
+        background-color: #0d8490;
+    }
+
+
+    .formulario-recuperacion button:active {
+        transform: scale(0.99);
+    }
+
+
+    .mensaje-error {
+        width: 100%;
+
+        margin-bottom: 20px;
+
+        padding: 12px 15px;
+
+        border:
+            1px solid #f5c2c7;
+
+        border-radius: 8px;
+
+        background-color: #f8d7da;
+
+        color: #842029;
+
+        box-sizing: border-box;
+
+        font-weight: 600;
+    }
+
+
+    .volver-login {
+        display: inline-block;
+
+        margin-top: 24px;
+
+        color: #0d8490;
+
+        text-decoration: none;
+
+        font-weight: 600;
+    }
+
+
+    .volver-login:hover {
+        text-decoration: underline;
+    }
+
+</style></main><link rel="stylesheet" href="/css/sarmedix-global.css"><script>document.addEventListener("submit",e=>e.preventDefault());document.querySelectorAll("a").forEach(a=>a.removeAttribute("href"));</script></body></html>

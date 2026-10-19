@@ -1,0 +1,1091 @@
+﻿@using Microsoft.AspNetCore.Http
+
+@{
+    string permisosTexto =
+        Context.Session.GetString("Permisos") ?? "";
+
+    var permisos =
+        permisosTexto
+            .Split(
+                '|',
+                StringSplitOptions.RemoveEmptyEntries
+            )
+            .ToList();
+
+
+    /*
+        FUNCION PARA COMPROBAR PERMISOS
+    */
+
+    Func<string, bool> TienePermiso =
+        permiso =>
+            permisos.Any(
+                p => p.Equals(
+                    permiso,
+                    StringComparison.OrdinalIgnoreCase
+                )
+            );
+
+
+
+    /* =========================================================
+       PERMISOS DE USUARIOS
+       ========================================================= */
+
+    bool puedeCrearUsuario =
+        TienePermiso(
+            "Crear usuario"
+        );
+
+
+    bool puedeGestionarUsuarios =
+        TienePermiso(
+            "Gestionar usuarios y permisos"
+        );
+
+
+    bool mostrarModuloUsuarios =
+        puedeCrearUsuario
+        ||
+        puedeGestionarUsuarios;
+
+
+
+    /* =========================================================
+       PERMISOS DE PRODUCTOS
+       ========================================================= */
+
+    bool puedeConsultarProductos =
+        TienePermiso(
+            "Consultar productos"
+        );
+
+
+    bool puedeRegistrarProductos =
+        TienePermiso(
+            "Registrar productos"
+        );
+
+
+    bool mostrarModuloProductos =
+        puedeConsultarProductos
+        ||
+        puedeRegistrarProductos;
+
+
+
+    /* =========================================================
+       PERMISOS DE MOVIMIENTOS E HISTORIAL
+       ========================================================= */
+
+    bool puedeConsultarHistorial =
+        TienePermiso(
+            "Consultar historial"
+        );
+
+
+    bool puedeRegistrarEntradas =
+        TienePermiso(
+            "Registrar entradas de inventario"
+        );
+
+
+    bool puedeTrasladarStock =
+        TienePermiso(
+            "Trasladar stock"
+        );
+
+
+    bool puedePrepararDosificaciones =
+        TienePermiso(
+            "Preparar dosificaciones"
+        );
+
+
+    bool puedeEntregarDosificaciones =
+        TienePermiso(
+            "Entregar dosificaciones"
+        );
+
+
+    bool puedeRegistrarBajas =
+        TienePermiso(
+            "Registrar bajas de inventario"
+        );
+
+
+    bool puedeRegistrarSalidasExtraordinarias =
+        TienePermiso(
+            "Registrar salidas extraordinarias"
+        );
+
+
+
+    /* =========================================================
+UBICACIONES - SOLO ADMINISTRADOR
+========================================================= */
+
+    string rolActual =
+        Context.Session.GetString("Rol") ?? "";
+
+    bool puedeGestionarUbicaciones =
+        rolActual.Equals(
+            "Administrador",
+            StringComparison.OrdinalIgnoreCase
+        );
+
+    /* =========================================================
+       MODULOS INVENTARIO Y MOVIMIENTOS
+       ========================================================= */
+
+    bool mostrarModuloInventario =
+        puedeConsultarProductos
+        ||
+        puedeRegistrarProductos;
+
+
+    bool mostrarModuloMovimientos =
+        puedeRegistrarEntradas
+        ||
+        puedeTrasladarStock
+        ||
+        puedePrepararDosificaciones
+        ||
+        puedeEntregarDosificaciones
+        ||
+        puedeRegistrarBajas
+        ||
+        puedeRegistrarSalidasExtraordinarias
+        ||
+        puedeConsultarHistorial;
+
+
+
+    /* =========================================================
+       PERMISOS DE MEDICAMENTOS CONTROLADOS
+       ========================================================= */
+
+    bool puedeGestionarControlados =
+        TienePermiso(
+            "Gestionar medicamentos controlados"
+        );
+
+
+    bool puedeVerSalidasTurno =
+        puedeEntregarDosificaciones
+        ||
+        puedeGestionarControlados
+        ||
+        puedeRegistrarSalidasExtraordinarias;
+
+
+
+    /* =========================================================
+       SABER EN QUE PAGINA ESTAMOS
+       ========================================================= */
+
+    string accionActual =
+        ViewContext
+            .RouteData
+            .Values["action"]
+            ?.ToString()
+        ?? "";
+
+
+
+    /* =========================================================
+       SABER QUE MODULO ESTA ACTIVO
+       ========================================================= */
+
+    bool usuariosActivo =
+        accionActual == "UsuariosPermisos"
+        ||
+        accionActual == "CrearUsuario"
+        ||
+        accionActual == "Usuarios"
+        ||
+        accionActual == "EditarUsuario"
+        ||
+        accionActual == "ListadoEliminarUsuarios"
+        ||
+        accionActual == "RolesPermisos"
+        ||
+        accionActual == "CrearRol"
+        ||
+        accionActual == "EditarRol"
+        ||
+        accionActual == "RolesInactivos";
+
+
+    bool productosActivo =
+        accionActual == "Productos"
+        ||
+        accionActual == "CrearProducto"
+        ||
+        accionActual == "ListadoProductos2"
+        ||
+        accionActual == "EditarProducto";
+
+
+    bool inventarioActivo =
+        accionActual == "Lotes"
+        ||
+        accionActual == "EditarLote";
+
+
+    bool sectoresActivo =
+        accionActual == "Ubicaciones"
+        ||
+        accionActual == "InventarioUbicacion";
+
+
+    bool movimientosActivo =
+        accionActual == "CrearLote"
+        ||
+        accionActual == "TrasladarStock"
+        ||
+        accionActual == "RegistrarTraslado"
+        ||
+        accionActual == "Dosificaciones"
+        ||
+        accionActual == "GuardarDosificacionProgramada"
+        ||
+        accionActual == "ImprimirDosificacion"
+        ||
+        accionActual == "EntregaDosificacion"
+        ||
+        accionActual == "ProcesarEntregaDosificacion"
+        ||
+        accionActual == "BajaInventario"
+        ||
+        accionActual == "RegistrarBajaInventario"
+        ||
+        accionActual == "SalidaExtraordinaria"
+        ||
+        accionActual == "RegistrarSalidaExtraordinaria"
+        ||
+        accionActual == "HistorialSectores"
+        ||
+        accionActual == "HistorialSalidasTurno"
+        ||
+        accionActual == "InformeSalidasTurno"
+        ||
+        accionActual == "MovimientoHistorial"
+        ||
+        accionActual == "Historial"
+        ||
+        accionActual == "HistorialUsuarios"
+        ||
+        accionActual == "HistorialProductos";
+
+
+    bool controladosActivo =
+        accionActual == "MedicamentosControlados"
+        ||
+        accionActual == "RegistrarMovimientoControlado";
+}
+
+
+
+<aside class="sidebar">
+
+
+    <!-- TITULO -->
+
+    <div class="sidebar-titulo">
+
+        <span class="sm-nav-eyebrow">ESPACIO DE TRABAJO</span>
+        <span>Gestión clínica</span>
+
+    </div>
+
+
+
+    <!-- MENU -->
+
+    <nav class="sidebar-menu" aria-label="Módulos de SARMedix">
+
+
+
+        <!-- =====================================================
+             USUARIOS Y PERMISOS
+             ===================================================== -->
+
+        @if (mostrarModuloUsuarios)
+        {
+            <div class="sidebar-grupo">
+
+
+                <div class="sidebar-cabecera @(usuariosActivo ? "activo" : "")">
+
+
+                    <a asp-controller="Home"
+                       asp-action="UsuariosPermisos"
+                       class="sidebar-modulo-enlace"
+                       title="Ir a Usuarios y Permisos" data-orbit-action="navigation">
+
+
+                        <span class="sidebar-icono"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-users" /></svg></span>
+
+
+                        <span class="sidebar-texto">
+
+                            Usuarios y Permisos
+
+                        </span>
+
+
+                    </a>
+
+
+
+                    <button type="button"
+                            class="sidebar-toggle"
+                            onclick="alternarSubmenu(this)"
+                            aria-label="Mostrar submódulos de Usuarios y Permisos"
+                            aria-expanded="false" data-orbit-action="navigation">
+
+
+                        <span class="sidebar-flecha">
+
+                            ▼
+
+                        </span>
+
+
+                    </button>
+
+
+                </div>
+
+
+
+                <div class="sidebar-submenu">
+
+
+                    @if (puedeCrearUsuario)
+                    {
+                        <a asp-controller="Home"
+                           asp-action="CrearUsuario"
+                           class="sidebar-subopcion @(accionActual == "CrearUsuario" ? "activo" : "")" data-orbit-action="navigation">
+
+
+                            <span class="sidebar-subicono">
+
+                                ＋
+
+                            </span>
+
+
+                            <span>
+
+                                Crear usuario
+
+                            </span>
+
+
+                        </a>
+                    }
+
+
+
+                    @if (puedeGestionarUsuarios)
+                    {
+                        <a asp-controller="Home"
+                           asp-action="Usuarios"
+                           class="sidebar-subopcion @(accionActual == "Usuarios" || accionActual == "EditarUsuario" ? "activo" : "")" data-orbit-action="navigation">
+
+
+                            <span class="sidebar-subicono">
+
+                                ≡
+
+                            </span>
+
+
+                            <span>
+
+                                Listado de usuarios
+
+                            </span>
+
+
+                        </a>
+
+
+
+                        <a asp-controller="Home"
+                           asp-action="RolesPermisos"
+                           class="sidebar-subopcion @(accionActual == "RolesPermisos" || accionActual == "CrearRol" || accionActual == "EditarRol" || accionActual == "RolesInactivos" ? "activo" : "")" data-orbit-action="navigation">
+
+
+                            <span class="sidebar-subicono">
+
+                                ⚙
+
+                            </span>
+
+
+                            <span>
+
+                                Roles y permisos
+
+                            </span>
+
+
+                        </a>
+
+
+
+                        <a asp-controller="Home"
+                           asp-action="ListadoEliminarUsuarios"
+                           class="sidebar-subopcion @(accionActual == "ListadoEliminarUsuarios" ? "activo" : "")" data-orbit-action="navigation">
+
+
+                            <span class="sidebar-subicono">
+
+                                ○
+
+                            </span>
+
+
+                            <span>
+
+                                Usuarios inactivos
+
+                            </span>
+
+
+                        </a>
+                    }
+
+
+                </div>
+
+
+            </div>
+        }
+
+
+
+        <!-- =====================================================
+             PRODUCTOS
+             ===================================================== -->
+
+        @if (mostrarModuloProductos)
+        {
+            <div class="sidebar-grupo">
+
+                <div class="sidebar-cabecera @(productosActivo ? "activo" : "")">
+
+                    <a asp-controller="Home"
+                       asp-action="Productos"
+                       class="sidebar-modulo-enlace"
+                       title="Ir a Productos" data-orbit-action="navigation">
+
+                        <span class="sidebar-icono"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-products" /></svg></span>
+
+                        <span class="sidebar-texto">
+                            Productos
+                        </span>
+
+                    </a>
+
+                    <button type="button"
+                            class="sidebar-toggle"
+                            onclick="alternarSubmenu(this)"
+                            aria-label="Mostrar submódulos de Productos"
+                            aria-expanded="false" data-orbit-action="navigation">
+
+                        <span class="sidebar-flecha">▼</span>
+
+                    </button>
+
+                </div>
+
+                <div class="sidebar-submenu">
+
+                    @if (puedeRegistrarProductos)
+                    {
+                        <a asp-controller="Home"
+                           asp-action="CrearProducto"
+                           class="sidebar-subopcion @(accionActual == "CrearProducto" ? "activo" : "")" data-orbit-action="navigation">
+
+                            <span class="sidebar-subicono">＋</span>
+
+                            <span>Registrar producto</span>
+
+                        </a>
+                    }
+
+                    @if (puedeConsultarProductos)
+                    {
+                        <a asp-controller="Home"
+                           asp-action="ListadoProductos2"
+                           class="sidebar-subopcion @(accionActual == "ListadoProductos2" || accionActual == "EditarProducto" ? "activo" : "")" data-orbit-action="navigation">
+
+                            <span class="sidebar-subicono">≡</span>
+
+                            <span>Listado de productos</span>
+
+                        </a>
+                    }
+
+                </div>
+
+            </div>
+        }
+
+
+
+        <!-- =====================================================
+             INVENTARIO
+             ===================================================== -->
+
+        @if (mostrarModuloInventario)
+        {
+            <div class="sidebar-grupo">
+
+                <div class="sidebar-cabecera @(inventarioActivo ? "activo" : "")">
+
+                    <a asp-controller="Home"
+                       asp-action="Lotes"
+                       class="sidebar-modulo-enlace"
+                       title="Ir a Inventario" data-orbit-action="navigation">
+
+                        <span class="sidebar-icono"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-inventory" /></svg></span>
+
+                        <span class="sidebar-texto">
+                            Inventario
+                        </span>
+
+                    </a>
+
+                    <button type="button"
+                            class="sidebar-toggle"
+                            onclick="alternarSubmenu(this)"
+                            aria-label="Mostrar submódulos de Inventario"
+                            aria-expanded="false" data-orbit-action="navigation">
+
+                        <span class="sidebar-flecha">▼</span>
+
+                    </button>
+
+                </div>
+
+                <div class="sidebar-submenu">
+
+                    @if (puedeConsultarProductos)
+                    {
+                        <a asp-controller="Home"
+                           asp-action="Lotes"
+                           class="sidebar-subopcion @(accionActual == "Lotes" || accionActual == "EditarLote" ? "activo" : "")" data-orbit-action="navigation">
+
+                            <span class="sidebar-subicono"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-inventory" /></svg></span>
+
+                            <span>Stock y lotes</span>
+
+                        </a>
+                    }
+
+                </div>
+
+            </div>
+        }
+
+
+
+        <!-- =====================================================
+             MOVIMIENTOS
+             ===================================================== -->
+
+        @if (mostrarModuloMovimientos)
+        {
+            <div class="sidebar-grupo">
+
+
+                <div class="sidebar-cabecera @(movimientosActivo ? "activo" : "")">
+
+
+                    <!--
+                        EL NOMBRE DEL MODULO LLEVA AL MENU
+                        DE MOVIMIENTOS E HISTORIAL.
+                    -->
+
+                    <a asp-controller="Home"
+                       asp-action="MovimientoHistorial"
+                       class="sidebar-modulo-enlace"
+                       title="Ir a Movimientos" data-orbit-action="navigation">
+
+
+                        <span class="sidebar-icono"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-movements" /></svg></span>
+
+
+                        <span class="sidebar-texto">
+
+                            Movimientos
+
+                        </span>
+
+
+                    </a>
+
+
+
+                    <!--
+                        LA FLECHA SOLO ABRE Y CIERRA
+                        LOS HISTORIALES.
+                    -->
+
+                    <button type="button"
+                            class="sidebar-toggle"
+                            onclick="alternarSubmenu(this)"
+                            aria-label="Mostrar submódulos de Movimientos"
+                            aria-expanded="false" data-orbit-action="navigation">
+
+
+                        <span class="sidebar-flecha">
+
+                            ▼
+
+                        </span>
+
+
+                    </button>
+
+
+                </div>
+
+
+
+                <div class="sidebar-submenu">
+
+                    @if (puedeRegistrarEntradas)
+                    {
+                        <a asp-controller="Home"
+                           asp-action="CrearLote"
+                           class="sidebar-subopcion @(accionActual == "CrearLote" ? "activo" : "")" data-orbit-action="navigation">
+
+                            <span class="sidebar-subicono">⇩</span>
+
+                            <span>Registrar entrada</span>
+
+                        </a>
+                    }
+
+
+                    @if (puedeTrasladarStock)
+                    {
+                        <a asp-controller="Home"
+                           asp-action="TrasladarStock"
+                           class="sidebar-subopcion @(accionActual == "TrasladarStock" || accionActual == "RegistrarTraslado" ? "activo" : "")" data-orbit-action="navigation">
+
+                            <span class="sidebar-subicono">⇄</span>
+
+                            <span>Trasladar stock</span>
+
+                        </a>
+                    }
+
+
+                    @if (puedePrepararDosificaciones)
+                    {
+                        <a asp-controller="Home"
+                           asp-action="Dosificaciones"
+                           class="sidebar-subopcion @(accionActual == "Dosificaciones" || accionActual == "GuardarDosificacionProgramada" || accionActual == "ImprimirDosificacion" ? "activo" : "")" data-orbit-action="navigation">
+
+                            <span class="sidebar-subicono">🖨</span>
+
+                            <span>Dosificaciones</span>
+
+                        </a>
+                    }
+
+
+                    @if (puedeEntregarDosificaciones)
+                    {
+                        <a asp-controller="Home"
+                           asp-action="EntregaDosificacion"
+                           class="sidebar-subopcion @(accionActual == "EntregaDosificacion" || accionActual == "ProcesarEntregaDosificacion" ? "activo" : "")" data-orbit-action="navigation">
+
+                            <span class="sidebar-subicono">▥</span>
+
+                            <span>Entrega por escáner</span>
+
+                        </a>
+                    }
+
+
+                    @if (puedeRegistrarBajas)
+                    {
+                        <a asp-controller="Home"
+                           asp-action="BajaInventario"
+                           class="sidebar-subopcion @(accionActual == "BajaInventario" || accionActual == "RegistrarBajaInventario" ? "activo" : "")" data-orbit-action="navigation">
+
+                            <span class="sidebar-subicono">🗑</span>
+
+                            <span>Baja / merma</span>
+
+                        </a>
+                    }
+
+
+                    @if (puedeRegistrarSalidasExtraordinarias)
+                    {
+                        <a asp-controller="Home"
+                           asp-action="SalidaExtraordinaria"
+                           class="sidebar-subopcion @(accionActual == "SalidaExtraordinaria" || accionActual == "RegistrarSalidaExtraordinaria" ? "activo" : "")" data-orbit-action="navigation">
+
+                            <span class="sidebar-subicono">↗</span>
+
+                            <span>Salida extraordinaria</span>
+
+                        </a>
+                    }
+
+
+                    @if (puedeVerSalidasTurno)
+                    {
+                        <a asp-controller="Home"
+                           asp-action="HistorialSalidasTurno"
+                           class="sidebar-subopcion @(accionActual == "HistorialSalidasTurno" || accionActual == "InformeSalidasTurno" ? "activo" : "")" data-orbit-action="navigation">
+
+                            <span class="sidebar-subicono">📊</span>
+
+                            <span>Salidas del turno</span>
+
+                        </a>
+                    }
+
+
+                    @if (puedeConsultarHistorial)
+                    {
+                        <a asp-controller="Home"
+                           asp-action="Historial"
+                       class="sidebar-subopcion @(accionActual == "Historial" ? "activo" : "")" data-orbit-action="navigation">
+
+
+                        <span class="sidebar-subicono">
+
+                            ◷
+
+                        </span>
+
+
+                        <span>
+
+                            Historial general
+
+                        </span>
+
+
+                    </a>
+
+
+
+                    @if (puedeGestionarUsuarios)
+                    {
+                    <a asp-controller="Home"
+                       asp-action="HistorialUsuarios"
+                       class="sidebar-subopcion @(accionActual == "HistorialUsuarios" ? "activo" : "")" data-orbit-action="navigation">
+
+
+                        <span class="sidebar-subicono">
+
+                            👤
+
+                        </span>
+
+
+                        <span>
+
+                            Historial de usuarios
+
+                        </span>
+
+
+                    </a>
+                    }
+
+
+
+                    <a asp-controller="Home"
+                       asp-action="HistorialProductos"
+                       class="sidebar-subopcion @(accionActual == "HistorialProductos" ? "activo" : "")" data-orbit-action="navigation">
+
+
+                        <span class="sidebar-subicono">
+
+                            📦
+
+                        </span>
+
+
+                        <span>
+
+                            Historial de productos
+
+                        </span>
+
+
+                    </a>
+
+
+                    <a asp-controller="Home"
+                       asp-action="HistorialSectores"
+                       class="sidebar-subopcion @(accionActual == "HistorialSectores" ? "activo" : "")" data-orbit-action="navigation">
+
+                        <span class="sidebar-subicono">
+                            🏥
+                        </span>
+
+                        <span>
+                            Historial por sector
+                        </span>
+
+                    </a>
+                    }
+
+
+                </div>
+
+
+            </div>
+        }
+
+
+
+        <!-- =====================================================
+             MEDICAMENTOS CONTROLADOS
+             ===================================================== -->
+
+        @if (puedeGestionarControlados)
+        {
+            <div class="sidebar-grupo">
+
+
+                <div class="sidebar-cabecera @(controladosActivo ? "activo" : "")">
+
+
+                    <a asp-controller="Home"
+                       asp-action="MedicamentosControlados"
+                       class="sidebar-modulo-enlace"
+                       title="Ir a Medicamentos Controlados" data-orbit-action="navigation">
+
+
+                        <span class="sidebar-icono"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-controlled" /></svg></span>
+
+
+                        <span class="sidebar-texto">
+
+                            Medicamentos Controlados
+
+                        </span>
+
+
+                    </a>
+
+
+
+                    <button type="button"
+                            class="sidebar-toggle"
+                            onclick="alternarSubmenu(this)"
+                            aria-label="Mostrar submódulos de Medicamentos Controlados"
+                            aria-expanded="false" data-orbit-action="navigation">
+
+
+                        <span class="sidebar-flecha">
+
+                            ▼
+
+                        </span>
+
+
+                    </button>
+
+
+                </div>
+
+
+
+                <div class="sidebar-submenu">
+
+
+                    <a asp-controller="Home"
+                       asp-action="MedicamentosControlados"
+                       class="sidebar-subopcion @(accionActual == "MedicamentosControlados" ? "activo" : "")" data-orbit-action="navigation">
+
+
+                        <span class="sidebar-subicono">
+
+                            💊
+
+                        </span>
+
+
+                        <span>
+
+                            Gestionar controlados
+
+                        </span>
+
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+        }
+
+
+        <!-- =====================================================
+             SECTORES
+             ===================================================== -->
+
+        @if (puedeGestionarUbicaciones)
+        {
+            <div class="sidebar-grupo">
+
+                <div class="sidebar-cabecera @(sectoresActivo ? "activo" : "")">
+
+                    <a asp-controller="Home"
+                       asp-action="Ubicaciones"
+                       class="sidebar-modulo-enlace"
+                       title="Ir a Sectores" data-orbit-action="navigation">
+
+                        <span class="sidebar-icono"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-sectors" /></svg></span>
+
+                        <span class="sidebar-texto">
+                            Sectores
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
+        }
+
+
+    </nav>
+
+
+    <div class="sm-sidebar-signature" aria-hidden="true">
+        <span class="sm-signature-cross">+</span>
+        <span>Cada detalle cuenta.<small>CONTROL · TRAZABILIDAD · CUIDADO</small></span>
+    </div>
+</aside>
+
+
+
+<script>
+
+    /*
+        SOLO LA FLECHA ABRE O CIERRA
+        LOS SUBMODULOS.
+
+        PRESIONAR EL NOMBRE DEL MODULO
+        NAVEGA A SU MENU PRINCIPAL.
+    */
+
+    function alternarSubmenu(
+        boton
+    ) {
+
+        const grupo =
+            boton.closest(
+                ".sidebar-grupo"
+            );
+
+
+        if (!grupo) {
+
+            return;
+
+        }
+
+
+        const estabaAbierto =
+            grupo.classList.contains(
+                "abierto"
+            );
+
+
+        /*
+            CERRAR LOS OTROS SUBMENUS
+        */
+
+        const grupos =
+            document.querySelectorAll(
+                ".sidebar-grupo"
+            );
+
+
+        grupos.forEach(
+            function (otroGrupo) {
+
+                if (otroGrupo !== grupo) {
+
+                    otroGrupo.classList.remove(
+                        "abierto"
+                    );
+
+
+                    const otroBoton =
+                        otroGrupo.querySelector(
+                            ".sidebar-toggle"
+                        );
+
+
+                    if (otroBoton) {
+
+                        otroBoton.setAttribute(
+                            "aria-expanded",
+                            "false"
+                        );
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        /*
+            ABRIR O CERRAR
+            EL SUBMENU SELECCIONADO
+        */
+
+        if (estabaAbierto) {
+
+            grupo.classList.remove(
+                "abierto"
+            );
+
+
+            boton.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+        else {
+
+            grupo.classList.add(
+                "abierto"
+            );
+
+
+            boton.setAttribute(
+                "aria-expanded",
+                "true"
+            );
+
+        }
+
+    }
+
+</script>

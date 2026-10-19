@@ -1,0 +1,383 @@
+﻿@* SM-ORBITA-METADATA *@
+@{ ViewData["SmScreen"] = "ModuloUsuariosPermisos"; ViewData["SmFamily"] = "users"; }
+@{
+    ViewData["Title"] = "Usuarios y Permisos";
+
+    ViewData["TituloBarra"] =
+        "Seleccione Submódulo";
+}
+
+
+<style>
+
+    /* CONTENEDOR */
+
+    .submenu-contenedor {
+        width: 90%;
+
+        max-width: 1050px;
+
+        margin:
+            5px auto;
+
+        text-align: center;
+    }
+
+
+
+    /* TITULO */
+
+    .submenu-titulo {
+        margin: 0;
+
+        color: #087bc2;
+
+        font-size: 32px;
+
+        font-weight: 700;
+    }
+
+
+    .submenu-descripcion {
+        margin:
+            8px 0 35px;
+
+        color: #5f7180;
+
+        font-size: 16px;
+    }
+
+
+
+    /* TARJETAS */
+
+    .submenu-grid {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 25px;
+    }
+
+
+    .submenu-card {
+        min-height: 190px;
+
+        padding: 30px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        align-items: center;
+
+        background:
+            rgba(255, 255, 255, 0.95);
+
+        border-radius: 14px;
+
+        color: #17324d;
+
+        text-align: center;
+
+        text-decoration: none;
+
+        box-shadow:
+            0 7px 20px
+            rgba(28, 65, 95, 0.15);
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+
+    .submenu-card:hover {
+        transform:
+            translateY(-5px);
+
+        box-shadow:
+            0 14px 30px
+            rgba(15, 91, 150, 0.25);
+
+        color: #17324d;
+    }
+
+
+
+    /* ICONO */
+
+    .submenu-icono {
+        margin-bottom: 12px;
+
+        font-size: 42px;
+    }
+
+
+
+    /* TITULO TARJETA */
+
+    .submenu-card-titulo {
+        margin-bottom: 8px;
+
+        color: #087bc2;
+
+        font-size: 21px;
+
+        font-weight: 700;
+    }
+
+
+    .submenu-card p {
+        margin: 0;
+
+        color: #687b89;
+
+        font-size: 14px;
+    }
+
+
+
+    /* BOTON VOLVER */
+
+    .volver-contenedor {
+        margin-top: 35px;
+
+        text-align: center;
+    }
+
+
+    .btn-volver-submenu {
+        display: inline-block;
+
+        padding:
+            11px 20px;
+
+        background: #0b8f9c;
+
+        color: white;
+
+        border-radius: 7px;
+
+        text-decoration: none;
+
+        font-weight: 600;
+    }
+
+
+    .btn-volver-submenu:hover {
+        background: #087580;
+
+        color: white;
+    }
+
+
+
+    /* RESPONSIVE */
+
+    @@media (max-width: 900px) {
+
+        .submenu-grid {
+            grid-template-columns:
+                1fr;
+        }
+
+
+        .submenu-contenedor {
+            width: 94%;
+        }
+
+    }
+
+
+    @@media (max-width: 600px) {
+
+        .submenu-titulo {
+            font-size: 27px;
+        }
+
+
+        .submenu-card {
+            min-height: 170px;
+
+            padding: 25px;
+        }
+
+
+        .submenu-icono {
+            font-size: 38px;
+        }
+
+    }
+
+</style>
+
+
+
+<section class="submenu-contenedor">
+
+
+    <!-- TITULO -->
+
+    <div class="submenu-titulo">
+
+        Usuarios y Permisos
+
+    </div>
+
+
+    <p class="submenu-descripcion">
+
+        Seleccione una opción para gestionar
+        los usuarios del sistema.
+
+    </p>
+
+
+
+    <!-- TARJETAS -->
+
+    <div class="submenu-grid">
+
+
+
+        <!-- CREAR USUARIO -->
+
+        <a asp-controller="Home"
+           asp-action="CrearUsuario"
+           class="submenu-card" data-orbit-action="navigation">
+
+
+            <div class="submenu-icono"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-user-add" /></svg></div>
+
+
+            <div class="submenu-card-titulo">
+
+                Crear Usuario
+
+            </div>
+
+
+            <p>
+
+                Registrar un nuevo usuario
+                en SARMedix.
+
+            </p>
+
+
+        </a>
+
+
+
+        <!-- LISTADO DE USUARIOS -->
+
+        <a asp-controller="Home"
+           asp-action="Usuarios"
+           class="submenu-card" data-orbit-action="navigation">
+
+
+            <div class="submenu-icono"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-user-list" /></svg></div>
+
+
+            <div class="submenu-card-titulo">
+
+                Listado de Usuarios
+
+            </div>
+
+
+            <p>
+
+                Consultar, editar y
+                desactivar usuarios.
+
+            </p>
+
+
+        </a>
+
+
+
+        <!-- USUARIOS INACTIVOS -->
+
+        <a asp-controller="Home"
+           asp-action="ListadoEliminarUsuarios"
+           class="submenu-card" data-orbit-action="navigation">
+
+
+            <div class="submenu-icono"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-user-off" /></svg></div>
+
+
+            <div class="submenu-card-titulo">
+
+                Usuarios Inactivos
+
+            </div>
+
+
+            <p>
+
+                Consultar usuarios desactivados
+                y eliminarlos.
+
+            </p>
+
+
+        </a>
+
+
+
+        <!-- ROLES Y PERMISOS -->
+
+        <a asp-controller="Home"
+           asp-action="RolesPermisos"
+           class="submenu-card" data-orbit-action="navigation">
+
+
+            <div class="submenu-icono"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-authorization" /></svg></div>
+
+
+            <div class="submenu-card-titulo">
+
+                Roles y Permisos
+
+            </div>
+
+
+            <p>
+
+                Consultar y administrar los permisos
+                asociados a cada rol.
+
+            </p>
+
+
+        </a>
+
+
+    </div>
+
+
+
+    <!-- VOLVER -->
+
+    <div class="volver-contenedor">
+
+
+        <a asp-controller="Home"
+           asp-action="Modulos"
+           class="btn-volver-submenu" data-orbit-action="secondary">
+
+            ← Volver a módulos
+
+        </a>
+
+
+    </div>
+
+
+</section>

@@ -1,0 +1,1551 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/css/site.css"><link rel="stylesheet" href="/css/sidebar.css"><link rel="stylesheet" href="/css/sarmedix-ui.css"><link rel="stylesheet" href="/css/sarmedix-orbita-v2.css"><link rel="stylesheet" href="/css/sarmedix-system.css"><link rel="stylesheet" href="/css/sarmedix-structural.css"><link rel="stylesheet" href="/css/sarmedix-refinement.css"><body class="sm-app" data-sm-screen="CrearLote" data-sm-family="products"><div style="padding:10px;background:#fff;color:#385575;font:13px system-ui">Vista estática sin datos · CrearLote · Formularios desconectados</div><main role="main" id="sm-main" style="width:100%;padding:24px;display:block">﻿
+
+
+
+
+
+
+<div class="entrada-pagina sm-reception">
+
+    <div class="entrada-encabezado"><span class="sm-form-eyebrow">ÓRBITA / RECEPCIÓN</span>
+
+        <div class="entrada-icono-principal">
+            ⇩
+        </div>
+
+        <div>
+            <h1>Registrar entrada</h1>
+
+            <p>
+                Recepción de medicamentos e insumos
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- MENSAJE GENERAL                           -->
+    <!-- ========================================= -->
+
+    <div class="espacio-mensaje">
+
+        
+
+    </div>
+
+
+    <form
+         
+          method="post"
+          id="formCrearLote"
+          class="formulario-entrada"
+         
+          novalidate data-orbit-form="CrearLote">
+
+
+        <!-- ========================================= -->
+        <!-- PASO 1 - IDENTIFICAR PRODUCTO             -->
+        <!-- ========================================= -->
+
+        <section class="entrada-seccion sm-identify">
+
+            <div class="seccion-cabecera">
+
+                <div class="numero-paso">
+                    1
+                </div>
+
+                <div>
+                    <h2>Identificar producto</h2>
+
+                    <p>
+                        Escanee la caja o busque el producto manualmente.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="selector-modo">
+
+                <button type="button"
+                        id="btnModoScanner"
+                        class="btn-modo activo"
+                        data-orbit-action="secondary">
+
+                    🔫 Escáner
+
+                </button>
+
+
+                <button type="button"
+                        id="btnModoManual"
+                        class="btn-modo"
+                        data-orbit-action="secondary">
+
+                    ✋ Manual
+
+                </button>
+
+            </div>
+
+
+            <!-- ========================================= -->
+            <!-- MODO ESCANER                              -->
+            <!-- ========================================= -->
+
+            <div id="modoScanner"
+                 class="contenido-modo">
+
+                <div class="scanner-caja">
+
+                    <div class="scanner-icono">
+                        🔫
+                    </div>
+
+                    <div class="scanner-textos">
+
+                        <strong>
+                            Escanee el código de la caja
+                        </strong>
+
+                        <span>
+                            El sistema intentará reconocer producto, lote y vencimiento automáticamente.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <label for="codigoScanner">
+                    Código de barras / GS1
+                </label>
+
+
+                <div class="scanner-input-contenedor">
+
+                    <input type="text"
+                           id="codigoScanner"
+                           autocomplete="off"
+                           placeholder="Esperando lectura del escáner..." />
+
+                    <button type="button"
+                            class="btn-buscar-codigo"
+                            data-orbit-action="quiet">
+
+                        Buscar
+
+                    </button>
+
+                </div>
+
+
+                <div id="resultadoScanner"
+                     class="resultado-scanner resultado-oculto">
+                </div>
+
+            </div>
+
+
+            <!-- ========================================= -->
+            <!-- MODO MANUAL                               -->
+            <!-- ========================================= -->
+
+            <div id="modoManual"
+                 class="contenido-modo modo-oculto">
+
+                <label for="producto">
+                    Buscar producto
+                </label>
+
+                <select
+                        id="producto">
+
+                    <option value="">
+                        Seleccione un producto
+                    </option>
+
+                    
+
+                </select>
+
+                <div class="ayuda-campo">
+                    Use esta opción cuando el código no esté disponible o no pueda leerse.
+                </div>
+
+            </div>
+
+
+            <!-- ========================================= -->
+            <!-- PRODUCTO IDENTIFICADO                     -->
+            <!-- ========================================= -->
+
+            <div id="productoIdentificado"
+                 class="producto-identificado producto-identificado-oculto">
+
+                <div class="producto-check">
+                    ✓
+                </div>
+
+                <div class="producto-identificado-info">
+
+                    <div class="producto-etiqueta">
+                        Producto identificado
+                    </div>
+
+                    <div id="productoIdentificadoNombre"
+                         class="producto-identificado-nombre">
+                    </div>
+
+                    <div id="productoIdentificadoDetalle"
+                         class="producto-identificado-detalle">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ========================================= -->
+        <!-- RESTO DEL FORMULARIO                      -->
+        <!-- ========================================= -->
+
+        <div id="datosEntrada"
+             class="datos-entrada datos-entrada-ocultos">
+
+
+            <div class="sm-receipt-body"><div class="entrada-columnas">
+
+
+                <!-- ========================================= -->
+                <!-- PASO 2 - DATOS DEL LOTE                   -->
+                <!-- ========================================= -->
+
+                <section class="entrada-seccion">
+
+                    <div class="seccion-cabecera">
+
+                        <div class="numero-paso">
+                            2
+                        </div>
+
+                        <div>
+                            <h2>Datos del lote</h2>
+
+                            <p>
+                                Revise los datos detectados o complételos manualmente.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="campo-grupo">
+
+                        <div class="label-con-estado">
+
+                            <label for="numeroLote">
+                                Número de lote
+                            </label>
+
+                            <span id="estadoLote"
+                                  class="estado-dato estado-manual">
+                                ✏️ Ingreso manual
+                            </span>
+
+                        </div>
+
+                        <input
+                               id="numeroLote"
+                               autocomplete="off"
+                               placeholder="Ej: G010376" />
+
+                    </div>
+
+
+                    <div class="campo-grupo">
+
+                        <div class="label-con-estado">
+
+                            <label for="fechaVencimiento">
+                                Fecha de vencimiento
+                            </label>
+
+                            <span id="estadoFecha"
+                                  class="estado-dato estado-manual">
+                                ✏️ Ingreso manual
+                            </span>
+
+                        </div>
+
+                        <input
+                               id="fechaVencimiento"
+                               type="date" />
+
+                        <div id="avisoVencimiento"
+                             class="aviso-vencimiento aviso-vencimiento-oculto">
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+
+                <!-- ========================================= -->
+                <!-- PASO 3 - RECEPCION                        -->
+                <!-- ========================================= -->
+
+                <section class="entrada-seccion">
+
+                    <div class="seccion-cabecera">
+
+                        <div class="numero-paso">
+                            3
+                        </div>
+
+                        <div>
+                            <h2>Recepción</h2>
+
+                            <p>
+                                Indique cuánto llegó y dónde quedará almacenado.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="campo-grupo">
+
+                        <label for="cantidadEnvases">
+                            Cantidad de envases recibidos
+                        </label>
+
+                        <input id="cantidadEnvases"
+                               name="cantidadEnvases"
+                               type="number"
+                               min="1"
+                               step="1"
+                               placeholder="Ej: 10"
+                               autocomplete="off" />
+
+                        <!-- El usuario escribe envases. El sistema guarda stock real. -->
+                        <input
+                               id="cantidadTotalStock"
+                               type="hidden" />
+
+                        <div id="calculoRecepcion"
+                             class="calculo-recepcion">
+
+                            <strong id="calculoContenido">
+                                Seleccione un producto para ver su contenido.
+                            </strong>
+
+                            <span id="calculoTotal">
+                                El total de stock se calculará automáticamente.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="campo-grupo">
+
+                        <label for="ubicacion">
+                            Ubicación destino
+                        </label>
+
+                        <select
+                                id="ubicacion">
+
+                            <option value="">
+                                Seleccione una ubicación
+                            </option>
+
+                            
+
+                        </select>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+
+            <!-- ========================================= -->
+            <!-- PASO 4 - RESUMEN                          -->
+            <!-- ========================================= -->
+
+            <section class="entrada-seccion resumen-seccion">
+
+                <div class="seccion-cabecera">
+
+                    <div class="numero-paso">
+                        4
+                    </div>
+
+                    <div>
+                        <h2>Revisar entrada</h2>
+
+                        <p>
+                            Confirme los datos antes de guardarlos.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="resumen-grid">
+
+                    <div class="resumen-item resumen-producto">
+
+                        <span class="resumen-label">
+                            Producto
+                        </span>
+
+                        <strong id="resumenProducto">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="resumen-item">
+
+                        <span class="resumen-label">
+                            Lote
+                        </span>
+
+                        <strong id="resumenLote">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="resumen-item">
+
+                        <span class="resumen-label">
+                            Vencimiento
+                        </span>
+
+                        <strong id="resumenVencimiento">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="resumen-item">
+
+                        <span class="resumen-label">
+                            Recibido
+                        </span>
+
+                        <strong id="resumenEnvases">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="resumen-item">
+
+                        <span class="resumen-label">
+                            Stock a sumar
+                        </span>
+
+                        <strong id="resumenCantidad">
+                            —
+                        </strong>
+
+                    </div>
+
+
+                    <div class="resumen-item resumen-destino">
+
+                        <span class="resumen-label">
+                            Destino
+                        </span>
+
+                        <strong id="resumenUbicacion">
+                            —
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div id="resumenEstado"
+                     class="resumen-estado">
+
+                    Complete los datos requeridos para registrar la entrada.
+
+                </div>
+
+
+                <button type="submit"
+                        id="btnRegistrarEntrada"
+                        class="btn-registrar-entrada" data-orbit-action="primary">
+
+                    ✓ Registrar entrada
+
+                </button>
+
+            </section>
+
+        </div>
+
+        </div>
+    </form>
+
+
+    <!-- ========================================= -->
+    <!-- NAVEGACION                                -->
+    <!-- ========================================= -->
+
+    <div class="entrada-navegacion">
+
+        <a
+          
+           class="btn-volver-inventario" data-orbit-action="secondary">
+
+            ← Volver a Inventario
+
+        </a>
+
+    </div>
+
+</div>
+
+
+
+<!-- ========================================= -->
+<!-- MODAL DE CONFIRMACION                     -->
+<!-- ========================================= -->
+
+<div id="modalConfirmacion"
+     class="modal-fondo sm-confirmation" role="dialog" aria-modal="true" aria-labelledby="smConfirmTitle">
+
+    <div class="modal-contenido" data-orbit-dialog="surface">
+
+        <div class="modal-icono">
+            ✓
+        </div>
+
+        <h2 id="smConfirmTitle">
+            Confirmar entrada
+        </h2>
+
+        <p>
+            Revise una última vez antes de registrar.
+        </p>
+
+
+        <div id="modalResumen"
+             class="modal-resumen">
+        </div>
+
+
+        <div class="sm-confirm-actions"><span class="sm-form-eyebrow">CONFIRMACIÓN</span><div class="modal-botones">
+
+            <button type="button"
+                    class="btn-modal-si"
+                    data-orbit-action="primary">
+
+                Sí, registrar
+
+            </button>
+
+
+            <button type="button"
+                    class="btn-modal-no"
+                    data-orbit-action="secondary">
+
+                Volver
+
+            </button>
+
+
+            <button type="button"
+                    class="btn-modal-cancelar"
+                    data-orbit-action="secondary">
+
+                Limpiar
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+</div>
+<style>
+
+    /* ========================================= */
+    /* CONTENEDOR GENERAL                        */
+    /* ========================================= */
+
+    .entrada-pagina {
+        width: min(1120px, calc(100% - 32px));
+        margin: 35px auto;
+        padding: 34px;
+        box-sizing: border-box;
+        background-color: rgba(255, 255, 255, 0.97);
+        border-radius: 20px;
+        box-shadow: 0 12px 34px rgba(16, 65, 95, 0.15);
+    }
+
+
+    .entrada-encabezado {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding-bottom: 24px;
+        margin-bottom: 22px;
+        border-bottom: 1px solid #e2ebf0;
+    }
+
+
+    .entrada-icono-principal {
+        width: 56px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 16px;
+        background: linear-gradient( 135deg, #0d7898, #1198a5 );
+        color: white;
+        font-size: 31px;
+        font-weight: 800;
+        box-shadow: 0 7px 18px rgba(17, 152, 165, 0.22);
+    }
+
+
+    .entrada-encabezado h1 {
+        margin: 0;
+        color: #073b64;
+        font-size: 30px;
+        font-weight: 750;
+    }
+
+
+    .entrada-encabezado p {
+        margin: 5px 0 0 0;
+        color: #6a8191;
+        font-size: 15px;
+    }
+
+
+
+    /* ========================================= */
+    /* FORMULARIO                                 */
+    /* ========================================= */
+
+    #formCrearLote.formulario-entrada {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        background: transparent;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+
+    .entrada-seccion {
+        width: 100%;
+        padding: 24px;
+        box-sizing: border-box;
+        background-color: #ffffff;
+        border: 1px solid #dce8ee;
+        border-radius: 16px;
+        box-shadow: 0 5px 16px rgba(16, 65, 95, 0.06);
+    }
+
+
+    .seccion-cabecera {
+        display: flex;
+        align-items: flex-start;
+        gap: 13px;
+        margin-bottom: 22px;
+    }
+
+
+    .numero-paso {
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 10px;
+        background-color: #e8f5fa;
+        color: #087591;
+        font-size: 16px;
+        font-weight: 800;
+    }
+
+
+    .seccion-cabecera h2 {
+        width: auto;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        background: transparent;
+        border-radius: 0;
+        box-shadow: none;
+        color: #073b64;
+        font-size: 20px;
+        font-weight: 750;
+    }
+
+
+        .seccion-cabecera h2::before,
+        .seccion-cabecera h2::after {
+            display: none;
+        }
+
+
+    .seccion-cabecera p {
+        margin: 4px 0 0 0;
+        color: #718695;
+        font-size: 13px;
+        line-height: 1.45;
+    }
+
+
+
+    /* ========================================= */
+    /* MENSAJES                                  */
+    /* ========================================= */
+
+    .espacio-mensaje {
+        min-height: 0;
+        margin-bottom: 18px;
+    }
+
+
+    .mensaje {
+        width: 100%;
+        padding: 13px 16px;
+        box-sizing: border-box;
+        border-radius: 10px;
+        text-align: center;
+        font-weight: 650;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+    }
+
+
+    .mensaje-exito {
+        background-color: #dff3e7;
+        color: #12623d;
+        border: 1px solid #b8dfc8;
+    }
+
+
+    .mensaje-error {
+        background-color: #fae1e3;
+        color: #8b2631;
+        border: 1px solid #f0bec3;
+    }
+
+
+    .mensaje-oculto {
+        display: none;
+    }
+
+
+
+    /* ========================================= */
+    /* SELECTOR MANUAL / ESCANER                 */
+    /* ========================================= */
+
+    .selector-modo {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+
+    .btn-modo {
+        width: 100%;
+        padding: 12px 16px;
+        border: 1px solid #cfdde5;
+        border-radius: 10px;
+        background-color: #f8fafb;
+        color: #4f6270;
+        font-family: inherit;
+        font-size: 15px;
+        font-weight: 750;
+        cursor: pointer;
+        transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+    }
+
+
+        .btn-modo:hover {
+            transform: translateY(-1px);
+            border-color: #1198a5;
+            background-color: #eef9fa;
+        }
+
+
+        .btn-modo.activo {
+            border-color: #1198a5;
+            background-color: #1198a5;
+            color: white;
+        }
+
+
+    .contenido-modo {
+        width: 100%;
+    }
+
+
+    .modo-oculto {
+        display: none;
+    }
+
+
+
+    /* ========================================= */
+    /* CONTROLES                                  */
+    /* ========================================= */
+
+    .formulario-entrada label {
+        display: block;
+        margin-bottom: 7px;
+        color: #173d5e;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+
+    .formulario-entrada input,
+    .formulario-entrada select {
+        width: 100%;
+        min-height: 48px;
+        padding: 11px 13px;
+        box-sizing: border-box;
+        border: 1px solid #bfd1dd;
+        border-radius: 10px;
+        background-color: #fbfdfe;
+        color: #20394d;
+        font-family: inherit;
+        font-size: 15px;
+        outline: none;
+        transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+    }
+
+
+        .formulario-entrada input:focus,
+        .formulario-entrada select:focus {
+            border-color: #1198a5;
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(17, 152, 165, 0.12);
+        }
+
+
+    .campo-grupo + .campo-grupo {
+        margin-top: 22px;
+    }
+
+
+    .ayuda-campo {
+        margin-top: 7px;
+        color: #8193a0;
+        font-size: 12px;
+    }
+
+
+
+    /* ========================================= */
+    /* ESCANER                                   */
+    /* ========================================= */
+
+    .scanner-caja {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 16px;
+        margin-bottom: 17px;
+        background-color: #f0f9fb;
+        border: 1px solid #c4e4ea;
+        border-radius: 12px;
+    }
+
+
+    .scanner-icono {
+        width: 52px;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background-color: #1198a5;
+        color: white;
+        font-size: 24px;
+    }
+
+
+    .scanner-textos {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+
+        .scanner-textos strong {
+            color: #073b64;
+            font-size: 15px;
+        }
+
+
+        .scanner-textos span {
+            color: #6e8492;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+
+    .scanner-input-contenedor {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 10px;
+    }
+
+
+    .btn-buscar-codigo {
+        min-width: 112px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 10px;
+        background-color: #1198a5;
+        color: white;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+
+        .btn-buscar-codigo:hover {
+            background-color: #0d8490;
+        }
+
+
+
+    /* ========================================= */
+    /* RESULTADO DEL ESCANEO                     */
+    /* ========================================= */
+
+    .resultado-scanner {
+        margin-top: 15px;
+        padding: 15px 16px;
+        border-radius: 11px;
+        font-size: 13px;
+        line-height: 1.55;
+    }
+
+
+    .resultado-oculto {
+        display: none;
+    }
+
+
+    .resultado-encontrado {
+        display: block;
+        background-color: #e1f3e8;
+        color: #145b38;
+        border: 1px solid #bddfc9;
+    }
+
+
+    .resultado-no-encontrado {
+        display: block;
+        background-color: #fff3cd;
+        color: #694f00;
+        border: 1px solid #f2dd9c;
+    }
+
+
+    .resultado-error {
+        display: block;
+        background-color: #f8d7da;
+        color: #842029;
+        border: 1px solid #efb8be;
+    }
+
+
+    .producto-encontrado-titulo {
+        margin-bottom: 5px;
+        font-size: 15px;
+        font-weight: 800;
+    }
+
+
+    .btn-registrar-producto {
+        display: inline-block;
+        margin-top: 12px;
+        padding: 9px 14px;
+        border-radius: 8px;
+        background-color: #1198a5;
+        color: white;
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+
+        .btn-registrar-producto:hover {
+            background-color: #0d8490;
+            color: white;
+        }
+
+
+
+    /* ========================================= */
+    /* PRODUCTO IDENTIFICADO                     */
+    /* ========================================= */
+
+    .producto-identificado {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        margin-top: 19px;
+        padding: 14px 16px;
+        border: 1px solid #b9dfc8;
+        border-radius: 12px;
+        background-color: #edf8f1;
+    }
+
+
+    .producto-identificado-oculto {
+        display: none;
+    }
+
+
+    .producto-check {
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background-color: #198754;
+        color: white;
+        font-size: 20px;
+        font-weight: 800;
+    }
+
+
+    .producto-etiqueta {
+        color: #52705e;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+
+    .producto-identificado-nombre {
+        margin-top: 1px;
+        color: #0b4f31;
+        font-size: 18px;
+        font-weight: 800;
+    }
+
+
+    .producto-identificado-detalle {
+        margin-top: 3px;
+        color: #4f715d;
+        font-size: 12px;
+    }
+
+
+
+    /* ========================================= */
+    /* DATOS DE ENTRADA                          */
+    /* ========================================= */
+
+    .datos-entrada {
+        margin-top: 18px;
+    }
+
+
+    .datos-entrada-ocultos {
+        display: none;
+    }
+
+
+    .entrada-columnas {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+
+    .label-con-estado {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 7px;
+    }
+
+
+        .label-con-estado label {
+            margin-bottom: 0;
+        }
+
+
+    .estado-dato {
+        padding: 4px 8px;
+        border-radius: 999px;
+        font-size: 10px;
+        font-weight: 750;
+        white-space: nowrap;
+    }
+
+
+    .estado-manual {
+        background-color: #eef2f5;
+        color: #647582;
+    }
+
+
+    .estado-detectado {
+        background-color: #dff3e7;
+        color: #14613c;
+    }
+
+
+    .aviso-vencimiento {
+        margin-top: 8px;
+        padding: 9px 11px;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 650;
+    }
+
+
+    .aviso-vencimiento-oculto {
+        display: none;
+    }
+
+
+    .aviso-vencido {
+        display: block;
+        background-color: #f8d7da;
+        color: #842029;
+        border: 1px solid #efb8be;
+    }
+
+
+    .aviso-vigente {
+        display: block;
+        background-color: #e3f4e9;
+        color: #155b39;
+        border: 1px solid #c0e0cb;
+    }
+
+
+
+    /* ========================================= */
+    /* RESUMEN                                   */
+    /* ========================================= */
+
+    .resumen-seccion {
+        margin-top: 18px;
+        background: linear-gradient( 180deg, #ffffff, #f8fbfd );
+    }
+
+
+    .resumen-grid {
+        display: grid;
+        grid-template-columns: 1.4fr repeat(3, minmax(0, 1fr)) 1.2fr;
+        gap: 10px;
+    }
+
+
+    .resumen-item {
+        min-width: 0;
+        padding: 13px;
+        border: 1px solid #dce8ee;
+        border-radius: 10px;
+        background-color: white;
+    }
+
+
+    .resumen-label {
+        display: block;
+        margin-bottom: 5px;
+        color: #8495a1;
+        font-size: 10px;
+        font-weight: 750;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+
+    .resumen-item strong {
+        display: block;
+        overflow-wrap: anywhere;
+        color: #173d5e;
+        font-size: 14px;
+    }
+
+
+    .resumen-estado {
+        margin-top: 14px;
+        padding: 11px 13px;
+        border-radius: 9px;
+        background-color: #eef5f9;
+        color: #587083;
+        font-size: 13px;
+        text-align: center;
+    }
+
+
+    .resumen-estado-listo {
+        background-color: #e1f3e8;
+        color: #145b38;
+    }
+
+
+    .resumen-estado-error {
+        background-color: #f8d7da;
+        color: #842029;
+    }
+
+
+    .btn-registrar-entrada {
+        width: 100%;
+        margin-top: 14px;
+        padding: 14px 18px;
+        border: none;
+        border-radius: 10px;
+        background: linear-gradient( 90deg, #0d7898, #1198a5 );
+        color: white;
+        font-family: inherit;
+        font-size: 15px;
+        font-weight: 800;
+        cursor: pointer;
+        box-shadow: 0 6px 16px rgba(13, 120, 152, 0.17);
+    }
+
+
+        .btn-registrar-entrada:hover {
+            filter: brightness(0.96);
+        }
+
+
+
+    /* ========================================= */
+    /* NAVEGACION                                */
+    /* ========================================= */
+
+    .entrada-navegacion {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+
+    .btn-volver-inventario {
+        display: inline-block;
+        padding: 11px 20px;
+        border-radius: 9px;
+        background-color: #5b6872;
+        color: white;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+
+        .btn-volver-inventario:hover {
+            background-color: #48535c;
+            color: white;
+        }
+
+
+
+    /* ========================================= */
+    /* MODAL                                     */
+    /* ========================================= */
+
+    .modal-fondo {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        padding: 18px;
+        background-color: rgba(0, 0, 0, 0.46);
+    }
+
+
+    .modal-contenido {
+        width: min(440px, 100%);
+        padding: 28px;
+        box-sizing: border-box;
+        border-radius: 16px;
+        background-color: white;
+        text-align: center;
+        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.24);
+    }
+
+
+    .modal-icono {
+        width: 54px;
+        height: 54px;
+        margin: 0 auto 14px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: #198754;
+        color: white;
+        font-size: 25px;
+        font-weight: 800;
+    }
+
+
+    .modal-contenido h2 {
+        width: auto;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        background: none;
+        box-shadow: none;
+        color: #073b64;
+        font-size: 23px;
+    }
+
+
+        .modal-contenido h2::before,
+        .modal-contenido h2::after {
+            display: none;
+        }
+
+
+    .modal-contenido > p {
+        margin: 8px 0 18px 0;
+        color: #6d808d;
+        font-size: 14px;
+    }
+
+
+    .modal-resumen {
+        padding: 14px;
+        border-radius: 10px;
+        background-color: #f4f8fa;
+        color: #3f586a;
+        font-size: 13px;
+        line-height: 1.7;
+        text-align: left;
+    }
+
+
+    .modal-botones {
+        display: flex;
+        justify-content: center;
+        gap: 9px;
+        margin-top: 18px;
+        flex-wrap: wrap;
+    }
+
+
+        .modal-botones button {
+            min-width: 105px;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+
+    .btn-modal-si {
+        background-color: #198754;
+    }
+
+
+        .btn-modal-si:hover {
+            background-color: #157347;
+        }
+
+
+    .btn-modal-no {
+        background-color: #0d7898;
+    }
+
+
+        .btn-modal-no:hover {
+            background-color: #09637e;
+        }
+
+
+    .btn-modal-cancelar {
+        background-color: #68747c;
+    }
+
+
+        .btn-modal-cancelar:hover {
+            background-color: #555f66;
+        }
+
+
+
+    /* ========================================= */
+    /* RESPONSIVE                                */
+    /* ========================================= */
+
+    @media (max-width: 900px) {
+
+        .entrada-columnas {
+            grid-template-columns: 1fr;
+        }
+
+
+        .resumen-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+
+        .resumen-producto,
+        .resumen-destino {
+            grid-column: span 2;
+        }
+    }
+
+
+    @media (max-width: 620px) {
+
+        .entrada-pagina {
+            width: calc(100% - 20px);
+            margin: 18px auto;
+            padding: 20px 14px;
+        }
+
+
+        .entrada-encabezado {
+            align-items: flex-start;
+        }
+
+
+            .entrada-encabezado h1 {
+                font-size: 25px;
+            }
+
+
+        .entrada-seccion {
+            padding: 18px 15px;
+        }
+
+
+        .selector-modo {
+            grid-template-columns: 1fr;
+        }
+
+
+        .scanner-input-contenedor {
+            grid-template-columns: 1fr;
+        }
+
+
+        .btn-buscar-codigo {
+            width: 100%;
+        }
+
+
+        .label-con-estado {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+
+        .resumen-grid {
+            grid-template-columns: 1fr;
+        }
+
+
+        .resumen-producto,
+        .resumen-destino {
+            grid-column: auto;
+        }
+
+
+        .modal-botones {
+            flex-direction: column;
+        }
+
+
+            .modal-botones button {
+                width: 100%;
+            }
+    }
+
+
+
+    /* CALCULO DE ENVASES A STOCK */
+
+    .calculo-recepcion {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-top: 9px;
+        padding: 11px 13px;
+        border: 1px solid #c9e5ec;
+        border-radius: 9px;
+        background-color: #f3fafc;
+        color: #536c7b;
+        font-size: 12px;
+        line-height: 1.45;
+    }
+
+        .calculo-recepcion strong {
+            color: #0b5f7b;
+            font-size: 13px;
+        }
+
+        .calculo-recepcion.calculo-listo {
+            border-color: #b8dec8;
+            background-color: #eef9f2;
+        }
+
+            .calculo-recepcion.calculo-listo strong {
+                color: #13734a;
+            }
+
+</style>
+
+
+
+
+<link rel="stylesheet" href="/css/sarmedix-refinement.css" />
+
+
+</main><link rel="stylesheet" href="/css/sarmedix-global.css"><script>document.addEventListener("submit",e=>e.preventDefault());document.querySelectorAll("a").forEach(a=>a.removeAttribute("href"));</script></body></html>

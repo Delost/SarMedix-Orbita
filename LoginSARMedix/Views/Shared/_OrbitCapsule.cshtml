@@ -1,0 +1,18 @@
+@* Generic medicine motif used only when no photograph exists. Unique paint IDs per card. *@
+@{ var paint = "sm-capsule-" + System.Guid.NewGuid().ToString("N"); }
+<span class="sm-visual sm-holo-capsule" aria-hidden="true">
+    <svg viewBox="0 0 100 100" fill="none" focusable="false" aria-hidden="true">
+        <defs><linearGradient id="@paint" x1="20" y1="30" x2="70" y2="70" gradientUnits="userSpaceOnUse"><stop stop-color="#f2fcff" stop-opacity=".9" /><stop offset=".35" stop-color="#9fdaff" stop-opacity=".55" /><stop offset=".68" stop-color="#3a88cf" stop-opacity=".35" /><stop offset="1" stop-color="#d3f5ff" stop-opacity=".8" /></linearGradient></defs>
+        <ellipse cx="50" cy="79" rx="28" ry="5" fill="#417fb6" fill-opacity=".12" />
+        <ellipse cx="50" cy="80" rx="19" ry="2" fill="#67b5e7" fill-opacity=".15" />
+        <g class="sm-capsule-body"><g transform="rotate(-34 50 48)">
+            <rect x="17" y="32" width="66" height="32" rx="16" fill="url(#@paint)" stroke="#77b9e4" stroke-width="1.2" />
+            <path d="M50 32h17a16 16 0 0 1 0 32H50Z" fill="#398bd0" fill-opacity=".2" />
+            <path d="M50 33v30" stroke="#4e91c3" stroke-opacity=".6" />
+            <path d="M23 53c3 7 8 9 15 9h29c6 0 10-2 13-6" stroke="#427dae" stroke-opacity=".25" />
+            <path class="sm-capsule-glint" d="M29 39c2-2 5-3 9-3h28c4 0 7 1 9 3" stroke="#f1fdff" stroke-width="2.4" stroke-linecap="round" />
+            <path d="M25 45v5" stroke="#e2f7ff" stroke-width="2" stroke-linecap="round" />
+        </g></g>
+        <path d="M12 29v6m-3-3h6m70 35h6" stroke="#71add5" stroke-opacity=".5" />
+    </svg>
+</span>

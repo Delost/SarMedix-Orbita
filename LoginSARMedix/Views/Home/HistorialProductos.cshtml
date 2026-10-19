@@ -1,0 +1,1418 @@
+﻿
+@* SM-ORBITA-METADATA *@
+@{
+    ViewData["SmScreen"] = "HistorialProductos";
+    ViewData["SmFamily"] = "history";
+}
+
+@using System.Text.RegularExpressions
+@model List<LoginSARMedix.Models.Historial>
+
+@{
+    ViewData["Title"] = "Historial de Productos";
+    ViewData["TituloBarra"] = "Historial de Productos";
+
+    string buscarActual = ViewBag.Buscar?.ToString() ?? "";
+    string filtroActual = (ViewBag.Filtro?.ToString() ?? "todos").ToLowerInvariant();
+    string periodoActual = (ViewBag.Periodo?.ToString() ?? "todos").ToLowerInvariant();
+
+    int totalRegistros = ViewBag.TotalRegistros != null
+        ? Convert.ToInt32(ViewBag.TotalRegistros)
+        : 0;
+
+    int paginaActual = ViewBag.PaginaActual != null
+        ? Convert.ToInt32(ViewBag.PaginaActual)
+        : 1;
+
+    int totalPaginas = ViewBag.TotalPaginas != null
+        ? Convert.ToInt32(ViewBag.TotalPaginas)
+        : 0;
+}
+
+<link rel="stylesheet"
+      href="~/css/sarmedix-structural.css"
+      asp-append-version="true" />
+
+<link rel="stylesheet"
+      href="~/css/sarmedix-refinement.css"
+      asp-append-version="true" />
+
+<div class="historial-card sm-reimagined sm-history-workspace historial-productos-original">
+
+    <!-- ENCABEZADO ORIGINAL -->
+
+    <header class="sm-history-heading">
+
+        <span class="sm-workspace-symbol">
+            <svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <use href="#sm-icon-movements" />
+            </svg>
+        </span>
+
+        <div>
+            <span class="sm-overline">
+                ÓRBITA / TRAZABILIDAD
+            </span>
+
+            <h1>La memoria del sistema.</h1>
+
+            <p>
+                Cada cambio, su responsable y su momento.
+                Historial de productos y lotes.
+            </p>
+        </div>
+
+    </header>
+
+    <div class="sm-history-grid">
+
+        <!-- PANEL DE BUSQUEDA Y FILTROS -->
+
+        <aside class="sm-history-console">
+
+            <div class="sm-console-heading">
+
+                <span class="sm-overline">
+                    EXPLORAR REGISTROS
+                </span>
+
+                <h2>Encuentra el contexto</h2>
+
+                <p>
+                    Busca por responsable, producto, lote o motivo
+                    y delimita la consulta.
+                </p>
+
+            </div>
+
+            <div class="historial-herramientas">
+
+                <form asp-controller="Home"
+                      asp-action="HistorialProductos"
+                      method="get"
+                      class="form-busqueda"
+                      data-orbit-form="HistorialProductos">
+
+                    <input type="hidden"
+                           name="filtro"
+                           value="@filtroActual" />
+
+                    <input type="hidden"
+                           name="periodo"
+                           value="@periodoActual" />
+
+                    <label for="buscarProductosHistorial">
+                        Responsable o descripción
+                    </label>
+
+                    <div class="filtro-busqueda">
+
+                        <span aria-hidden="true">🔎</span>
+
+                        <input type="text"
+                               id="buscarProductosHistorial"
+                               name="buscar"
+                               value="@buscarActual"
+                               placeholder="Buscar en el historial..."
+                               autocomplete="off" />
+
+                    </div>
+
+                    <button type="submit"
+                            class="btn-buscar"
+                            data-orbit-action="quiet">
+                        Buscar
+                    </button>
+
+                </form>
+
+                <form asp-controller="Home"
+                      asp-action="HistorialProductos"
+                      method="get"
+                      class="form-filtros"
+                      data-orbit-form="HistorialProductos">
+
+                    <input type="hidden"
+                           name="buscar"
+                           value="@buscarActual" />
+
+                    <div class="filtro-campo">
+
+                        <label for="filtroProductos">
+                            Tipo
+                        </label>
+
+                        <select id="filtroProductos" name="filtro">
+
+                            <option value="todos"
+                                    selected="@(filtroActual == "todos")">
+                                Todos los cambios
+                            </option>
+
+                            <option value="productos"
+                                    selected="@(filtroActual == "productos")">
+                                Productos
+                            </option>
+
+                            <option value="lotes"
+                                    selected="@(filtroActual == "lotes")">
+                                Lotes
+                            </option>
+
+                            <option value="entradas"
+                                    selected="@(filtroActual == "entradas")">
+                                Entradas de stock
+                            </option>
+
+                            <option value="salidas"
+                                    selected="@(filtroActual == "salidas")">
+                                Salidas de stock
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="filtro-campo">
+
+                        <label for="periodoProductos">
+                            Período
+                        </label>
+
+                        <select id="periodoProductos" name="periodo">
+
+                            <option value="todos"
+                                    selected="@(periodoActual == "todos")">
+                                Todo el historial
+                            </option>
+
+                            <option value="hoy"
+                                    selected="@(periodoActual == "hoy")">
+                                Hoy
+                            </option>
+
+                            <option value="7"
+                                    selected="@(periodoActual == "7")">
+                                Últimos 7 días
+                            </option>
+
+                            <option value="30"
+                                    selected="@(periodoActual == "30")">
+                                Últimos 30 días
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <button type="submit"
+                            class="btn-aplicar-filtros"
+                            data-orbit-action="quiet">
+                        Aplicar
+                    </button>
+
+                    <a asp-controller="Home"
+                       asp-action="HistorialProductos"
+                       asp-route-buscar="@buscarActual"
+                       class="btn-limpiar-filtros"
+                       data-orbit-action="quiet">
+                        Limpiar
+                    </a>
+
+                </form>
+
+            </div>
+
+        </aside>
+
+        <!-- RESULTADOS -->
+
+        <section class="sm-history-ledger">
+
+            <div class="historial-resumen-filtros">
+
+                <span>
+                    Registros encontrados:
+                    <strong>@totalRegistros</strong>
+                </span>
+
+                @if (!string.IsNullOrWhiteSpace(buscarActual))
+                {
+                    <span class="filtro-activo">
+                        🔎 “@buscarActual”
+                    </span>
+                }
+
+                @if (filtroActual != "todos")
+                {
+                    <span class="filtro-activo">
+                        Tipo: @filtroActual
+                    </span>
+                }
+
+                @if (periodoActual != "todos")
+                {
+                    <span class="filtro-activo">
+                        Período:
+                        @(periodoActual == "hoy"
+                            ? "Hoy"
+                            : periodoActual == "7"
+                                ? "Últimos 7 días"
+                                : "Últimos 30 días")
+                    </span>
+                }
+
+            </div>
+
+            @if (Model != null && Model.Count > 0)
+            {
+                <!-- MISMA TABLA ORIGINAL: CUATRO COLUMNAS -->
+
+                <div class="tabla-contenedor">
+
+                    <table class="tabla-historial">
+
+                        <thead>
+                            <tr>
+                                <th class="columna-id">ID</th>
+                                <th class="columna-responsable">Responsable</th>
+                                <th class="columna-descripcion">Descripción</th>
+                                <th class="columna-fecha">Fecha y hora</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var registro in Model)
+                            {
+                                string descripcion = registro.descripcion ?? "";
+
+                                /*
+                                    SALIDA EXTRAORDINARIA
+
+                                    Formato:
+                                    Registró salida extraordinaria de
+                                    12 Cápsulas de simisoya
+                                    desde clinica sar hacia SAPU.
+                                    Stock: 9982 → 9970.
+                                    FEFO: Lote 0300325: 12 Cápsulas.
+                                    Motivo: PETICION
+                                */
+
+                                Match salidaExtraordinaria = Regex.Match(
+                                    descripcion,
+                                    @"^Registró\s+salida\s+extraordinaria\s+de\s+(?<cantidad>\d+)\s+(?<unidad>.+?)\s+de\s+(?<producto>.+?)\s+desde\s+(?<origen>.+?)\s+hacia\s+(?<destino>.+?)\.\s*Stock:\s*(?<anterior>\d+)\s*→\s*(?<posterior>\d+)\.\s*FEFO:\s*(?<fefo>.+?)\.\s*Motivo:\s*(?<motivo>.+?)\.?\s*$",
+                                    RegexOptions.IgnoreCase
+                                );
+
+                                /*
+                                    MOVIMIENTO NORMAL
+
+                                    Acepta:
+                                    - Entradas
+                                    - Salidas
+                                    - Producto
+                                    - Medicamento
+                                    - Con motivo o sin motivo
+                                */
+
+                                Match movimientoNormal = Regex.Match(
+                                    descripcion,
+                                    @"^Registró\s+(?<tipo>entrada|salida)\s+de\s+(?<cantidad>\d+)\s+(?<unidad>.+?)\s+del\s+(?:medicamento|producto)\s+(?<producto>.+?)\s*,\s*lote\s+(?<lote>.+?)\.\s*Stock:\s*(?<anterior>\d+)\s*→\s*(?<posterior>\d+)(?:\.\s*Motivo:\s*(?<motivo>.+?))?\.?\s*$",
+                                    RegexOptions.IgnoreCase
+                                );
+
+                                /*
+                                    PRODUCTO CREADO CON CODIGO
+                                */
+
+                                Match productoCreado = Regex.Match(
+                                    descripcion,
+                                    @"^Creó el producto\s+(?<producto>.+?)\s+\((?<codigo>[^)]+)\)\.?\s*$",
+                                    RegexOptions.IgnoreCase
+                                );
+
+                                bool esSalidaExtraordinaria =
+                                    salidaExtraordinaria.Success;
+
+                                bool esMovimientoNormal =
+                                    movimientoNormal.Success;
+
+                                bool esProductoCreado =
+                                    productoCreado.Success;
+
+                                bool esLote =
+                                    descripcion.StartsWith(
+                                        "Creó el lote ",
+                                        StringComparison.OrdinalIgnoreCase)
+                                    ||
+                                    descripcion.StartsWith(
+                                        "Actualizó el lote ",
+                                        StringComparison.OrdinalIgnoreCase)
+                                    ||
+                                    descripcion.StartsWith(
+                                        "Eliminó el lote ",
+                                        StringComparison.OrdinalIgnoreCase);
+
+                                <tr>
+
+                                    <!-- ID -->
+
+                                    <td>
+
+                                        <span class="historial-id">
+                                            @registro.id_historial
+                                        </span>
+
+                                    </td>
+
+                                    <!-- RESPONSABLE -->
+
+                                    <td>
+
+                                        <div class="responsable-historial">
+
+                                            <span class="responsable-icono">
+                                                👤
+                                            </span>
+
+                                            <span>
+                                                @registro.usuario_responsable
+                                            </span>
+
+                                        </div>
+
+                                    </td>
+
+                                    <!-- DESCRIPCION ORGANIZADA -->
+
+                                    <td class="descripcion-historial">
+
+                                        @if (esSalidaExtraordinaria)
+                                        {
+                                            string cantidad =
+                                                salidaExtraordinaria.Groups["cantidad"].Value;
+
+                                            string unidad =
+                                                salidaExtraordinaria.Groups["unidad"].Value;
+
+                                            string producto =
+                                                salidaExtraordinaria.Groups["producto"].Value;
+
+                                            string origen =
+                                                salidaExtraordinaria.Groups["origen"].Value;
+
+                                            string destino =
+                                                salidaExtraordinaria.Groups["destino"].Value;
+
+                                            string stockAnterior =
+                                                salidaExtraordinaria.Groups["anterior"].Value;
+
+                                            string stockPosterior =
+                                                salidaExtraordinaria.Groups["posterior"].Value;
+
+                                            string fefo =
+                                                salidaExtraordinaria.Groups["fefo"].Value;
+
+                                            string motivo =
+                                                salidaExtraordinaria.Groups["motivo"].Value.Trim().TrimEnd('.');
+
+                                            <div class="descripcion-evento evento-producto">
+
+                                                <div class="evento-cabecera">
+
+                                                    <span class="evento-tipo tipo-salida">
+                                                        ↓ Salida extraordinaria
+                                                    </span>
+
+                                                    <strong class="evento-nombre">
+                                                        @producto
+                                                    </strong>
+
+                                                </div>
+
+                                                <div class="evento-contenido">
+
+                                                    <span class="evento-label">
+                                                        Acción realizada
+                                                    </span>
+
+                                                    <p>
+                                                        Se registró una salida extraordinaria
+                                                        de <strong>@cantidad @unidad</strong>.
+                                                    </p>
+
+                                                </div>
+
+                                                <div class="evento-datos">
+
+                                                    <div class="evento-dato">
+
+                                                        <span class="evento-label">
+                                                            Producto
+                                                        </span>
+
+                                                        <strong>
+                                                            @producto
+                                                        </strong>
+
+                                                    </div>
+
+                                                    <div class="evento-dato">
+
+                                                        <span class="evento-label">
+                                                            Cantidad
+                                                        </span>
+
+                                                        <strong class="cantidad-salida">
+                                                            -@cantidad @unidad
+                                                        </strong>
+
+                                                    </div>
+
+                                                    <div class="evento-dato">
+
+                                                        <span class="evento-label">
+                                                            Stock
+                                                        </span>
+
+                                                        <strong>
+                                                            @stockAnterior
+                                                            <span class="evento-flecha">→</span>
+                                                            @stockPosterior
+                                                        </strong>
+
+                                                    </div>
+
+                                                    <div class="evento-dato">
+
+                                                        <span class="evento-label">
+                                                            Origen
+                                                        </span>
+
+                                                        <strong>
+                                                            @origen
+                                                        </strong>
+
+                                                    </div>
+
+                                                    <div class="evento-dato">
+
+                                                        <span class="evento-label">
+                                                            Destino
+                                                        </span>
+
+                                                        <strong>
+                                                            @destino
+                                                        </strong>
+
+                                                    </div>
+
+                                                    <div class="evento-dato">
+
+                                                        <span class="evento-label">
+                                                            FEFO / Lotes utilizados
+                                                        </span>
+
+                                                        <strong>
+                                                            @fefo
+                                                        </strong>
+
+                                                    </div>
+
+                                                    <div class="evento-dato evento-dato-ancho">
+
+                                                        <span class="evento-label">
+                                                            Motivo
+                                                        </span>
+
+                                                        <strong>
+                                                            @motivo
+                                                        </strong>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        }
+                                        else if (esMovimientoNormal)
+                                        {
+                                            string tipo =
+                                                movimientoNormal.Groups["tipo"].Value;
+
+                                            bool esEntrada =
+                                                tipo.Equals(
+                                                    "entrada",
+                                                    StringComparison.OrdinalIgnoreCase);
+
+                                            string cantidad =
+                                                movimientoNormal.Groups["cantidad"].Value;
+
+                                            string unidad =
+                                                movimientoNormal.Groups["unidad"].Value;
+
+                                            string producto =
+                                                movimientoNormal.Groups["producto"].Value.Trim();
+
+                                            string lote =
+                                                movimientoNormal.Groups["lote"].Value;
+
+                                            string stockAnterior =
+                                                movimientoNormal.Groups["anterior"].Value;
+
+                                            string stockPosterior =
+                                                movimientoNormal.Groups["posterior"].Value;
+
+                                            string motivo =
+                                                movimientoNormal.Groups["motivo"].Value.Trim().TrimEnd('.');
+
+                                            <div class="descripcion-evento evento-producto">
+
+                                                <div class="evento-cabecera">
+
+                                                    <span class="evento-tipo @(esEntrada ? "tipo-entrada" : "tipo-salida")">
+
+                                                        @(esEntrada
+                                                            ? "↑ Entrada de stock"
+                                                            : "↓ Salida de stock")
+
+                                                    </span>
+
+                                                    <strong class="evento-nombre">
+                                                        @producto
+                                                    </strong>
+
+                                                </div>
+
+                                                <div class="evento-contenido">
+
+                                                    <span class="evento-label">
+                                                        Acción realizada
+                                                    </span>
+
+                                                    <p>
+                                                        Se registró una
+                                                        <strong>@tipo.ToLower()</strong>
+                                                        de
+                                                        <strong>@cantidad @unidad</strong>
+                                                        del producto
+                                                        <strong>@producto</strong>.
+                                                    </p>
+
+                                                </div>
+
+                                                <div class="evento-datos">
+
+                                                    <div class="evento-dato">
+
+                                                        <span class="evento-label">
+                                                            Producto
+                                                        </span>
+
+                                                        <strong>
+                                                            @producto
+                                                        </strong>
+
+                                                    </div>
+
+                                                    <div class="evento-dato">
+
+                                                        <span class="evento-label">
+                                                            Lote
+                                                        </span>
+
+                                                        <strong>
+                                                            @lote
+                                                        </strong>
+
+                                                    </div>
+
+                                                    <div class="evento-dato">
+
+                                                        <span class="evento-label">
+                                                            Cantidad
+                                                        </span>
+
+                                                        <strong class="@(esEntrada ? "cantidad-entrada" : "cantidad-salida")">
+
+                                                            @(esEntrada ? "+" : "-")@cantidad @unidad
+
+                                                        </strong>
+
+                                                    </div>
+
+                                                    <div class="evento-dato evento-dato-ancho">
+
+                                                        <span class="evento-label">
+                                                            Cambio de stock
+                                                        </span>
+
+                                                        <strong>
+                                                            @stockAnterior
+                                                            <span class="evento-flecha">→</span>
+                                                            @stockPosterior
+                                                        </strong>
+
+                                                    </div>
+
+                                                    @if (!string.IsNullOrWhiteSpace(motivo))
+                                                    {
+                                                        <div class="evento-dato evento-dato-ancho">
+
+                                                            <span class="evento-label">
+                                                                Motivo
+                                                            </span>
+
+                                                            <strong>
+                                                                @motivo
+                                                            </strong>
+
+                                                        </div>
+                                                    }
+
+                                                </div>
+
+                                            </div>
+                                        }
+                                        else if (esProductoCreado)
+                                        {
+                                            string producto =
+                                                productoCreado.Groups["producto"].Value;
+
+                                            string codigo =
+                                                productoCreado.Groups["codigo"].Value;
+
+                                            <div class="descripcion-evento evento-producto">
+
+                                                <div class="evento-cabecera">
+
+                                                    <span class="evento-tipo tipo-entrada">
+                                                        + Producto creado
+                                                    </span>
+
+                                                    <strong class="evento-nombre">
+                                                        @producto
+                                                    </strong>
+
+                                                </div>
+
+                                                <div class="evento-contenido">
+
+                                                    <span class="evento-label">
+                                                        Acción realizada
+                                                    </span>
+
+                                                    <p>
+                                                        Se creó el producto
+                                                        <strong>@producto</strong>.
+                                                    </p>
+
+                                                </div>
+
+                                                <div class="evento-datos">
+
+                                                    <div class="evento-dato">
+
+                                                        <span class="evento-label">
+                                                            Producto
+                                                        </span>
+
+                                                        <strong>
+                                                            @producto
+                                                        </strong>
+
+                                                    </div>
+
+                                                    <div class="evento-dato">
+
+                                                        <span class="evento-label">
+                                                            Código
+                                                        </span>
+
+                                                        <strong>
+                                                            @codigo
+                                                        </strong>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        }
+                                        else if (esLote)
+                                        {
+                                            <div class="descripcion-evento evento-lote">
+
+                                                <div class="evento-cabecera">
+
+                                                    <span class="evento-tipo tipo-lote">
+                                                        📋 Lotes
+                                                    </span>
+
+                                                </div>
+
+                                                <div class="evento-contenido">
+
+                                                    <span class="evento-label">
+                                                        Acción realizada
+                                                    </span>
+
+                                                    <p>
+                                                        @descripcion
+                                                    </p>
+
+                                                </div>
+
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <!--
+                                                EVENTOS QUE NO COINCIDEN
+                                                CON LOS FORMATOS ANTERIORES
+
+                                                SE CONSERVA EL TEXTO ORIGINAL
+                                                COMPLETO PARA NO PERDER DATOS.
+                                            -->
+
+                                            <div class="descripcion-evento evento-producto">
+
+                                                <div class="evento-cabecera">
+
+                                                    <span class="evento-tipo tipo-producto">
+                                                        📦 Productos
+                                                    </span>
+
+                                                </div>
+
+                                                <div class="evento-contenido">
+
+                                                    <span class="evento-label">
+                                                        Acción realizada
+                                                    </span>
+
+                                                    <p>
+                                                        @descripcion
+                                                    </p>
+
+                                                </div>
+
+                                            </div>
+                                        }
+
+                                    </td>
+
+                                    <!-- FECHA Y HORA -->
+
+                                    <td>
+
+                                        <div class="fecha-historial">
+
+                                            <span class="fecha-dia">
+                                                @registro.fecha_hora.ToString("dd-MM-yyyy")
+                                            </span>
+
+                                            <span class="fecha-hora">
+                                                @registro.fecha_hora.ToString("HH:mm:ss")
+                                            </span>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <!-- PAGINACION -->
+
+                @if (totalPaginas > 1)
+                {
+                    <div class="paginacion">
+
+                        @if (paginaActual > 1)
+                        {
+                            <a asp-controller="Home"
+                               asp-action="HistorialProductos"
+                               asp-route-pagina="@(paginaActual - 1)"
+                               asp-route-buscar="@buscarActual"
+                               asp-route-filtro="@filtroActual"
+                               asp-route-periodo="@periodoActual"
+                               class="pagina-boton"
+                               data-orbit-action="quiet">
+                                ← Anterior
+                            </a>
+                        }
+
+                        @for (int i = 1; i <= totalPaginas; i++)
+                        {
+                            <a asp-controller="Home"
+                               asp-action="HistorialProductos"
+                               asp-route-pagina="@i"
+                               asp-route-buscar="@buscarActual"
+                               asp-route-filtro="@filtroActual"
+                               asp-route-periodo="@periodoActual"
+                               class="pagina-boton @(i == paginaActual ? "pagina-activa" : "")"
+                               data-orbit-action="quiet">
+                                @i
+                            </a>
+                        }
+
+                        @if (paginaActual < totalPaginas)
+                        {
+                            <a asp-controller="Home"
+                               asp-action="HistorialProductos"
+                               asp-route-pagina="@(paginaActual + 1)"
+                               asp-route-buscar="@buscarActual"
+                               asp-route-filtro="@filtroActual"
+                               asp-route-periodo="@periodoActual"
+                               class="pagina-boton"
+                               data-orbit-action="quiet">
+                                Siguiente →
+                            </a>
+                        }
+
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="sin-registros">
+
+                    @if (!string.IsNullOrWhiteSpace(buscarActual)
+                         || filtroActual != "todos"
+                         || periodoActual != "todos")
+                    {
+                        <strong>
+                            No se encontraron registros con esos criterios.
+                        </strong>
+
+                        <span>
+                            Prueba cambiando la búsqueda o modificando los filtros.
+                        </span>
+                    }
+                    else
+                    {
+                        <strong>
+                            No existen registros relacionados con productos.
+                        </strong>
+                    }
+
+                </div>
+            }
+
+        </section>
+
+    </div>
+
+    <div class="contenedor-volver">
+
+        <a asp-controller="Home"
+           asp-action="MovimientoHistorial"
+           class="btn-volver"
+           data-orbit-action="secondary">
+
+            ← Volver a Movimientos e Historial
+
+        </a>
+
+    </div>
+
+</div>
+
+<style>
+
+    /* MISMA COMPOSICION EXTERIOR */
+
+    body.sm-app .historial-productos-original {
+        width: 100% !important;
+        max-width: 1500px !important;
+        margin: 5px auto !important;
+        box-sizing: border-box;
+    }
+
+    body.sm-app .historial-productos-original .sm-history-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 18px !important;
+        width: 100% !important;
+    }
+
+    body.sm-app .historial-productos-original .sm-history-console {
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        padding: 20px 22px !important;
+        border: 1px solid #bdd1eb;
+        border-radius: 18px;
+        background: linear-gradient(135deg, #eef5ff, #e7f0ff);
+        box-sizing: border-box;
+    }
+
+    body.sm-app .historial-productos-original .sm-console-heading {
+        margin: 0 0 16px !important;
+        padding: 0 0 12px !important;
+        border-bottom: 1px solid #cadaf0;
+    }
+
+    body.sm-app .historial-productos-original .sm-console-heading h2 {
+        margin: 3px 0 4px;
+        font-size: 20px;
+        color: #173d69;
+    }
+
+    body.sm-app .historial-productos-original .sm-console-heading p {
+        margin: 0;
+        color: #526f8f;
+    }
+
+    /* FILTROS */
+
+    body.sm-app .historial-productos-original .historial-herramientas {
+        display: grid !important;
+        grid-template-columns: minmax(260px, 1fr) minmax(440px, 1.45fr) !important;
+        align-items: end !important;
+        gap: 16px !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    body.sm-app .historial-productos-original .form-busqueda {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) auto !important;
+        align-items: end !important;
+        gap: 6px 10px !important;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    body.sm-app .historial-productos-original .form-busqueda > label {
+        grid-column: 1 / -1;
+        margin: 0;
+        color: #526f8e;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    body.sm-app .historial-productos-original .filtro-busqueda {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+        min-height: 43px;
+        padding: 0 12px;
+        border: 1px solid #afc6e5;
+        border-radius: 10px;
+        background: #fbfdff;
+    }
+
+    body.sm-app .historial-productos-original .filtro-busqueda input {
+        flex: 1;
+        width: 100%;
+        min-width: 0;
+        margin: 0 !important;
+        padding: 8px 0 !important;
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        outline: none;
+    }
+
+    body.sm-app .historial-productos-original .form-filtros {
+        display: grid !important;
+        grid-template-columns: minmax(140px, 1fr) minmax(140px, 1fr) auto auto !important;
+        align-items: end !important;
+        gap: 10px !important;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    body.sm-app .historial-productos-original .filtro-campo {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        min-width: 0;
+    }
+
+    body.sm-app .historial-productos-original .filtro-campo label {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #526f8e;
+    }
+
+    body.sm-app .historial-productos-original .filtro-campo select {
+        width: 100%;
+        min-height: 43px;
+    }
+
+    body.sm-app .historial-productos-original :is(
+        .btn-buscar,
+        .btn-aplicar-filtros,
+        .btn-limpiar-filtros
+    ) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 43px !important;
+        white-space: nowrap;
+    }
+
+    /* RESULTADOS */
+
+    body.sm-app .historial-productos-original .sm-history-ledger {
+        display: block !important;
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+    }
+
+    body.sm-app .historial-productos-original .historial-resumen-filtros {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        min-height: 62px;
+        margin: 0 0 14px;
+        padding: 15px 18px;
+        border-radius: 15px;
+        background: linear-gradient(115deg, #193e66, #255485);
+        color: white;
+        font-size: 12px;
+        box-sizing: border-box;
+    }
+
+    body.sm-app .historial-productos-original .historial-resumen-filtros strong {
+        color: white;
+        font-size: 17px;
+        margin-left: 4px;
+    }
+
+    body.sm-app .historial-productos-original .filtro-activo {
+        padding: 5px 9px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.12);
+        color: white;
+    }
+
+    /* TABLA ORIGINAL DE CUATRO COLUMNAS */
+
+    body.sm-app .historial-productos-original .tabla-contenedor {
+        width: 100%;
+        overflow-x: auto;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 7px 20px rgba(28, 65, 95, 0.12);
+    }
+
+    body.sm-app .historial-productos-original .tabla-historial {
+        width: 100%;
+        min-width: 900px;
+        table-layout: fixed;
+        border-collapse: collapse;
+        background: white;
+    }
+
+    body.sm-app .historial-productos-original .tabla-historial th {
+        padding: 14px !important;
+        background: #0f5278 !important;
+        color: white !important;
+        text-align: left;
+        font-weight: 600;
+    }
+
+    body.sm-app .historial-productos-original .tabla-historial td {
+        padding: 12px 14px !important;
+        border-bottom: 1px solid #dce6ec;
+        color: #17324d;
+        vertical-align: top;
+    }
+
+    body.sm-app .historial-productos-original .tabla-historial tbody tr:hover {
+        background: #f4f9fc;
+    }
+
+    body.sm-app .historial-productos-original .columna-id {
+        width: 7%;
+    }
+
+    body.sm-app .historial-productos-original .columna-responsable {
+        width: 16%;
+    }
+
+    body.sm-app .historial-productos-original .columna-descripcion {
+        width: 59%;
+    }
+
+    body.sm-app .historial-productos-original .columna-fecha {
+        width: 18%;
+    }
+
+    /* IDENTIFICACION DEL REGISTRO */
+
+    body.sm-app .historial-productos-original .historial-id {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 34px;
+        padding: 5px 7px;
+        border-radius: 6px;
+        background: #edf5f9;
+        color: #31566d;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    body.sm-app .historial-productos-original .responsable-historial {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+    }
+
+    body.sm-app .historial-productos-original .responsable-icono {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: #eef6fa;
+        font-size: 12px;
+    }
+
+    /* ========================================
+       ORGANIZACION INTERNA DE DESCRIPCION
+       ======================================== */
+
+    body.sm-app .historial-productos-original .descripcion-evento {
+        width: 100%;
+        padding: 11px 13px;
+        border: 1px solid #dce7ec;
+        border-radius: 9px;
+        background: #fbfdfe;
+        box-sizing: border-box;
+    }
+
+    body.sm-app .historial-productos-original .evento-producto {
+        border-left: 4px solid #c37a38;
+    }
+
+    body.sm-app .historial-productos-original .evento-lote {
+        border-left: 4px solid #4f7d99;
+    }
+
+    body.sm-app .historial-productos-original .evento-cabecera {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    body.sm-app .historial-productos-original .evento-tipo {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 9px;
+        border-radius: 999px;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    body.sm-app .historial-productos-original .evento-nombre {
+        color: #073b64;
+        font-size: 13px;
+    }
+
+    body.sm-app .historial-productos-original .tipo-producto {
+        background: #fff2e7;
+        color: #a15c1b;
+    }
+
+    body.sm-app .historial-productos-original .tipo-lote {
+        background: #eef5fa;
+        color: #315c79;
+    }
+
+    body.sm-app .historial-productos-original .tipo-entrada {
+        background: #e7f7ef;
+        color: #18794e;
+    }
+
+    body.sm-app .historial-productos-original .tipo-salida {
+        background: #fff0f0;
+        color: #b42318;
+    }
+
+    /* ACCION REALIZADA */
+
+    body.sm-app .historial-productos-original .evento-contenido {
+        padding: 8px 10px;
+        border-radius: 7px;
+        background: #f2f7f9;
+    }
+
+    body.sm-app .historial-productos-original .evento-label {
+        display: block;
+        color: #71838e;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    body.sm-app .historial-productos-original .evento-contenido p {
+        margin: 4px 0 0;
+        color: #385563;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    /* DATOS SEPARADOS, COMO EN HISTORIAL USUARIOS */
+
+    body.sm-app .historial-productos-original .evento-datos {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    body.sm-app .historial-productos-original .evento-dato {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        min-width: 0;
+        padding: 10px 12px;
+        border-radius: 7px;
+        background: #f1f6f8;
+        font-size: 12px;
+        overflow-wrap: anywhere;
+    }
+
+    body.sm-app .historial-productos-original .evento-dato strong {
+        color: #264763;
+        font-weight: 700;
+    }
+
+    body.sm-app .historial-productos-original .evento-dato-ancho {
+        grid-column: 1 / -1;
+    }
+
+    body.sm-app .historial-productos-original .evento-dato .cantidad-salida {
+        color: #b42318;
+    }
+
+    body.sm-app .historial-productos-original .evento-dato .cantidad-entrada {
+        color: #18794e;
+    }
+
+    body.sm-app .historial-productos-original .evento-flecha {
+        margin: 0 5px;
+        color: #1198a5;
+    }
+
+    /* FECHA */
+
+    body.sm-app .historial-productos-original .fecha-historial {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    body.sm-app .historial-productos-original .fecha-dia {
+        color: #244a62;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    body.sm-app .historial-productos-original .fecha-hora {
+        color: #6f818c;
+        font-size: 12px;
+    }
+
+    /* PAGINACION Y NAVEGACION */
+
+    body.sm-app .historial-productos-original .paginacion {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-top: 25px;
+    }
+
+    body.sm-app .historial-productos-original .sin-registros {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding: 28px;
+        border: 1px solid #d8e2e8;
+        border-radius: 10px;
+        background: #f5f8fa;
+        color: #60798b;
+        text-align: center;
+    }
+
+    body.sm-app .historial-productos-original .contenedor-volver {
+        margin: 30px 0;
+        text-align: center;
+    }
+
+    /* RESPONSIVE */
+
+    @@media screen and (max-width: 1200px) {
+
+        body.sm-app .historial-productos-original .historial-herramientas {
+            grid-template-columns: minmax(0, 1fr) !important;
+        }
+
+    }
+
+    @@media screen and (max-width: 700px) {
+
+        body.sm-app .historial-productos-original .sm-history-console {
+            padding: 16px !important;
+        }
+
+        body.sm-app .historial-productos-original .form-busqueda,
+        body.sm-app .historial-productos-original .form-filtros {
+            grid-template-columns: minmax(0, 1fr) !important;
+        }
+
+        body.sm-app .historial-productos-original :is(
+            .btn-buscar,
+            .btn-aplicar-filtros,
+            .btn-limpiar-filtros
+        ) {
+            width: 100%;
+        }
+
+        body.sm-app .historial-productos-original .evento-datos {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+    }
+
+    @@media screen and (max-width: 450px) {
+
+        body.sm-app .historial-productos-original .evento-datos {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+    }
+
+</style>

@@ -1,0 +1,255 @@
+{
+  "views": {
+    "LoginSARMedix/Views/Home/Index.cshtml": {
+      "original": "d74fd21f6b8df95c0d23243d43e2d4ad64afae327baf84d4fd34c7f73b562fab",
+      "scripts": [
+        "64bc3a6fb990b09e16bb8fbde4019387efb022ae5be6f108b331b38ec3c02adf"
+      ]
+    },
+    "LoginSARMedix/Views/Home/RecuperarContrasena.cshtml": {
+      "original": "37d7068079a583db445b07fdc369b1d231ad3fd815a68c980c8201c602507d4a",
+      "scripts": []
+    },
+    "LoginSARMedix/Views/Home/VerificarCodigo.cshtml": {
+      "original": "6e54a0737f08c8b804dd70ffd5a189e6a317177f0d032eae73c379d17ebd9f32",
+      "scripts": []
+    },
+    "LoginSARMedix/Views/Home/NuevaContrasena.cshtml": {
+      "original": "c3d09cf3a383722795555f13d28419cc2302f8012c97b10e106812c0f1e4cf67",
+      "scripts": []
+    },
+    "LoginSARMedix/Views/Home/AccesoDenegado.cshtml": {
+      "original": "2a149d258e8329570837d55e683fabf2db39db5e26ad3816ac327450d817a846",
+      "scripts": []
+    },
+    "LoginSARMedix/Views/Home/Modulos/UsuariosPermisos.cshtml": {
+      "original": "c98dd8b908c21c15b44c2e2e9a5ac97f7c79b77ed3be19e8b204aeefad4b33a7",
+      "scripts": []
+    },
+    "LoginSARMedix/Views/Home/Usuarios.cshtml": {
+      "original": "451d6a064711dc1b9db3ec818cf53120f136b414578d7164e517071cf80a8848",
+      "scripts": [
+        "e07b49cb5adfd1b40a994bcf77faeb705692829e47b6f376a9f51b641e92c39a"
+      ]
+    },
+    "LoginSARMedix/Views/Home/CrearUsuario.cshtml": {
+      "original": "591ffc28d664447d2ffa8a1bb37c0d30ca8c36889e1b1415f180aa1063dbe5b5",
+      "scripts": [
+        "54cf52a73b4b51b476ca0bd89931f93f54fae33a501393b59032eadb0b2e47ef"
+      ]
+    },
+    "LoginSARMedix/Views/Home/EditarUsuario.cshtml": {
+      "original": "d84969ef477f42bca64134a312d0bd9ca1a1e5fd735dc300b4654b593f711967",
+      "scripts": [
+        "39551c18e2c2b792efdf1800e0042a283ab57645b635c2175f5b3e347333c0f9",
+        "7c63019b3bb1f76a6ff47b1ec89659136a194f649c2ba7783a89fbdbfd631563"
+      ]
+    },
+    "LoginSARMedix/Views/Home/ListadoEliminarUsuarios.cshtml": {
+      "original": "732fa735bb6dab9078424de80a85c9e68f6f76fb0838cc57c8c9d9290f836432",
+      "scripts": [
+        "096dea88c76c5f5e62812e99049a48efabc0503a0aa97ff78c1c4cf105e8df55"
+      ]
+    },
+    "LoginSARMedix/Views/Home/RolesPermisos.cshtml": {
+      "original": "02ec5bb28124cc65884208b3cdc03d03b61f54ad1fd3a52317472ffe4e2f6bc0",
+      "scripts": [
+        "7d7c2cdc53cef3802b20371e063afe4313f23e50789cb99d6fb45d2f1e090e05"
+      ]
+    },
+    "LoginSARMedix/Views/Home/CrearRol.cshtml": {
+      "original": "a600798a94cc7f09f73b6bde5a04150ffe7936361f6df770850d2d18442575d0",
+      "scripts": [
+        "3f3c217e7a375d3dd8ac52aeab8a8f7cfbdaba65abb93314be94c0d9885ec18c"
+      ]
+    },
+    "LoginSARMedix/Views/Home/EditarRol.cshtml": {
+      "original": "4c51c8b88d44ff6f73e436acfcc0e2b3dd3d8a042bea0bf7eeba8ce43b49179e",
+      "scripts": []
+    },
+    "LoginSARMedix/Views/Home/RolesInactivos.cshtml": {
+      "original": "e0d69c491c14e986b6f7658f7929e5c1562b8642cd9e16f2356a6dde2d588ffc",
+      "scripts": [
+        "9d29121b8db622dd025e7faa2f15eec0b7c1ecc1a64a228490ee33d95ee71c8c"
+      ]
+    },
+    "LoginSARMedix/Views/Home/Modulos/Productos.cshtml": {
+      "original": "af5dad18154708816695a423b8a68f27b0fffbdde56cd2b97a4339530c0e15ee",
+      "scripts": []
+    },
+    "LoginSARMedix/Views/Home/Productos.cshtml": {
+      "original": "b4ff00e2fb937bf67fa02c59e19679a4ccc5c1284f6fbe07e0a2a2cfbc7a5846",
+      "scripts": [
+        "b061a6c7a394cc4c1b6ff0e800c21290b14ec29a331ad014c1e6e962fb6e0822"
+      ]
+    },
+    "LoginSARMedix/Views/Home/CrearProducto.cshtml": {
+      "original": "c5e97041e87211040d97b664c3c6404384657a6814677b705127ca12d67c6458",
+      "scripts": [
+        "3f38d36c90775f9fc4891e0af2a99797be26c0874b351001d974d68a049ca9d8"
+      ]
+    },
+    "LoginSARMedix/Views/Home/EditarProducto.cshtml": {
+      "original": "f8c8f8b1c66513e751e5e8e599b3449f24168cd4856bb681a01c5eae52dd4653",
+      "scripts": [
+        "60597a7792d4fbb59b382b79f91d8dccbb51f1c2b145d30669a1f1621814d66c"
+      ]
+    },
+    "LoginSARMedix/Views/Home/Lotes.cshtml": {
+      "original": "ba8ce4e9d1a48fc8b58b2b4b36f079d33327249c4d861a4b29f77e62c7642430",
+      "scripts": [
+        "373c54c6cabb6cacff68dbda28fcf52b3e704d3812a4d25d12422bbfac96391f"
+      ]
+    },
+    "LoginSARMedix/Views/Home/CrearLote.cshtml": {
+      "original": "a43a5c725321f8dab63392f76dba87ab2814a31755cdfcebfd65a9b775e16dde",
+      "scripts": [
+        "ea9cbeca9a0836a9be5b8993cb162f38449099d67878e27533e4fd6f9d5fb192"
+      ]
+    },
+    "LoginSARMedix/Views/Home/EditarLote.cshtml": {
+      "original": "7a6c66515b76c2d2f058f0a8ce6264a0bc137db67cfee3389f60e1e3371c2cec",
+      "scripts": [
+        "f68f96d073e2c2d43448966827bf2f3bc1c726f752b42507e9239429a323671b"
+      ]
+    },
+    "LoginSARMedix/Views/Home/Ubicaciones.cshtml": {
+      "original": "279e139f3a0775ecd2bbf17a00fb77d9e0f05a06e89d41a651b94742ea879102",
+      "scripts": [
+        "6fcbcde292281cf086b17a9862d322ac612c7722b3e3910b8d60ac779cb01e06"
+      ]
+    },
+    "LoginSARMedix/Views/Home/InventarioUbicacion.cshtml": {
+      "original": "2a0da87a0fbed34f488a9a76e4363337426ccf9836e26549c799bc1f8a8e9bc8",
+      "scripts": []
+    },
+    "LoginSARMedix/Views/Home/Modulos/MovimientoHistorial.cshtml": {
+      "original": "eaaa57896ee88526233f919b6f213f109d123d439ba6291d38f02b8e91d059ba",
+      "scripts": []
+    },
+    "LoginSARMedix/Views/Home/TrasladarStock.cshtml": {
+      "original": "e4d68cf9078133b6f1b622a38e69f7c754b80354d882b1f3375d13d8b5a7dd77",
+      "scripts": [
+        "f889f68836a52e265a8c3ee379f4f1620c3d92b30018e1f71c0f3361727e9afc"
+      ]
+    },
+    "LoginSARMedix/Views/Home/BajaInventario.cshtml": {
+      "original": "73f50cd97daceca2a66cccf06c4e8ffca5ba84cd6cdb700937c32333cae9ae1b",
+      "scripts": [
+        "169d8137984f7a26058927c3c87c026f0163c2c57fd5f3290a78fdb2227dcbbf"
+      ]
+    },
+    "LoginSARMedix/Views/Home/SalidaExtraordinaria.cshtml": {
+      "original": "4a77a5d1b78523a24a4945425b4e07b9c03e7feb6ce0d19983af7a236d4e7c4a",
+      "scripts": [
+        "1c902a624012b91791cb9a5d4b447f6caec8258a73557f67f6cd0f51dd8a9ef7"
+      ]
+    },
+    "LoginSARMedix/Views/Home/Dosificaciones.cshtml": {
+      "original": "e99444fcf706623c08231eb2c6b0b3fa46abeb57dceafd22663718fcbc009175",
+      "scripts": [
+        "5740f3da167044426db45aa2110d857cc7003e31656215814eefc256b1c101d3"
+      ]
+    },
+    "LoginSARMedix/Views/Home/EntregaDosificacion.cshtml": {
+      "original": "793c38abbfc99e9842ab5eeb3de31b6a08370e32538c8e492fdea530dbca3f8f",
+      "scripts": [
+        "ec510814cc330e590cac489899bace85f0afbbc0594e5c09f94edd4146b239bd"
+      ]
+    },
+    "LoginSARMedix/Views/Home/ImprimirDosificacion.cshtml": {
+      "original": "9c4bcb59c6bc3ae5d624355cd8cc35039cae2d85d93fbd51d45133185666ea3b",
+      "scripts": [
+        "d01a18619db54f78debc2192b472e4d4a425c796e84c297537d2a55b26d22eb3"
+      ]
+    },
+    "LoginSARMedix/Views/Home/Modulos/MedicamentosControlados.cshtml": {
+      "original": "e675749372485dad6e7527afbed290f28264f73d827731a7d85bb508fd1d9696",
+      "scripts": [
+        "5592c8583eb3c4b33f50719b9ca268942cb29467fa7b181bb8cc0a5ba6bf9a1b"
+      ]
+    },
+    "LoginSARMedix/Views/Home/Historial.cshtml": {
+      "original": "3d0123b36a78145efcb510fd9baff2d1141e93d65049293c4df26ee80f3c2ee2",
+      "scripts": []
+    },
+    "LoginSARMedix/Views/Home/HistorialUsuarios.cshtml": {
+      "original": "4abdc7f9b1a39f1f849e6a7056f5f39f16cc71aacb315351d4db1bfc34764254",
+      "scripts": []
+    },
+    "LoginSARMedix/Views/Home/HistorialProductos.cshtml": {
+      "original": "62dd1e42fb08770d4cdade21cc614bf6ca2bec1c4cb222f68eeaf857c1981408",
+      "scripts": []
+    },
+    "LoginSARMedix/Views/Home/HistorialSectores.cshtml": {
+      "original": "7bc060863a16bf69cb8e2b013961beff74cd86cc42076c43df38eb04aac719ca",
+      "scripts": []
+    },
+    "LoginSARMedix/Views/Home/HistorialSalidasTurno.cshtml": {
+      "original": "ce4e003b0d2705690c05e3cdd7afdf2c6b8c0d7d3ad09c266f76a767dd9908fa",
+      "scripts": [
+        "f7ff69a548d2d9f07e1bf9d1d5c2e3fdd7b086f282ddc0b4819b48dd49d948be"
+      ]
+    },
+    "LoginSARMedix/Views/Home/InformeSalidasTurno.cshtml": {
+      "original": "21a6291e7bfcac12a2e3aa49cb7149e0d9ccdadbafed7b82f84046805bc778be",
+      "scripts": []
+    },
+    "LoginSARMedix/Views/Home/Bienvenida.cshtml": {
+      "original": "96138c3ca8dd834e1f6856eaea1877e0f076d8704e8810a8144adb9f9ab31f9a",
+      "scripts": [
+        "118378f64369128318c3fefafdde55fc07ca82c539222610112f3a806615389e"
+      ]
+    },
+    "LoginSARMedix/Views/Shared/Error.cshtml": {
+      "original": "5dbf98b6b9394ad78206edce40cab1d7a238aa69cfefa41bab0ebc6aa22488aa",
+      "scripts": []
+    }
+  },
+  "protected": {
+    "LoginSARMedix/Controllers/HomeController.cs": "b9413a41618e6346de66de72a21a26d19735b1b4e5646e72be0c91e2694033b7",
+    "LoginSARMedix/Repository/DosificacionRepository.cs": "4c04bfc57f517c4f9479ded5cafa4902b193a11d95ecdb7646635321ef15eea7",
+    "LoginSARMedix/Repository/HistorialRepository.cs": "1b9a0c5943f1b62f284181738e45af0e1dad707c28909e75b348f1d1ae102dbd",
+    "LoginSARMedix/Repository/LoteRepository.cs": "b8836c6421700bda3f474fd7a234f190a4dcde6df3c6bd93e78c655849d3fe1a",
+    "LoginSARMedix/Repository/MovimientoRepository.cs": "29d216adfece8f963439d7e45d3d72edd6009f81f1482e7e103a7711d234cb2b",
+    "LoginSARMedix/Repository/PermisoRepository.cs": "d61f4ebb8adc90cb59aed273b177816792b44834ca26dc26f54e60844d5c2536",
+    "LoginSARMedix/Repository/ProductoRepository.cs": "efcff5f80787a1a320aab330da3ee675d3a3f37adfca51a393693ab93fb2e5a8",
+    "LoginSARMedix/Repository/UsuarioRepository.cs": "196e540f61e03bad3b2f3c0602c41297c924c44cdd95445d5c9ffcf84f0b8a3d",
+    "LoginSARMedix/Models/DosificacionProgramada.cs": "6c92968bd4a99e4436bff3a6f485167ba9d3e87f50b1bb0ae0fe74d7e2fb9525",
+    "LoginSARMedix/Models/EntregaPaciente.cs": "6f8785299652c45ecdead82087274a5241b63a6132914cfd5573d130fece0b82",
+    "LoginSARMedix/Models/ErrorViewModel.cs": "0a4e9a2f37ff07955ae98f410842ebb95f74e45ba6abbf6eb014ab3d34e3a945",
+    "LoginSARMedix/Models/Historial.cs": "338b5a97d67b16082072a6559bd71487247fab92d1b5f4990fd0d406f0661535",
+    "LoginSARMedix/Models/Lote.cs": "a86008406f3fcc42ff43f4ca79cb685dc5abe91cce54d024a502f3e32d9a1c38",
+    "LoginSARMedix/Models/MovimientoControladoHistorial.cs": "36d07dfc9a35c50f56f60d310933de9500376d186d5388b767b3c38ce04c5e3b",
+    "LoginSARMedix/Models/Permiso.cs": "8dc9fc2505069be8864fb5f65e69ef912e0ed11b25267fa80922dfe3d8445627",
+    "LoginSARMedix/Models/Producto.cs": "1cf91f1ce5b417e690bf0c8accb2ea590810ff2cc5d55e6094b2862a6d5e2a17",
+    "LoginSARMedix/Models/Rol.cs": "cdd3146d160fc14f11604cbd6794ff6e12d4a4860cd8c7ff2679d9231058a030",
+    "LoginSARMedix/Models/SalidasEspeciales.cs": "bed8b8b457e1004a762e0e298b8513411ad454fdb933fdc93adcc42ac28a3ff2",
+    "LoginSARMedix/Models/TrasladoStock.cs": "acb20d3dbeb34ac477f4318e5c8943e41e0fe7d2541640e1c27feeee1eedfc46",
+    "LoginSARMedix/Models/Ubicacion.cs": "3840fb1fc497e22f58ec043a43d576ea46d6d0a7898fa6250ba36f22e45d9591",
+    "LoginSARMedix/Models/Usuario.cs": "5f32617184d5ee6027d27b35ebff31ed059e99d79ba20233c243d2a1e6cdb069",
+    "LoginSARMedix/EmailService/EmailService.cs": "8497408db426c410d87d868e251d75feee82e7040edb674d6222ab72a9a04342",
+    "LoginSARMedix/ViewComponents/AlertasViewComponent.cs": "d7f9ebd97480a1c87f47b7223786b772b032b785bca632e830ac5d62b9cc0b38",
+    "LoginSARMedix/wwwroot/js/sarmedix-orbita-v2.js": "c914db6dbcea77b7396a63bd6b989c8485c2596836f015fc851963e5f76c364d",
+    "LoginSARMedix/wwwroot/js/sarmedix-ui.js": "900408d7886e042606d3b9b33c2b584dc21e2ce7760778bd04104ea26219ebb4",
+    "LoginSARMedix/wwwroot/js/site.js": "b79e48f50d4ed4c5dd309259171806791753bb3a72b4e2103a686e6f77658c16",
+    "LoginSARMedix/wwwroot/css/sarmedix-orbita-v2.css": "087e1908511363472762346c3d2ada0ab03a36bd7f7f1d4ae53879c400494296",
+    "LoginSARMedix/wwwroot/css/sarmedix-ui.css": "b3b4bf78dbe71774e236837f63d5d05719513ec3b06adbafe652777fcf579832",
+    "LoginSARMedix/wwwroot/css/sidebar.css": "c1e1bafb02d7b3f82941f1cb66bfb4250e16609ed8989b0ce79a85ca21f890bd",
+    "LoginSARMedix/wwwroot/css/site.css": "6b31f4a99c8f9e0768c175fb1d495fb8fec466e3f20f4fd7221f09f0a08b4a71",
+    "LoginSARMedix/Views/Shared/Components/Alertas/Default.cshtml": "0ce2809fdc17a1eda82d5eb9c91600dc85b7df79f1cf58ef3a91a5eb7cbf7990",
+    "LoginSARMedix/Views/Shared/_Layout.cshtml.css": "a50ad1af0709e4a2cca3fed34a257fad983e2d8a8c344f2b417d6b0c8ba27532",
+    "LoginSARMedix/Views/Shared/_ModuleIcons.cshtml": "6bf27a5cd75728918f04fb174771d9e18c95b18491e7b0e44b959b36336edcd1",
+    "LoginSARMedix/Views/Shared/_OrbitalMark.cshtml": "e15cb7818e9688385eb63b564005f36a579cdc4f85662e91775209faee3c92e3",
+    "LoginSARMedix/Views/Shared/_Sidebar.cshtml": "2cb448c6f9b239854c8dcbcbc812b2e0d4c915e7cfbb2901643a939b438f53a4",
+    "LoginSARMedix/Views/Shared/_Sidebar.cshtml.css": "a50ad1af0709e4a2cca3fed34a257fad983e2d8a8c344f2b417d6b0c8ba27532",
+    "LoginSARMedix/Views/Shared/_ValidationScriptsPartial.cshtml": "9ef82fee87759dfecf2638af263085e669aa14a40c723d556d790d65a525ba11",
+    "LoginSARMedix/Views/_ViewImports.cshtml": "2c3ec818f9ef45190c64b3de05781a507fac330ad76b3f5af470ae5cd5cc212b",
+    "LoginSARMedix/Views/_ViewStart.cshtml": "47e02b4da20d198892b7b1b00b12944068797c438ef2e82d20ff70b4d56bad39",
+    "LoginSARMedix/appsettings.Development.json": "73f95f9e0ceb205fc1c4dc50c07697fcfa29d7087868c2aef1d504cb38c771ec",
+    "LoginSARMedix/appsettings.json": "0de8781b4405bb0369ab2be1ed6980c1f04e246ccdf00979a0bc258029fe4742",
+    "LoginSARMedix/appsettings.Production.json": "2ea960049eefde72207135e53fdaa4ee4ade16493c1985e8ba05c05318f8526e",
+    "LoginSARMedix/LoginSARMedix.csproj": "4f0f5de9e2a0172959a310e950bf12b1369982b772120cb3055e8ce83d201626",
+    "LoginSARMedix/Program.cs": "e5dfd95280242b7dc670761fa6781b301518dc4581f0f7ba31bff59482eb1dc7"
+  }
+}

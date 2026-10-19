@@ -1,0 +1,267 @@
+﻿@* SM-ORBITA-METADATA *@
+@{ ViewData["SmScreen"] = "EditarRol"; ViewData["SmFamily"] = "users"; }
+@model LoginSARMedix.Models.Rol
+
+@{
+    ViewData["Title"] = "Editar Rol";
+    ViewData["TituloBarra"] = "Editar Rol";
+}
+
+
+<section class="contenedor-editar-rol">
+
+    <h1 class="titulo-editar-rol">
+        Editar Rol
+    </h1>
+
+    <p class="descripcion-editar-rol">
+        Modifique el nombre o la descripción del rol seleccionado.
+    </p>
+
+
+    <div class="tarjeta-editar-rol">
+
+        @if (ViewBag.Mensaje != null)
+        {
+            <div class="mensaje-error">
+                @ViewBag.Mensaje
+            </div>
+        }
+
+
+        <form asp-controller="Home"
+              asp-action="ActualizarRol"
+              method="post"
+              class="form-editar-rol" data-orbit-form="EditarRol">
+
+            <input type="hidden"
+                   asp-for="id_rol" />
+
+
+            <fieldset class="orbit-role-fields"><legend>Definición del rol</legend><div class="grupo-rol">
+
+                <label asp-for="nombre">
+                    Nombre del rol
+                </label>
+
+                <input asp-for="nombre"
+                       required />
+
+            </div>
+
+
+            <div class="grupo-rol">
+
+                <label asp-for="descripcion">
+                    Descripción
+                </label>
+
+                <textarea asp-for="descripcion"
+                          required></textarea>
+
+            </div>
+
+
+            </fieldset><button type="submit"
+                    class="btn-guardar-rol" data-orbit-action="primary">
+
+                Guardar cambios
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+
+    <!-- VOLVER -->
+
+    <div class="volver-rol">
+
+        <a asp-controller="Home"
+           asp-action="RolesPermisos"
+           asp-route-idRol="@Model.id_rol"
+           class="btn-volver-rol" data-orbit-action="secondary">
+
+            ← Volver a Roles y Permisos
+
+        </a>
+
+    </div>
+
+</section>
+
+
+
+<style>
+
+    /* CONTENEDOR */
+
+    .contenedor-editar-rol {
+        width: 90%;
+        max-width: 650px;
+        margin: 5px auto;
+    }
+
+
+    .titulo-editar-rol {
+        margin-bottom: 8px;
+        text-align: center;
+        color: #087bc2;
+        font-size: 32px;
+        font-weight: 700;
+    }
+
+
+    .descripcion-editar-rol {
+        margin-bottom: 30px;
+        text-align: center;
+        color: #687b89;
+        font-size: 16px;
+    }
+
+
+
+    /* TARJETA */
+
+    .tarjeta-editar-rol {
+        padding: 35px;
+        background: rgba(255, 255, 255, 0.96);
+        border-radius: 14px;
+        box-shadow: 0 7px 20px rgba(28, 65, 95, 0.15);
+    }
+
+
+
+    /* FORMULARIO */
+
+    .form-editar-rol {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+
+    .grupo-rol {
+        margin-bottom: 22px;
+    }
+
+
+    .grupo-rol label {
+        display: block;
+        margin-bottom: 8px;
+        color: #17324d;
+        font-weight: 600;
+    }
+
+
+    .grupo-rol input,
+    .grupo-rol textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #b9cbd7;
+        border-radius: 7px;
+        background: white;
+        color: #17324d;
+        font-family: inherit;
+        font-size: 15px;
+    }
+
+
+    .grupo-rol input:focus,
+    .grupo-rol textarea:focus {
+        outline: none;
+        border-color: #087bc2;
+        box-shadow: 0 0 0 3px rgba(8, 123, 194, 0.10);
+    }
+
+
+    .grupo-rol textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+
+
+    /* BOTON GUARDAR */
+
+    .btn-guardar-rol {
+        width: 100%;
+        padding: 13px;
+        background: #0b8f9c;
+        color: white;
+        border: none;
+        border-radius: 7px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+
+    .btn-guardar-rol:hover {
+        background: #087580;
+    }
+
+
+
+    /* MENSAJE */
+
+    .mensaje-error {
+        margin-bottom: 22px;
+        padding: 14px 18px;
+        background: #fdecec;
+        border: 1px solid #e5aaaa;
+        color: #a12828;
+        border-radius: 9px;
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+
+
+    /* VOLVER */
+
+    .volver-rol {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+
+    .btn-volver-rol {
+        display: inline-block;
+        padding: 11px 20px;
+        background: #0b8f9c;
+        color: white;
+        text-decoration: none;
+        border-radius: 7px;
+        font-weight: 600;
+    }
+
+
+    .btn-volver-rol:hover {
+        background: #087580;
+        color: white;
+    }
+
+
+
+    /* RESPONSIVE */
+
+    @@media (max-width: 600px) {
+
+        .contenedor-editar-rol {
+            width: 94%;
+        }
+
+
+        .tarjeta-editar-rol {
+            padding: 24px;
+        }
+
+    }
+
+</style>

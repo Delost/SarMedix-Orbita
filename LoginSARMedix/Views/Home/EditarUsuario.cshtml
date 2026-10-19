@@ -1,0 +1,315 @@
+﻿@* SM-ORBITA-METADATA *@
+@{ ViewData["SmScreen"] = "EditarUsuario"; ViewData["SmFamily"] = "users"; }
+@model LoginSARMedix.Models.Usuario
+
+@{
+    ViewData["Title"] = "Editar Usuario";
+    ViewData["TituloBarra"] = "Editar Usuario";
+}
+<header class="orbit-editor-heading"><span class="orbit-eyebrow">ÓRBITA / PERSONAS</span><h1>Editar usuario</h1></header>
+
+<form asp-controller="Home"
+      asp-action="ActualizarUsuario"
+      method="post"
+      class="formulario-principal" data-orbit-form="EditarUsuario">
+
+    <input asp-for="id_usuario"
+           type="hidden" />
+
+
+    <div class="orbit-identity-grid"><fieldset><legend>01 · Identidad personal</legend><div class="grupo-campo">
+
+        <label for="nombre">
+            Nombre
+        </label>
+
+        <input asp-for="nombre"
+               autocomplete="off" />
+
+    </div>
+
+
+    <div class="grupo-campo">
+
+        <label for="apellido">
+            Apellido
+        </label>
+
+        <input asp-for="apellido"
+               autocomplete="off" />
+
+    </div>
+
+
+    <div class="grupo-campo">
+
+        <label for="email">
+            Correo electrónico
+        </label>
+
+        <input asp-for="email"
+               type="email"
+               autocomplete="off" />
+
+    </div>
+
+
+    <div class="grupo-campo">
+
+        <label for="rut">
+            RUT
+        </label>
+
+        <input asp-for="rut"
+               maxlength="10"
+               autocomplete="off"
+               oninput="formatearRut(this)" />
+
+    </div>
+
+
+    </fieldset><fieldset class="orbit-credentials"><legend>02 · Perfil de acceso</legend><div class="grupo-campo">
+
+        <label for="id_rol">
+            Rol
+        </label>
+
+        <select asp-for="id_rol">
+
+            <option value="1">
+                Administrador
+            </option>
+
+            <option value="2">
+                TENS
+            </option>
+
+            <option value="3">
+                Enfermera
+            </option>
+
+            <option value="4">
+                Auxiliar
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div class="grupo-campo">
+
+        <label for="nombre_usuario">
+            Nombre de usuario
+        </label>
+
+        <input asp-for="nombre_usuario"
+               autocomplete="off" />
+
+    </div>
+
+
+    </fieldset></div><div class="orbit-form-actions"><button type="submit" data-orbit-action="primary">
+
+        Actualizar usuario
+
+    </button>
+
+
+    <div class="contenedor-volver">
+
+        <a asp-controller="Home"
+           asp-action="Usuarios"
+           class="btn-volver" data-orbit-action="secondary">
+
+            ← Volver al listado
+
+        </a>
+
+    </div>
+
+</div></form>
+
+
+@if (ViewBag.Mensaje != null)
+{
+    <div class="orbit-inline-error" role="alert">@ViewBag.Mensaje</div>
+}
+
+
+<style>
+
+    .grupo-campo {
+        width: 100%;
+        margin-bottom: 18px;
+    }
+
+
+    .grupo-campo label {
+        display: block;
+        width: 100%;
+        margin-bottom: 8px;
+        font-weight: 600;
+    }
+
+
+    /* INPUTS */
+
+    .formulario-principal input:not([type="hidden"]) {
+        display: block !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        height: 54px !important;
+
+        padding: 0 16px !important;
+
+        margin: 0 !important;
+
+        border: 1px solid #b8cfe0 !important;
+        border-radius: 10px !important;
+
+        background-color: #ffffff !important;
+
+        font-size: 16px !important;
+        font-family: inherit !important;
+
+        box-sizing: border-box !important;
+
+        outline: none !important;
+
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+
+    /* SELECT DEL ROL */
+
+    .formulario-principal select {
+        display: block !important;
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        height: 54px !important;
+
+        padding: 0 16px !important;
+
+        margin: 0 !important;
+
+        border: 1px solid #b8cfe0 !important;
+        border-radius: 10px !important;
+
+        background-color: #ffffff !important;
+
+        font-size: 16px !important;
+        font-family: inherit !important;
+
+        box-sizing: border-box !important;
+
+        outline: none !important;
+    }
+
+
+    /* FOCUS */
+
+    .formulario-principal input:not([type="hidden"]):focus,
+    .formulario-principal select:focus {
+        border-color: #1198a5 !important;
+
+        box-shadow:
+            0 0 0 3px
+            rgba(17, 152, 165, 0.15) !important;
+    }
+
+
+    /* BOTON ACTUALIZAR */
+
+    .formulario-principal button[type="submit"] {
+        width: 100%;
+
+        min-height: 48px;
+
+        border: none;
+
+        border-radius: 8px;
+
+        background-color: #1198a5;
+
+        color: white;
+
+        font-size: 16px;
+        font-weight: 600;
+
+        cursor: pointer;
+    }
+
+
+    .formulario-principal button[type="submit"]:hover {
+        background-color: #0d8490;
+    }
+
+
+    /* BOTON VOLVER */
+
+    .contenedor-volver {
+        display: flex;
+        justify-content: center;
+
+        margin-top: 25px;
+        margin-bottom: 20px;
+    }
+
+
+    .btn-volver {
+        display: inline-block;
+
+        padding: 12px 22px;
+
+        background-color: #1198a5;
+
+        color: white;
+
+        border-radius: 7px;
+
+        text-decoration: none;
+
+        font-weight: 600;
+    }
+
+
+    .btn-volver:hover {
+        background-color: #0d8490;
+        color: white;
+    }
+
+</style>
+
+
+<script>
+
+    function formatearRut(input) {
+
+        let rut = input.value
+            .replace(/[^0-9kK]/g, '')
+            .toUpperCase();
+
+
+        rut = rut.substring(0, 9);
+
+
+        if (rut.length > 1) {
+
+            rut =
+                rut.slice(0, -1)
+                + "-"
+                + rut.slice(-1);
+
+        }
+
+
+        input.value = rut;
+    }
+
+</script>

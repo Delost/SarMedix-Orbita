@@ -1,0 +1,293 @@
+@* SARMedix - ORBITA 2.0 *@
+@* Pulso cardiaco decorativo del footer *@
+
+<div class="sm-visual sm-digital-pulse"
+     aria-hidden="true">
+
+    <svg viewBox="0 0 1200 36"
+         preserveAspectRatio="none"
+         focusable="false"
+         role="presentation">
+
+        <defs>
+
+            <!-- Luz de la estrella fugaz -->
+
+            <linearGradient id="smEcgLight"
+                            x1="0%" y1="0%"
+                            x2="100%" y2="0%">
+
+                <stop offset="0%"
+                      stop-color="#58bfff"
+                      stop-opacity="0" />
+
+                <stop offset="35%"
+                      stop-color="#65d5ff"
+                      stop-opacity=".45" />
+
+                <stop offset="65%"
+                      stop-color="#a0eeff"
+                      stop-opacity=".9" />
+
+                <stop offset="100%"
+                      stop-color="#65d5ff"
+                      stop-opacity="0" />
+
+            </linearGradient>
+
+
+            <!-- Suavizado del destello -->
+
+            <linearGradient id="smEcgFade"
+                            x1="0%" y1="0%"
+                            x2="100%" y2="0%">
+
+                <stop offset="0%"
+                      stop-color="black" />
+
+                <stop offset="25%"
+                      stop-color="white"
+                      stop-opacity=".45" />
+
+                <stop offset="65%"
+                      stop-color="white" />
+
+                <stop offset="100%"
+                      stop-color="black" />
+
+            </linearGradient>
+
+
+            <!-- Ventana que recorre el ECG -->
+
+            <mask id="smEcgPassingLight"
+                  maskUnits="userSpaceOnUse"
+                  maskContentUnits="userSpaceOnUse"
+                  x="0" y="0"
+                  width="1200" height="36">
+
+                <rect x="0"
+                      y="0"
+                      width="1200"
+                      height="36"
+                      fill="black" />
+
+                <rect class="sm-ecg-mask-window"
+                      x="-260"
+                      y="0"
+                      width="260"
+                      height="36"
+                      fill="url(#smEcgFade)" />
+
+            </mask>
+
+        </defs>
+
+
+        <!--
+            Forma del electrocardiograma:
+            linea tranquila, onda P, complejo QRS
+            y onda T. Dos latidos separados.
+        -->
+
+        <g mask="url(#smEcgPassingLight)">
+
+            <!-- Resplandor -->
+
+            <path class="sm-ecg-glow"
+                  d="
+            M 0 18
+            L 130 18
+            Q 143 18 153 15
+            Q 164 12 175 18
+            L 195 18
+            L 207 21
+            L 219 18
+            L 233 31
+            L 246 3
+            L 259 25
+            L 273 18
+            L 306 18
+            Q 322 13 338 15
+            Q 350 16 364 18
+            L 570 18
+
+            L 710 18
+            Q 723 18 733 15
+            Q 744 12 755 18
+            L 775 18
+            L 787 21
+            L 799 18
+            L 813 31
+            L 826 3
+            L 839 25
+            L 853 18
+            L 886 18
+            Q 902 13 918 15
+            Q 930 16 944 18
+            L 1200 18
+            " />
+
+
+            <!-- Trazo principal -->
+
+            <path class="sm-ecg-line"
+                  d="
+            M 0 18
+            L 130 18
+            Q 143 18 153 15
+            Q 164 12 175 18
+            L 195 18
+            L 207 21
+            L 219 18
+            L 233 31
+            L 246 3
+            L 259 25
+            L 273 18
+            L 306 18
+            Q 322 13 338 15
+            Q 350 16 364 18
+            L 570 18
+
+            L 710 18
+            Q 723 18 733 15
+            Q 744 12 755 18
+            L 775 18
+            L 787 21
+            L 799 18
+            L 813 31
+            L 826 3
+            L 839 25
+            L 853 18
+            L 886 18
+            Q 902 13 918 15
+            Q 930 16 944 18
+            L 1200 18
+            " />
+
+        </g>
+
+    </svg>
+
+</div>
+
+
+<!-- ESTILOS EXCLUSIVOS DEL PULSO -->
+
+<style>
+
+    /* Sin marcos ni fondos */
+
+    body .sm-digital-pulse {
+        width: 72%;
+        max-width: 720px;
+        height: 34px;
+        margin: 6px auto 0;
+        padding: 0;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        overflow: hidden;
+    }
+
+        body .sm-digital-pulse::before,
+        body .sm-digital-pulse::after {
+            display: none !important;
+        }
+
+        /* Mantener el SVG dentro del footer */
+
+        body .sm-digital-pulse > svg {
+            display: block;
+            width: 100% !important;
+            max-width: 100% !important;
+            height: 100% !important;
+            overflow: hidden;
+        }
+
+        /* Línea cian delicada */
+
+        body .sm-digital-pulse .sm-ecg-line {
+            fill: none;
+            stroke: #83ddff;
+            stroke-width: 1.25;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            vector-effect: non-scaling-stroke;
+        }
+
+        /* Halo apenas visible */
+
+        body .sm-digital-pulse .sm-ecg-glow {
+            fill: none;
+            stroke: #66d6ff;
+            stroke-width: 4;
+            opacity: .13;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            vector-effect: non-scaling-stroke;
+        }
+
+        /*
+           Recorrido:
+           - 0% al 68%: de izquierda a derecha
+           - 68% al 100%: descanso
+           - reinicia automaticamente
+        */
+
+        body .sm-digital-pulse .sm-ecg-mask-window {
+            animation: sm-ecg-destello 9s linear infinite;
+        }
+
+    @@keyframes sm-ecg-destello {
+
+        0% {
+            transform: translateX(0);
+        }
+
+        68% {
+            transform: translateX(1500px);
+        }
+
+        100% {
+            transform: translateX(1500px);
+        }
+    }
+
+    /* Sin movimiento cuando se pausan los efectos */
+
+    .sm-motion-paused
+    .sm-digital-pulse
+    .sm-ecg-mask-window {
+        animation: none !important;
+    }
+
+    /* Accesibilidad */
+
+    @@media (prefers-reduced-motion: reduce) {
+
+        body .sm-digital-pulse .sm-ecg-mask-window {
+            animation: none !important;
+        }
+    }
+
+    /* Dispositivos pequeños */
+
+    @@media screen and (max-width: 480px) {
+
+        body .sm-digital-pulse {
+            width: 78%;
+            height: 30px;
+        }
+    }
+
+    /* No mostrar en impresion */
+
+    @@media print {
+
+        body .sm-digital-pulse {
+            display: none !important;
+        }
+    }
+
+</style>

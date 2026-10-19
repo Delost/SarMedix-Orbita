@@ -1,0 +1,188 @@
+[
+  {
+    "screen": "ModuloUsuariosPermisos",
+    "variant": "security",
+    "target": ".submenu-titulo",
+    "placement": "heading"
+  },
+  {
+    "screen": "Usuarios",
+    "variant": "security",
+    "target": ".usuarios-titulo",
+    "placement": "heading"
+  },
+  {
+    "screen": "ListadoEliminarUsuarios",
+    "variant": "security",
+    "target": ".usuarios-titulo",
+    "placement": "heading"
+  },
+  {
+    "screen": "CrearUsuario",
+    "variant": "security",
+    "target": ".orbit-editor-heading",
+    "placement": "heading"
+  },
+  {
+    "screen": "EditarUsuario",
+    "variant": "security",
+    "target": ".orbit-editor-heading",
+    "placement": "heading"
+  },
+  {
+    "screen": "RolesPermisos",
+    "variant": "security",
+    "target": "h1.titulo",
+    "placement": "heading"
+  },
+  {
+    "screen": "RolesInactivos",
+    "variant": "security",
+    "target": ".titulo-roles-inactivos",
+    "placement": "heading"
+  },
+  {
+    "screen": "CrearRol",
+    "variant": "security",
+    "target": ".descripcion-crear-rol",
+    "placement": "below"
+  },
+  {
+    "screen": "EditarRol",
+    "variant": "security",
+    "target": ".descripcion-editar-rol",
+    "placement": "below"
+  },
+  {
+    "screen": "ModuloProductos",
+    "variant": "inventory",
+    "target": ".submenu-titulo",
+    "placement": "heading"
+  },
+  {
+    "screen": "Productos",
+    "variant": "inventory",
+    "target": ".productos-titulo",
+    "placement": "heading"
+  },
+  {
+    "screen": "CrearProducto",
+    "variant": "inventory",
+    "target": ".orbit-editor-heading",
+    "placement": "heading"
+  },
+  {
+    "screen": "EditarProducto",
+    "variant": "inventory",
+    "target": ".orbit-editor-heading",
+    "placement": "heading"
+  },
+  {
+    "screen": "Lotes",
+    "variant": "trace",
+    "target": ".sm-workspace-heading",
+    "placement": "heading"
+  },
+  {
+    "screen": "CrearLote",
+    "variant": "trace",
+    "target": ".entrada-encabezado",
+    "placement": "heading"
+  },
+  {
+    "screen": "EditarLote",
+    "variant": "trace",
+    "target": ".sm-edit-heading",
+    "placement": "heading"
+  },
+  {
+    "screen": "ModuloMovimientoHistorial",
+    "variant": "transfer",
+    "target": ".submenu-titulo",
+    "placement": "heading"
+  },
+  {
+    "screen": "TrasladarStock",
+    "variant": "transfer",
+    "target": ".traslado-encabezado",
+    "placement": "heading"
+  },
+  {
+    "screen": "BajaInventario",
+    "variant": "transfer",
+    "target": ".salida-titulo",
+    "placement": "heading"
+  },
+  {
+    "screen": "SalidaExtraordinaria",
+    "variant": "transfer",
+    "target": ".extra-titulo",
+    "placement": "heading"
+  },
+  {
+    "screen": "Dosificaciones",
+    "variant": "preparation",
+    "target": ".sm-dose-orbit",
+    "placement": "slot"
+  },
+  {
+    "screen": "EntregaDosificacion",
+    "variant": "preparation",
+    "target": ".scan-encabezado",
+    "placement": "heading"
+  },
+  {
+    "screen": "ImprimirDosificacion",
+    "variant": "preparation",
+    "target": ".print-controles",
+    "placement": "heading"
+  },
+  {
+    "screen": "ModuloMedicamentosControlados",
+    "variant": "protection",
+    "target": ".controlados-encabezado",
+    "placement": "heading"
+  },
+  {
+    "screen": "Ubicaciones",
+    "variant": "distribution",
+    "target": ".ubicaciones-encabezado",
+    "placement": "heading"
+  },
+  {
+    "screen": "InventarioUbicacion",
+    "variant": "distribution",
+    "target": ".inventario-encabezado-superior",
+    "placement": "heading"
+  },
+  {
+    "screen": "Historial",
+    "variant": "memory",
+    "target": ".sm-history-heading",
+    "placement": "heading"
+  },
+  {
+    "screen": "HistorialUsuarios",
+    "variant": "memory",
+    "target": ".sm-history-heading",
+    "placement": "heading"
+  },
+  {
+    "screen": "HistorialProductos",
+    "variant": "memory",
+    "target": ".sm-history-heading",
+    "placement": "heading"
+  },
+  {
+    "screen": "HistorialSectores",
+    "variant": "memory",
+    "target": ".sm-history-heading",
+    "placement": "heading"
+  },
+  {
+    "screen": "HistorialSalidasTurno",
+    "variant": "memory",
+    "target": ".turno-encabezado",
+    "placement": "heading"
+  }
+]

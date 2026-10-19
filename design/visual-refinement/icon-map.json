@@ -1,0 +1,48 @@
+{
+  "UsuariosPermisos": [
+    [
+      "CrearUsuario",
+      "user-add"
+    ],
+    [
+      "Usuarios",
+      "user-list"
+    ],
+    [
+      "ListadoEliminarUsuarios",
+      "user-off"
+    ],
+    [
+      "RolesPermisos",
+      "authorization"
+    ]
+  ],
+  "Productos": [
+    [
+      "CrearProducto",
+      "product-add"
+    ],
+    [
+      "ListadoProductos2",
+      "catalog"
+    ],
+    [
+      "Lotes",
+      "lot-tag"
+    ]
+  ],
+  "MovimientoHistorial": [
+    [
+      "Historial",
+      "history-log"
+    ],
+    [
+      "HistorialUsuarios",
+      "user-history"
+    ],
+    [
+      "HistorialProductos",
+      "product-history"
+    ]
+  ]
+}

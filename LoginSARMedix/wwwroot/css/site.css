@@ -1,0 +1,1014 @@
+html {
+    font-size: 16px;
+    min-height: 100%;
+}
+
+
+/* ================================================== */
+/* BODY                                               */
+/* ================================================== */
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    color: #17324d;
+    background: linear-gradient( rgba(225, 242, 247, 0.50), rgba(225, 242, 247, 0.50) ), url('/images/fondo-clinico.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+
+/* ================================================== */
+/* BARRA SUPERIOR GENERAL                             */
+/* ================================================== */
+
+.barra-layout {
+    width: 100%;
+    height: 82px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    padding: 0 55px;
+    background: #0f5278;
+    color: white;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+}
+
+
+
+/* ================================================== */
+/* LOGO                                               */
+/* ================================================== */
+
+.logo-layout {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    color: white;
+    text-decoration: none;
+    justify-self: start;
+}
+
+
+    .logo-layout:hover {
+        color: white;
+        text-decoration: none;
+    }
+
+
+.logo-cruz-layout {
+    position: relative;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: linear-gradient( 135deg, #0d7898, #12a594 );
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.18);
+}
+
+
+    .logo-cruz-layout::before {
+        content: "";
+        position: absolute;
+        width: 22px;
+        height: 7px;
+        top: 17px;
+        left: 10px;
+        border-radius: 2px;
+        background-color: white;
+    }
+
+
+    .logo-cruz-layout::after {
+        content: "";
+        position: absolute;
+        width: 7px;
+        height: 22px;
+        top: 10px;
+        left: 17px;
+        border-radius: 2px;
+        background-color: white;
+    }
+
+
+.logo-texto-layout {
+    color: white;
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+}
+
+
+
+/* ================================================== */
+/* TITULO CENTRAL                                     */
+/* ================================================== */
+
+.titulo-layout {
+    justify-self: center;
+    color: white;
+    text-align: center;
+    font-size: 25px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+
+
+/* ================================================== */
+/* USUARIO                                            */
+/* ================================================== */
+
+.usuario-layout {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    justify-self: end;
+    gap: 12px;
+    min-width: 0;
+}
+
+
+.usuario-datos-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    line-height: 1.2;
+}
+
+
+.usuario-nombre-layout {
+    max-width: 190px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+.usuario-rol-layout {
+    margin-top: 4px;
+    color: #cfe7f3;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+
+.usuario-circulo-layout {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid rgba(255, 255, 255, 0.72);
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.14);
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+
+/* ================================================== */
+/* BOTON CERRAR SESION                                */
+/* ================================================== */
+
+.form-cerrar-layout {
+    margin: 0;
+    padding: 0;
+}
+
+
+.btn-cerrar-layout {
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 9px 16px !important;
+    border: 1px solid rgba(255, 255, 255, 0.70) !important;
+    border-radius: 7px !important;
+    background-color: transparent !important;
+    color: white !important;
+    font-family: inherit;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+
+    .btn-cerrar-layout:hover {
+        background-color: rgba(255, 255, 255, 0.18) !important;
+        border-color: white !important;
+    }
+
+
+
+/* ================================================== */
+/* CONTENEDOR DEL LAYOUT                              */
+/* ================================================== */
+
+.contenedor-layout {
+    width: 100%;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    flex: 1;
+}
+
+
+main {
+    min-height: calc( 100vh - 144px );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px !important;
+}
+
+
+
+    /* ================================================== */
+    /* CABECERA FORMULARIO                                */
+    /* ================================================== */
+
+    main > h2 {
+        width: 100%;
+        max-width: 520px;
+        margin: 0;
+        padding: 42px 48px 18px;
+        box-sizing: border-box;
+        background: rgba(255, 255, 255, 0.97);
+        text-align: center;
+        color: #093b62;
+        font-size: 31px;
+        font-weight: 700;
+        border-radius: 20px 20px 0 0;
+        box-shadow: 0 18px 45px rgba(16, 65, 95, 0.18);
+    }
+
+
+
+        /* LOGO CLINICO FORMULARIO */
+
+        main > h2::before {
+            content: "+";
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 76px;
+            height: 76px;
+            margin: 0 auto 22px;
+            border-radius: 20px;
+            background: linear-gradient( 135deg, #075985, #12a594 );
+            color: white;
+            font-size: 48px;
+            font-weight: 600;
+            line-height: 1;
+            box-shadow: 0 8px 18px rgba(0, 93, 125, 0.20);
+        }
+
+
+
+        /* SAR DE CHIGUAY */
+
+        main > h2::after {
+            content: "SAR de Chiguay";
+            display: block;
+            margin-top: 10px;
+            font-size: 17px;
+            font-weight: 400;
+            color: #657d90;
+        }
+
+
+
+    /* ================================================== */
+    /* FORMULARIO PRINCIPAL                               */
+    /* ================================================== */
+
+    main form.formulario-principal {
+        width: 100%;
+        max-width: 520px;
+        box-sizing: border-box;
+        padding: 24px 48px 42px;
+        background: rgba(255, 255, 255, 0.97);
+        border-radius: 0 0 20px 20px;
+        box-shadow: 0 22px 45px rgba(16, 65, 95, 0.18);
+    }
+
+
+        main form.formulario-principal > div {
+            margin-bottom: 22px;
+        }
+
+
+        main form.formulario-principal label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #173d5c;
+        }
+
+
+        main form.formulario-principal input[type="text"],
+        main form.formulario-principal input[type="email"],
+        main form.formulario-principal input[type="password"],
+        main form.formulario-principal input[type="number"],
+        main form.formulario-principal input[type="date"],
+        main form.formulario-principal select {
+            width: 100%;
+            height: 55px;
+            box-sizing: border-box;
+            padding: 0 18px;
+            border: 1px solid #bacdd9;
+            border-radius: 10px;
+            background: #fafdff;
+            font-size: 16px;
+            color: #17324d;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+        }
+
+
+        main form.formulario-principal textarea {
+            width: 100%;
+            min-height: 110px;
+            box-sizing: border-box;
+            padding: 14px 18px;
+            border: 1px solid #bacdd9;
+            border-radius: 10px;
+            background: #fafdff;
+            font-size: 16px;
+            color: #17324d;
+            font-family: inherit;
+            resize: vertical;
+            outline: none;
+        }
+
+
+            main form.formulario-principal input:focus,
+            main form.formulario-principal select:focus,
+            main form.formulario-principal textarea:focus {
+                background: white;
+                border-color: #1187a5;
+                box-shadow: 0 0 0 4px rgba(17, 135, 165, 0.12);
+            }
+
+
+
+/* ================================================== */
+/* VALIDACION GLOBAL SARMedix                         */
+/* ================================================== */
+
+/*
+    ESTA ES LA REGLA OFICIAL PARA CAMPOS CON ERROR.
+
+    La repetición ".campo-error.campo-error"
+    es intencional.
+
+    Algunas vistas antiguas poseen estilos
+    con !important.
+
+    Al aumentar la especificidad conseguimos
+    que este borde rojo gane sin tener que
+    modificar cada vista.
+*/
+
+html body input.campo-error.campo-error,
+html body select.campo-error.campo-error,
+html body textarea.campo-error.campo-error {
+    border: 1px solid #dc3545 !important;
+    border-color: #dc3545 !important;
+    background-color: #fff8f8 !important;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.10) !important;
+    outline: none !important;
+}
+
+
+    /*
+    Mientras el campo incorrecto tenga el foco,
+    continúa rojo.
+
+    Solamente desaparece cuando el usuario
+    empieza a corregirlo.
+*/
+
+    html body input.campo-error.campo-error:focus,
+    html body select.campo-error.campo-error:focus,
+    html body textarea.campo-error.campo-error:focus {
+        border-color: #dc3545 !important;
+        background-color: #fff8f8 !important;
+        box-shadow: 0 0 0 4px rgba(220, 53, 69, 0.13) !important;
+    }
+
+
+
+/* ================================================== */
+/* MENSAJE GLOBAL DE VALIDACION                       */
+/* ================================================== */
+
+/*
+    Este mensaje se utiliza en las pantallas
+    que todavía no tienen una caja de mensajes
+    propia.
+
+    Ejemplo:
+    Editar Usuario,
+    Recuperar Contraseña,
+    Verificar Código, etc.
+*/
+
+.mensaje-validacion-campo {
+    width: 100%;
+    min-height: 48px;
+    margin-bottom: 20px;
+    padding: 12px 15px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #f5b9bf;
+    border-radius: 8px;
+    background-color: #f8d7da;
+    color: #a71919;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+
+
+/* ================================================== */
+/* COMPATIBILIDAD CON MVC                             */
+/* ================================================== */
+
+/*
+    Si posteriormente utilizamos validaciones
+    automáticas de ASP.NET MVC, también tendrán
+    exactamente el mismo diseño.
+*/
+
+html body input.input-validation-error.input-validation-error,
+html body select.input-validation-error.input-validation-error,
+html body textarea.input-validation-error.input-validation-error {
+    border-color: #dc3545 !important;
+    background-color: #fff8f8 !important;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.10) !important;
+}
+
+
+
+/* ================================================== */
+/* BOTON FORMULARIO PRINCIPAL                         */
+/* ================================================== */
+
+main form.formulario-principal button[type="submit"] {
+    width: 100%;
+    height: 56px;
+    margin-top: 4px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient( 90deg, #075985, #087ca0 );
+    color: white;
+    font-size: 17px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+
+    main form.formulario-principal button[type="submit"]:hover {
+        transform: translateY( -2px );
+        box-shadow: 0 9px 20px rgba(7, 89, 133, 0.25);
+    }
+
+
+
+/* ================================================== */
+/* TEXTO INFERIOR FORMULARIO                          */
+/* ================================================== */
+
+main form.formulario-principal::after {
+    content: "Plataforma de control y trazabilidad farmacéutica";
+    display: block;
+    margin-top: 26px;
+    padding-top: 20px;
+    border-top: 1px solid #dae5eb;
+    text-align: center;
+    font-size: 14px;
+    color: #718696;
+}
+
+
+
+/* ================================================== */
+/* LISTADO DE USUARIOS                                */
+/* ================================================== */
+
+.usuarios-card {
+    width: 90%;
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 30px;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.97);
+    border-radius: 18px;
+    box-shadow: 0 18px 45px rgba(16, 65, 95, 0.18);
+}
+
+
+.usuarios-titulo {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+
+    .usuarios-titulo h1 {
+        margin: 0;
+        color: #093b62;
+        font-size: 30px;
+    }
+
+
+    .usuarios-titulo p {
+        margin: 5px 0 0;
+        color: #657d90;
+    }
+
+
+
+/* ================================================== */
+/* TABLA USUARIOS                                     */
+/* ================================================== */
+
+.tabla-usuarios {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+
+    .tabla-usuarios th {
+        padding: 13px 10px;
+        background: #0d7898;
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+
+    .tabla-usuarios td {
+        padding: 13px 10px;
+        border-bottom: 1px solid #dce5ea;
+        font-size: 14px;
+        text-align: center;
+    }
+
+
+    .tabla-usuarios tbody tr:hover {
+        background: #f3f8fa;
+    }
+
+
+
+/* ================================================== */
+/* ESTADOS                                            */
+/* ================================================== */
+
+.estado-activo {
+    color: #17833b;
+    font-weight: 600;
+}
+
+
+.estado-inactivo {
+    color: #777777;
+    font-weight: 600;
+}
+
+
+
+/* ================================================== */
+/* ACCIONES USUARIOS                                  */
+/* ================================================== */
+
+.acciones-contenido {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+}
+
+
+.form-desactivar {
+    display: inline-block;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+
+.btn-editar,
+.btn-desactivar {
+    display: inline-block;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 7px 12px !important;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px !important;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.btn-editar {
+    background: #0d7898;
+    color: white;
+}
+
+
+.btn-desactivar {
+    background: #545d63 !important;
+    color: white !important;
+}
+
+
+.btn-editar:hover {
+    background: #09637e;
+    color: white;
+}
+
+
+.btn-desactivar:hover {
+    background: #3f474c !important;
+}
+
+
+
+/* ================================================== */
+/* BOTON VOLVER                                       */
+/* ================================================== */
+
+.usuarios-volver {
+    margin-top: 25px;
+    text-align: center;
+}
+
+
+.btn-volver {
+    display: inline-block;
+    padding: 9px 18px;
+    background: #0d7898;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+
+    .btn-volver:hover {
+        background: #09637e;
+        color: white;
+    }
+
+
+
+/* ================================================== */
+/* BOTON ELIMINAR                                     */
+/* ================================================== */
+
+.btn-eliminar {
+    display: inline-block;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 7px 12px !important;
+    background: #b42318 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 6px !important;
+    font-size: 14px !important;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+    .btn-eliminar:hover {
+        background: #8f1c13 !important;
+    }
+
+
+
+/* ================================================== */
+/* FOOTER GENERAL                                     */
+/* ================================================== */
+
+.footer-layout {
+    width: 100%;
+    min-height: 62px;
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.96);
+    color: #60798b;
+    font-size: 14px;
+    text-align: center;
+}
+
+
+
+/* ================================================== */
+/* FOOTER ANTIGUO                                     */
+/* ================================================== */
+
+.footer {
+    position: relative !important;
+    width: 100%;
+    height: 62px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.96);
+    border: none !important;
+    line-height: normal !important;
+}
+
+
+    .footer .container {
+        text-align: center;
+        font-size: 0;
+    }
+
+
+        .footer .container::after {
+            content: "SARMedix · Sistema de Gestión Farmacéutica · SAR de Chiguay";
+            font-size: 14px;
+            color: #60798b;
+        }
+
+
+    .footer a {
+        display: none;
+    }
+
+
+
+/* ================================================== */
+/* MODAL CERRAR SESION                                */
+/* ================================================== */
+
+.modal-fondo-sesion {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.45);
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+}
+
+
+.modal-contenido-sesion {
+    width: 90%;
+    max-width: 430px;
+    padding: 30px;
+    background-color: white;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+}
+
+
+.modal-icono-sesion {
+    width: 55px;
+    height: 55px;
+    margin: 0 auto 15px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1198a5;
+    color: white;
+    border-radius: 50%;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+
+.modal-contenido-sesion h2 {
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: #003b64 !important;
+    font-size: 25px !important;
+}
+
+
+    .modal-contenido-sesion h2::before,
+    .modal-contenido-sesion h2::after {
+        display: none !important;
+    }
+
+
+.modal-contenido-sesion p {
+    margin-top: 15px;
+    margin-bottom: 25px;
+    color: #444;
+    font-size: 17px;
+}
+
+
+.modal-botones-sesion {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+
+    .modal-botones-sesion button {
+        min-width: 100px;
+        width: auto !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 10px 18px !important;
+        border: none !important;
+        border-radius: 7px !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        cursor: pointer;
+    }
+
+
+.btn-sesion-si {
+    background-color: #198754 !important;
+}
+
+
+    .btn-sesion-si:hover {
+        background-color: #157347 !important;
+    }
+
+
+.btn-sesion-no {
+    background-color: #c82333 !important;
+}
+
+
+    .btn-sesion-no:hover {
+        background-color: #a91d2a !important;
+    }
+
+
+
+/* ================================================== */
+/* RESPONSIVE TABLET                                  */
+/* ================================================== */
+
+@media (max-width: 850px) {
+
+    .barra-layout {
+        height: auto;
+        min-height: 82px;
+        grid-template-columns: 1fr 1fr;
+        padding: 12px 22px;
+    }
+
+
+    .titulo-layout {
+        display: none;
+    }
+
+
+    .logo-texto-layout {
+        font-size: 20px;
+    }
+
+
+    .usuario-datos-layout {
+        display: none;
+    }
+}
+
+
+
+/* ================================================== */
+/* RESPONSIVE CELULAR                                 */
+/* ================================================== */
+
+@media (max-width: 620px) {
+
+    .barra-layout {
+        min-height: 70px;
+        padding: 10px 14px;
+        gap: 10px;
+    }
+
+
+    .logo-cruz-layout {
+        width: 36px;
+        height: 36px;
+    }
+
+
+        .logo-cruz-layout::before {
+            width: 20px;
+            height: 6px;
+            top: 15px;
+            left: 8px;
+        }
+
+
+        .logo-cruz-layout::after {
+            width: 6px;
+            height: 20px;
+            top: 8px;
+            left: 15px;
+        }
+
+
+    .logo-texto-layout {
+        font-size: 17px;
+    }
+
+
+    .usuario-circulo-layout {
+        display: none;
+    }
+
+
+    .btn-cerrar-layout {
+        padding: 8px 11px !important;
+        font-size: 12px !important;
+    }
+
+
+    main > h2,
+    main form.formulario-principal {
+        max-width: 94%;
+    }
+
+
+    main > h2 {
+        padding: 30px 25px 15px;
+        font-size: 26px;
+    }
+
+
+    main form.formulario-principal {
+        padding: 20px 25px 32px;
+    }
+
+
+    .usuarios-card {
+        width: 98%;
+        padding: 15px;
+        overflow-x: auto;
+    }
+
+
+    .tabla-usuarios {
+        min-width: 800px;
+    }
+
+
+    .modal-botones-sesion {
+        flex-direction: column;
+    }
+
+
+        .modal-botones-sesion button {
+            width: 100% !important;
+        }
+}

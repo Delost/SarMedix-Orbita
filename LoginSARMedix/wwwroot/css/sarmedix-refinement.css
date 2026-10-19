@@ -1,0 +1,131 @@
+
+/* =========================================================
+   SARMedix - ORBITA 2.0
+   SCROLL GLOBAL PARA TABLAS PRINCIPALES
+
+   - Scroll independiente de la pagina
+   - Scroll vertical dentro de las tablas
+   - Encabezados fijos
+   - Conserva el diseño original
+   - No afecta modales ni formularios
+   ========================================================= */
+
+:root {
+    --sm-tabla-altura-maxima: 62vh;
+    --sm-tabla-altura-minima: 280px;
+    --sm-tabla-altura-limite: 680px;
+}
+
+
+/* =========================================================
+   CONTENEDORES DE TABLAS DEL SISTEMA
+   ========================================================= */
+
+body.sm-app main :is( .tabla-contenedor, .controlados-tabla-contenedor, .inventario-tabla-contenedor, .tabla-wrap, .sm-tabla-scroll ):not(:is( .modal *, [role="dialog"] *, form *, .informe-imprimible *, .reporte-imprimible * )) {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-height: clamp( var(--sm-tabla-altura-minima), var(--sm-tabla-altura-maxima), var(--sm-tabla-altura-limite) ) !important;
+    overflow-y: auto !important;
+    overflow-x: auto !important;
+    overscroll-behavior-y: contain;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: #8baed8 #edf3fb;
+    -webkit-overflow-scrolling: touch;
+}
+
+
+/* =========================================================
+   ENCABEZADOS FIJOS EN TODAS LAS TABLAS INCLUIDAS
+   ========================================================= */
+
+body.sm-app main :is( .tabla-contenedor, .controlados-tabla-contenedor, .inventario-tabla-contenedor, .tabla-wrap, .sm-tabla-scroll ) table thead th {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 5 !important;
+    background-clip: padding-box;
+    box-shadow: inset 0 -1px 0 rgba(50, 85, 130, 0.12);
+}
+
+
+/* =========================================================
+   SCROLL PERSONALIZADO
+   ========================================================= */
+
+body.sm-app main :is( .tabla-contenedor, .controlados-tabla-contenedor, .inventario-tabla-contenedor, .tabla-wrap, .sm-tabla-scroll )::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+body.sm-app main :is( .tabla-contenedor, .controlados-tabla-contenedor, .inventario-tabla-contenedor, .tabla-wrap, .sm-tabla-scroll )::-webkit-scrollbar-track {
+    background: #edf3fb;
+    border-radius: 10px;
+}
+
+body.sm-app main :is( .tabla-contenedor, .controlados-tabla-contenedor, .inventario-tabla-contenedor, .tabla-wrap, .sm-tabla-scroll )::-webkit-scrollbar-thumb {
+    background: #8baed8;
+    border-radius: 10px;
+    border: 2px solid #edf3fb;
+}
+
+    body.sm-app main :is( .tabla-contenedor, .controlados-tabla-contenedor, .inventario-tabla-contenedor, .tabla-wrap, .sm-tabla-scroll )::-webkit-scrollbar-thumb:hover {
+        background: #4b7fc2;
+    }
+
+
+/* =========================================================
+   HISTORIALES: FILTROS VISIBLES EN ESCRITORIO
+   ========================================================= */
+
+body.sm-app[data-sm-family="history"]
+.historial-card.sm-history-workspace {
+    overflow: visible !important;
+}
+
+    body.sm-app[data-sm-family="history"]
+    .historial-card.sm-history-workspace
+    .sm-history-grid > .sm-history-console {
+        position: sticky !important;
+        top: 16px !important;
+        z-index: 30 !important;
+        box-shadow: 0 8px 25px rgba(25, 64, 110, 0.12) !important;
+    }
+
+
+/* =========================================================
+   CELULARES Y PANTALLAS PEQUEÑAS
+   ========================================================= */
+
+@media screen and (max-width: 700px) {
+
+    body.sm-app main :is( .tabla-contenedor, .controlados-tabla-contenedor, .inventario-tabla-contenedor, .tabla-wrap, .sm-tabla-scroll ) {
+        max-height: 55vh !important;
+        scrollbar-gutter: auto;
+    }
+
+    body.sm-app[data-sm-family="history"]
+    .historial-card.sm-history-workspace
+    .sm-history-grid > .sm-history-console {
+        position: static !important;
+    }
+}
+
+
+/* =========================================================
+   IMPRESION: SIN LIMITACION DE ALTURA
+   ========================================================= */
+
+@media print {
+
+    body.sm-app main :is( .tabla-contenedor, .controlados-tabla-contenedor, .inventario-tabla-contenedor, .tabla-wrap, .sm-tabla-scroll ) {
+        max-height: none !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+        body.sm-app main :is( .tabla-contenedor, .controlados-tabla-contenedor, .inventario-tabla-contenedor, .tabla-wrap, .sm-tabla-scroll ) table thead th {
+            position: static !important;
+        }
+}

@@ -1,0 +1,611 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/css/site.css"><link rel="stylesheet" href="/css/sidebar.css"><link rel="stylesheet" href="/css/sarmedix-ui.css"><link rel="stylesheet" href="/css/sarmedix-orbita-v2.css"><link rel="stylesheet" href="/css/sarmedix-system.css"><link rel="stylesheet" href="/css/sarmedix-structural.css"><link rel="stylesheet" href="/css/sarmedix-refinement.css"><body class="sm-app" data-sm-screen="CrearProducto" data-sm-family="products"><div style="padding:10px;background:#fff;color:#385575;font:13px system-ui">Vista estática sin datos · CrearProducto · Formularios desconectados</div><main role="main" id="sm-main" style="width:100%;padding:24px;display:block">﻿
+
+
+
+
+
+<header class="orbit-editor-heading"><span class="orbit-eyebrow">ÓRBITA / CATÁLOGO</span><h1>Registrar producto</h1></header>
+
+<form
+     
+      method="post"
+      enctype="multipart/form-data"
+      class="formulario-principal"
+      id="formCrearProducto"
+     
+      novalidate data-orbit-form="CrearProducto">
+
+    <!-- MENSAJE -->
+    <div class="espacio-mensaje">
+        
+    </div>
+
+
+    <!-- TIPO -->
+    <div class="orbit-product-grid"><fieldset class="orbit-product-identity"><legend>01 · Identificación y presentación</legend><div>
+        <label for="tipoProducto">Tipo de producto</label>
+
+        <select
+                id="tipoProducto"
+               >
+            <option value="">Seleccione</option>
+            <option value="Medicamento">Medicamento</option>
+            <option value="Insumo">Insumo</option>
+        </select>
+    </div>
+
+
+    <!-- CODIGO INTERNO OCULTO -->
+    <!-- SARMedix lo genera automáticamente. El usuario no necesita verlo. -->
+    <input type="hidden"
+           name="codigo_interno"
+           id="codigoInterno"
+           value="AUTO" />
+
+
+    <!-- CODIGO DE BARRAS -->
+    <div class="bloque-codigo-barras">
+        <div class="fila-codigo-barras">
+            <label for="codigoBarras">Código de barras / GTIN</label>
+            <span class="badge-codigo">ESCÁNER O MANUAL</span>
+        </div>
+
+        <input
+               id="codigoBarras"
+               autocomplete="off"
+               placeholder="Escanee el código o escríbalo aquí" />
+
+        <div class="ayuda-codigo">
+            <span class="icono-codigo">▦</span>
+            <span>
+                <strong>Escanee con el lector</strong> o escriba el código manualmente.
+                Si el producto no tiene código, puede dejar este campo vacío.
+            </span>
+        </div>
+
+        <div id="estadoCodigoBarras"
+             class="estado-codigo estado-codigo-oculto"
+             aria-live="polite">
+        </div>
+    </div>
+
+
+    <!-- NOMBRE -->
+    <div>
+        <label for="nombreProducto">Nombre</label>
+
+        <input
+               id="nombreProducto"
+               placeholder="Ej.: Tapsin" />
+    </div>
+
+
+    <!-- CAMPOS MEDICAMENTO -->
+    <div id="camposMedicamento" style="display:none;">
+
+        <div>
+            <label for="formaFarmaceutica">Forma farmacéutica</label>
+
+            <select
+                    id="formaFarmaceutica"
+                   >
+                <option value="">Seleccione</option>
+                <option value="Comprimido">Comprimido</option>
+                <option value="Comprimido recubierto">Comprimido recubierto</option>
+                <option value="Cápsula">Cápsula</option>
+                <option value="Solución oral">Solución oral</option>
+                <option value="Jarabe">Jarabe</option>
+                <option value="Ampolla">Ampolla</option>
+                <option value="Gotas">Gotas</option>
+                <option value="Crema">Crema</option>
+                <option value="Inhalador">Inhalador</option>
+                <option value="Supositorio">Supositorio</option>
+                <option value="Sobre">Sobre</option>
+                <option value="Otro">Otro</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="principioActivo">Principio activo</label>
+
+            <input
+                   id="principioActivo"
+                   placeholder="Ej.: Dipirona + cafeína" />
+        </div>
+
+        <div>
+            <label for="concentracion">Concentración</label>
+
+            <input
+                   id="concentracion"
+                   placeholder="Ej.: 500 mg / 400 mg" />
+
+            <small class="texto-ayuda">
+                Aquí van los mg, g, mg/mL, etc. Ej.: 500 mg / 400 mg.
+                La concentración NO indica cuántos comprimidos trae el envase.
+            </small>
+        </div>
+
+        <div>
+            <label for="requiereControl">¿Requiere control?</label>
+
+            <select
+                    id="requiereControl">
+                <option value="false">No</option>
+                <option value="true">Sí</option>
+            </select>
+        </div>
+    </div>
+
+
+    <!-- CAMPOS INSUMO -->
+    <div id="camposInsumo" style="display:none;">
+        <div>
+            <label for="material">Material</label>
+
+            <input
+                   id="material" />
+        </div>
+
+        <div>
+            <label for="esEsteril">¿Es estéril?</label>
+
+            <select
+                    id="esEsteril">
+                <option value="false">No</option>
+                <option value="true">Sí</option>
+            </select>
+        </div>
+    </div>
+
+
+    <!-- CONTENIDO / STOCK -->
+    </fieldset><fieldset class="orbit-product-content"><legend>02 · Contenido e inventario</legend><div class="seccion-inventario">
+        <div class="seccion-inventario-titulo">Control de contenido y stock</div>
+        <div class="seccion-inventario-subtitulo">
+            Indique cuánto contiene el producto y en qué unidad se controlará.
+        </div>
+
+        <div>
+            <label for="contenidoPorEnvase">Cantidad por envase</label>
+
+            <input
+                   id="contenidoPorEnvase"
+                   type="number"
+                   min="1"
+                   placeholder="Ej.: 60"
+                   />
+
+            <small class="texto-ayuda">
+                Ejemplo: si la caja trae 60 comprimidos, escriba 60 y seleccione Comprimidos como unidad de inventario.
+            </small>
+        </div>
+
+        <div>
+            <label for="unidadMedidaReal">Unidad de inventario / contenido</label>
+
+            <input
+                   id="unidadMedidaReal"
+                   type="hidden" />
+
+            <select id="unidadSelector"
+                   >
+                <option value="">Seleccione</option>
+
+                <optgroup label="Unidades físicas">
+                    <option value="Comprimidos">Comprimidos</option>
+                    <option value="Cápsulas">Cápsulas</option>
+                    <option value="Ampollas">Ampollas</option>
+                    <option value="Sobres">Sobres</option>
+                    <option value="Supositorios">Supositorios</option>
+                    <option value="Inhaladores">Inhaladores</option>
+                    <option value="Frascos">Frascos</option>
+                    <option value="Unidades">Unidades</option>
+                </optgroup>
+
+                <optgroup label="Peso / volumen">
+                    <option value="mg">mg</option>
+                    <option value="g">g</option>
+                    <option value="kg">kg</option>
+                    <option value="mL">mL</option>
+                    <option value="L">L</option>
+                </optgroup>
+
+                <option value="Otro">Otro</option>
+                <option value="Omitir">Omitir</option>
+            </select>
+
+            <small class="texto-ayuda">
+                Para comprimidos use <strong>Comprimidos</strong>.
+                Los <strong>mg</strong> normalmente corresponden a la concentración; use mg/g aquí solo si el stock se controla físicamente por peso.
+            </small>
+
+            <div id="advertenciaUnidad"
+                 class="ayuda-stock"
+                 style="display:none; margin-top:8px;"></div>
+
+            <div id="unidadOtroContenedor"
+                 class="unidad-otro"
+                 style="display:none;">
+                <label for="unidadOtro">Especifique la unidad</label>
+
+                <input id="unidadOtro"
+                       type="text"
+                       placeholder="Ej.: comprimidos, ampollas, sobres"
+                       />
+            </div>
+        </div>
+
+        <div class="bloque-stock-alerta">
+            <label id="labelStockMinimo">Alerta de stock bajo</label>
+
+            <input
+                   id="stockMinimo"
+                   type="number"
+                   min="0"
+                   />
+
+            <div class="ayuda-stock" id="ayudaStock">
+                Seleccione una unidad para ver cómo se interpretará la alerta.
+            </div>
+        </div>
+    </div>
+
+
+    <!-- IMAGEN -->
+    <div>
+        <label for="imagenProducto">Imagen del producto</label>
+
+        <input type="file"
+               name="imagen"
+               id="imagenProducto"
+               accept="image/*" />
+
+        <small class="texto-ayuda">Opcional.</small>
+    </div>
+
+
+    <br />
+
+    </fieldset></div><div class="orbit-form-actions"><button type="submit"
+            id="btnRegistrarProducto" data-orbit-action="primary">
+        Registrar producto
+    </button>
+</div></form>
+
+
+<div class="contenedor-volver">
+    <a
+      
+       class="btn-volver-productos" data-orbit-action="secondary">
+        ← Volver a Productos
+    </a>
+</div>
+
+
+<!-- CONFIRMACION -->
+<div id="modalConfirmacion" class="modal-fondo">
+    <div class="modal-contenido" data-orbit-dialog="surface">
+        <div class="modal-icono">?</div>
+
+        <h2>Confirmar acción</h2>
+
+        <p>¿Quieres registrar este producto?</p>
+
+        <div class="modal-botones">
+            <button type="button"
+                    class="btn-modal-si"
+                    data-orbit-action="primary">
+                Sí
+            </button>
+
+            <button type="button"
+                    class="btn-modal-no"
+                    data-orbit-action="secondary">
+                No
+            </button>
+
+            <button type="button"
+                    class="btn-modal-cancelar"
+                    data-orbit-action="secondary">
+                Cancelar
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .espacio-mensaje {
+        min-height: 48px;
+        margin-bottom: 8px;
+    }
+
+    .mensaje {
+        width: 100%;
+        padding: 12px 15px;
+        border-radius: 7px;
+        text-align: center;
+        font-weight: 600;
+        opacity: 1;
+        transition: opacity 0.5s ease;
+    }
+
+    .mensaje-exito {
+        background-color: #d1e7dd;
+        color: #0f5132;
+        border: 1px solid #badbcc;
+    }
+
+    .mensaje-error {
+        background-color: #f8d7da;
+        color: #842029;
+        border: 1px solid #f5c2c7;
+    }
+
+    .mensaje-oculto {
+        visibility: hidden;
+    }
+
+    .texto-ayuda {
+        display: block;
+        margin-top: 6px;
+        color: #718592;
+        font-size: 12px;
+    }
+
+
+    /* CODIGO DE BARRAS */
+    .bloque-codigo-barras {
+        padding: 14px;
+        margin: 4px 0 16px 0;
+        border: 1px solid #b8dbe4;
+        border-radius: 10px;
+        background-color: #f4fbfc;
+    }
+
+    .fila-codigo-barras {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .badge-codigo {
+        padding: 4px 8px;
+        border-radius: 999px;
+        background-color: #d9f1f4;
+        color: #0b6670;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: .04em;
+    }
+
+    .bloque-codigo-barras input {
+        margin-top: 5px;
+    }
+
+    .ayuda-codigo {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-top: 8px;
+        color: #526d7c;
+        font-size: 12px;
+        line-height: 1.45;
+    }
+
+    .ayuda-codigo strong {
+        color: #075f6b;
+    }
+
+    .estado-codigo {
+        margin-top: 10px;
+        padding: 11px 12px;
+        border-radius: 8px;
+        font-size: 12px;
+        line-height: 1.45;
+    }
+
+    .estado-codigo-oculto {
+        display: none;
+    }
+
+    .estado-codigo-verificando {
+        display: block;
+        background-color: #eef7fb;
+        border: 1px solid #c5dfea;
+        color: #315f75;
+    }
+
+    .estado-codigo-disponible {
+        display: block;
+        background-color: #e7f6ed;
+        border: 1px solid #b8dec6;
+        color: #17633a;
+    }
+
+    .estado-codigo-duplicado {
+        display: block;
+        background-color: #fff4df;
+        border: 1px solid #efd09a;
+        color: #7a5110;
+    }
+
+    .estado-codigo-titulo {
+        display: block;
+        margin-bottom: 2px;
+        font-weight: 800;
+    }
+
+    .estado-codigo-accion {
+        display: inline-block;
+        margin-top: 8px;
+        padding: 7px 11px;
+        border-radius: 7px;
+        background-color: #1198a5;
+        color: white;
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+    .estado-codigo-accion:hover {
+        background-color: #0d8490;
+        color: white;
+    }
+
+    #btnRegistrarProducto:disabled {
+        opacity: .55;
+        cursor: not-allowed;
+    }
+
+    .icono-codigo {
+        color: #1198a5;
+        font-size: 18px;
+        line-height: 1;
+    }
+
+
+    /* CONTENIDO / STOCK */
+    .seccion-inventario {
+        margin-top: 18px;
+        padding-top: 18px;
+        border-top: 1px solid #dbe5ea;
+    }
+
+    .seccion-inventario-titulo {
+        color: #003b64;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .seccion-inventario-subtitulo {
+        margin: 3px 0 14px 0;
+        color: #718592;
+        font-size: 12px;
+    }
+
+    .unidad-otro {
+        margin-top: 10px;
+    }
+
+    .ayuda-stock {
+        margin-top: 8px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        background-color: #f3fafc;
+        border: 1px solid #c9e5ec;
+        color: #536c7b;
+        font-size: 12px;
+        line-height: 1.45;
+    }
+
+    .ayuda-stock strong {
+        color: #0b5f7b;
+    }
+
+
+    /* VOLVER */
+    .contenedor-volver {
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    .btn-volver-productos {
+        display: inline-block;
+        padding: 12px 22px;
+        background-color: #1198a5;
+        color: white;
+        border-radius: 7px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background-color 0.2s ease;
+    }
+
+    .btn-volver-productos:hover {
+        background-color: #0d8490;
+        color: white;
+    }
+
+
+    /* MODAL */
+    .modal-fondo {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.45);
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
+
+    .modal-contenido {
+        width: 90%;
+        max-width: 430px;
+        background-color: white;
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+    }
+
+    .modal-icono {
+        width: 55px;
+        height: 55px;
+        margin: 0 auto 15px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #1198a5;
+        color: white;
+        border-radius: 50%;
+        font-size: 30px;
+        font-weight: bold;
+    }
+
+    .modal-contenido h2 {
+        margin-top: 0;
+        color: #003b64;
+    }
+
+    .modal-contenido p {
+        margin-top: 15px;
+        margin-bottom: 25px;
+        font-size: 17px;
+        color: #444;
+    }
+
+    .modal-botones {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .modal-botones button {
+        min-width: 90px;
+        padding: 10px 18px;
+        border: none;
+        border-radius: 7px;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .btn-modal-si { background-color: #198754; }
+    .btn-modal-si:hover { background-color: #157347; }
+    .btn-modal-no { background-color: #c82333; }
+    .btn-modal-no:hover { background-color: #a91d2a; }
+    .btn-modal-cancelar { background-color: #59636b; }
+    .btn-modal-cancelar:hover { background-color: #474f55; }
+</style>
+
+
+
+</main><link rel="stylesheet" href="/css/sarmedix-global.css"><script>document.addEventListener("submit",e=>e.preventDefault());document.querySelectorAll("a").forEach(a=>a.removeAttribute("href"));</script></body></html>

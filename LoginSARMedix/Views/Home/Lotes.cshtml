@@ -1,0 +1,441 @@
+﻿@* SM-ORBITA-METADATA *@
+@{ ViewData["SmScreen"] = "Lotes"; ViewData["SmFamily"] = "products"; }
+@model List<LoginSARMedix.Models.Lote>
+
+@using Microsoft.AspNetCore.Http
+
+@{
+    ViewData["Title"] = "Inventario";
+    ViewData["TituloBarra"] = "Inventario";
+
+    string permisosTexto =
+        Context.Session.GetString("Permisos") ?? "";
+
+    var permisos =
+        permisosTexto
+            .Split(
+                '|',
+                StringSplitOptions.RemoveEmptyEntries
+            );
+
+    bool puedeRegistrar =
+        permisos.Any(
+            p => p.Equals(
+                "Registrar productos",
+                StringComparison.OrdinalIgnoreCase
+            )
+        );
+}
+
+
+<link rel="stylesheet" href="~/css/sarmedix-structural.css" asp-append-version="true" />
+
+<section class="usuarios-card sm-reimagined sm-stock-workspace" aria-label="Inventario">
+    <aside class="sm-stock-rail">
+        <div class="sm-overline">ÓRBITA / EXISTENCIAS</div>
+        <h1>Todo el stock.<br /><em>En perspectiva.</em></h1>
+        <p class="sm-lead">Consulta cada lote, su ubicación y su vencimiento desde una sola vista.</p>
+        <div class="sm-stock-instrument"><partial name="_OrbitInstrument" /><div class="sm-instrument-reading"><strong>@(Model?.Count ?? 0)</strong><span>Lotes en esta vista</span></div></div>
+        <div class="sm-rail-actions">    @if (puedeRegistrar)
+    {
+        <div class="acciones-superiores">
+
+            <a asp-controller="Home"
+               asp-action="CrearLote"
+               class="btn-nuevo-lote" data-orbit-action="primary">
+
+                + Registrar entrada
+
+            </a>
+
+        </div>
+    }</div>
+        <div class="sm-rail-navigation">    <div class="contenedor-navegacion">
+
+
+        <a asp-controller="Home"
+           asp-action="ListadoProductos2"
+           class="btn-listado-productos" data-orbit-action="secondary">
+
+            ← Ver catálogo de productos
+
+        </a>
+
+
+        <a asp-controller="Home"
+           asp-action="Productos"
+           class="btn-volver-productos" data-orbit-action="secondary">
+
+            ← Volver a Productos
+
+        </a>
+
+
+    </div>
+
+
+</div>
+    </aside>
+    <div class="sm-stock-content">
+            @if (TempData["Mensaje"] != null)
+    {
+        string tipoMensaje =
+            TempData["TipoMensaje"]?.ToString() ?? "";
+
+        <div id="mensajeListado"
+             class="mensaje @(tipoMensaje == "exito" ? "mensaje-exito" : "mensaje-error")">
+
+            @TempData["Mensaje"]
+
+        </div>
+    }
+        <header class="sm-workspace-heading"><div><span class="sm-overline">INVENTARIO / LOTES</span><h2>Mapa de existencias</h2></div><span class="sm-workspace-symbol"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-inventory" /></svg></span></header>
+        <div class="sm-stock-key"><span>Producto y lote</span><span>Vencimiento · Stock · Ubicación</span>@if (puedeRegistrar) { <span>Gestión</span> }</div>
+        @if (Model != null && Model.Count > 0)
+        {
+            <ul class="sm-stock-list">
+            @foreach (var lote in Model)
+            {
+                // Presentation uses the existing 30-day inventory threshold.
+                var fecha = lote.fecha_vencimiento?.Date;
+                var estado = !fecha.HasValue ? "Sin fecha" : fecha.Value < DateTime.Today ? "Vencido" : fecha.Value <= DateTime.Today.AddDays(30) ? "Próximo a vencer" : "Vigente";
+                var estadoClase = !fecha.HasValue ? "unknown" : fecha.Value < DateTime.Today ? "expired" : fecha.Value <= DateTime.Today.AddDays(30) ? "soon" : "current";
+                <li class="sm-stock-record" data-expiry="@estadoClase">
+                    <div class="sm-stock-product"><span class="sm-record-icon"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-products" /></svg></span><div><h3>@lote.nombre_producto</h3><span class="sm-stock-lot">Lote <strong>@lote.numero_lote</strong></span></div></div>
+                    <dl class="sm-stock-facts">
+                        <div><dt>Vencimiento</dt><dd>@lote.fecha_vencimiento?.ToString("dd-MM-yyyy") <span class="sm-state">@estado</span></dd></div>
+                        <div class="sm-stock-quantity"><dt>Stock actual</dt><dd><span class="cantidad-lote">@lote.cantidad_actual</span>@if (lote.cantidad_actual <= 0) { <span class="sm-state sm-zero">Sin stock</span> }</dd></div>
+                        <div><dt>Ubicación</dt><dd>@lote.nombre_ubicacion</dd></div>
+                    </dl>
+                    @if (puedeRegistrar)
+                    {
+                        <a asp-controller="Home" asp-action="EditarLote" asp-route-idLote="@lote.id_lote" class="btn-editar" data-orbit-action="secondary">Editar</a>
+                    }
+                </li>
+            }
+            </ul>
+        }
+        else
+        {
+            <div class="sin-registros">No existen existencias registradas en el inventario.</div>
+        }
+    </div>
+</section>
+<style>
+
+    /* ========================================= */
+    /* TARJETA                                   */
+    /* ========================================= */
+
+    .usuarios-card {
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+
+
+    /* ========================================= */
+    /* TABLA                                     */
+    /* ========================================= */
+
+    .tabla-contenedor {
+        width: 100%;
+        max-width: 100%;
+
+        overflow-x: auto;
+
+        box-sizing: border-box;
+    }
+
+
+    .tabla-usuarios {
+        width: 100%;
+
+        box-sizing: border-box;
+    }
+
+
+    .tabla-usuarios th,
+    .tabla-usuarios td {
+        vertical-align: middle;
+    }
+
+
+
+    /* ========================================= */
+    /* BOTON REGISTRAR                           */
+    /* ========================================= */
+
+    .acciones-superiores {
+        display: flex;
+
+        justify-content: flex-end;
+
+        margin-top: 20px;
+        margin-bottom: 22px;
+    }
+
+
+    .btn-nuevo-lote {
+        display: inline-block;
+
+        padding: 10px 18px;
+
+        background-color: #0d7898;
+
+        color: white;
+
+        border-radius: 6px;
+
+        text-decoration: none;
+
+        font-weight: 600;
+
+        transition:
+            background-color 0.2s ease;
+    }
+
+
+    .btn-nuevo-lote:hover {
+        background-color: #09637e;
+
+        color: white;
+    }
+
+
+
+    /* ========================================= */
+    /* CANTIDAD                                  */
+    /* ========================================= */
+
+    .cantidad-lote {
+        display: inline-block;
+
+        min-width: 45px;
+
+        padding: 5px 10px;
+
+        background-color: #e7f3f7;
+
+        color: #0d5b82;
+
+        border-radius: 14px;
+
+        text-align: center;
+
+        font-weight: 600;
+    }
+
+
+
+    /* ========================================= */
+    /* MENSAJES                                  */
+    /* ========================================= */
+
+    .mensaje {
+        width: 100%;
+
+        box-sizing: border-box;
+
+        margin-top: 20px;
+        margin-bottom: 20px;
+
+        padding: 12px 15px;
+
+        border-radius: 7px;
+
+        text-align: center;
+
+        font-weight: 600;
+
+        opacity: 1;
+
+        transition:
+            opacity 0.5s ease;
+    }
+
+
+    .mensaje-exito {
+        background-color: #d1e7dd;
+
+        color: #0f5132;
+
+        border:
+            1px solid #badbcc;
+    }
+
+
+    .mensaje-error {
+        background-color: #f8d7da;
+
+        color: #842029;
+
+        border:
+            1px solid #f5c2c7;
+    }
+
+
+
+    /* ========================================= */
+    /* SIN REGISTROS                             */
+    /* ========================================= */
+
+    .sin-registros {
+        padding: 25px;
+
+        margin-top: 20px;
+
+        background-color: #f5f8fa;
+
+        border:
+            1px solid #d8e2e8;
+
+        border-radius: 8px;
+
+        text-align: center;
+
+        color: #60798b;
+
+        font-size: 16px;
+    }
+
+
+
+    /* ========================================= */
+    /* NAVEGACION                                */
+    /* ========================================= */
+
+    .contenedor-navegacion {
+        display: flex;
+
+        justify-content: center;
+        align-items: center;
+
+        gap: 12px;
+
+        margin-top: 30px;
+        margin-bottom: 10px;
+
+        flex-wrap: wrap;
+    }
+
+
+    .btn-listado-productos {
+        display: inline-block;
+
+        padding: 12px 22px;
+
+        background-color: #59636b;
+
+        color: white;
+
+        border-radius: 7px;
+
+        text-decoration: none;
+
+        font-weight: 600;
+    }
+
+
+    .btn-listado-productos:hover {
+        background-color: #474f55;
+
+        color: white;
+    }
+
+
+    .btn-volver-productos {
+        display: inline-block;
+
+        padding: 12px 22px;
+
+        background-color: #1198a5;
+
+        color: white;
+
+        border-radius: 7px;
+
+        text-decoration: none;
+
+        font-weight: 600;
+    }
+
+
+    .btn-volver-productos:hover {
+        background-color: #0d8490;
+
+        color: white;
+    }
+
+
+
+    /* ========================================= */
+    /* CELULAR                                   */
+    /* ========================================= */
+
+    @@media (max-width: 700px) {
+
+        .acciones-superiores {
+            justify-content: center;
+        }
+
+
+        .contenedor-navegacion {
+            flex-direction: column;
+        }
+
+
+        .btn-listado-productos,
+        .btn-volver-productos {
+            width: 90%;
+
+            box-sizing: border-box;
+
+            text-align: center;
+        }
+
+    }
+
+</style>
+
+
+
+<script>
+
+    // =========================================
+    // OCULTAR MENSAJE DESPUES DE 3 SEGUNDOS
+    // =========================================
+
+    setTimeout(
+        function () {
+
+            const mensaje =
+                document.getElementById(
+                    "mensajeListado"
+                );
+
+
+            if (mensaje) {
+
+                mensaje.style.opacity =
+                    "0";
+
+
+                setTimeout(
+                    function () {
+
+                        mensaje.style.display =
+                            "none";
+
+                    },
+                    500
+                );
+            }
+
+        },
+        3000
+    );
+
+</script>
+
+<link rel="stylesheet" href="~/css/sarmedix-refinement.css" asp-append-version="true" />

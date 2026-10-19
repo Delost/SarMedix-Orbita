@@ -1,0 +1,928 @@
+﻿@* SM-ORBITA-METADATA *@
+@{ ViewData["SmScreen"] = "RolesInactivos"; ViewData["SmFamily"] = "users"; }
+@model List<LoginSARMedix.Models.Rol>
+
+@{
+    ViewData["Title"] = "Roles Inactivos";
+    ViewData["TituloBarra"] = "Roles Inactivos";
+}
+
+
+<section class="contenedor-roles-inactivos">
+
+
+    <!-- ================================= -->
+    <!-- TITULO                            -->
+    <!-- ================================= -->
+
+    <h1 class="titulo-roles-inactivos">
+
+        Roles Inactivos
+
+    </h1>
+
+
+    <p class="descripcion-roles-inactivos">
+
+        Aquí puede consultar los roles desactivados
+        y reactivarlos cuando sea necesario.
+
+    </p>
+
+
+
+    <!-- ================================= -->
+    <!-- MENSAJE                           -->
+    <!-- ================================= -->
+
+    @if (TempData["Mensaje"] != null)
+    {
+        string tipo =
+            TempData["TipoMensaje"]?.ToString()
+            ?? "exito";
+
+
+        <div class="mensaje @tipo"
+             id="mensaje">
+
+
+            @if (tipo == "exito")
+            {
+                <span class="mensaje-icono">
+                    ✓
+                </span>
+            }
+            else
+            {
+                <span class="mensaje-icono">
+                    !
+                </span>
+            }
+
+
+            <span>
+                @TempData["Mensaje"]
+            </span>
+
+
+        </div>
+    }
+
+
+
+    <!-- ================================= -->
+    <!-- TARJETA                           -->
+    <!-- ================================= -->
+
+    <div class="tarjeta-roles-inactivos">
+
+
+        @if (Model != null && Model.Count > 0)
+        {
+            <div class="tabla-contenedor">
+
+
+                <table class="tabla-roles" data-orbit-table="RolesInactivos"><caption class="orbit-table-caption">Roles inactivos · Perfiles de acceso</caption>
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Nombre
+                            </th>
+
+                            <th>
+                                Descripción
+                            </th>
+
+                            <th>
+                                Estado
+                            </th>
+
+                            <th>
+                                Acción
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+
+                    <tbody>
+
+
+                        @foreach (var rol in Model)
+                        {
+                            <tr>
+
+
+                                <td>
+
+                                    @rol.id_rol
+
+                                </td>
+
+
+                                <td>
+
+                                    @rol.nombre
+
+                                </td>
+
+
+                                <td>
+
+                                    @rol.descripcion
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="estado-inactivo">
+
+                                        Inactivo
+
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+
+                                    <form asp-controller="Home"
+                                          asp-action="ReactivarRol"
+                                          method="post"
+                                          class="form-reactivar-rol"
+                                          onsubmit="return confirmarReactivacionRol(this)" data-orbit-form="RolesInactivos">
+
+
+                                        <input type="hidden"
+                                               name="idRol"
+                                               value="@rol.id_rol" />
+
+
+                                        <button type="submit"
+                                                class="btn-reactivar" data-orbit-action="primary">
+
+                                            Reactivar rol
+
+                                        </button>
+
+
+                                    </form>
+
+
+                                </td>
+
+
+                            </tr>
+                        }
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+        }
+        else
+        {
+            <div class="sin-registros">
+
+                No existen roles inactivos actualmente.
+
+            </div>
+        }
+
+
+    </div>
+
+
+
+    <!-- ================================= -->
+    <!-- VOLVER                            -->
+    <!-- ================================= -->
+
+    <div class="volver-roles">
+
+
+        <a asp-controller="Home"
+           asp-action="RolesPermisos"
+           class="btn-volver-roles" data-orbit-action="secondary">
+
+            ← Volver a Roles y Permisos
+
+        </a>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ================================= -->
+<!-- VENTANA DE CONFIRMACION           -->
+<!-- ================================= -->
+
+<div id="modalConfirmacion"
+     class="modal-fondo">
+
+
+    <div class="modal-contenido" data-orbit-dialog="surface">
+
+
+        <div class="modal-icono">
+
+            ?
+
+        </div>
+
+
+        <div class="modal-titulo">
+
+            Confirmar acción
+
+        </div>
+
+
+        <p>
+
+            ¿Quieres reactivar este rol?
+
+        </p>
+
+
+        <div class="modal-botones">
+
+
+            <button type="button"
+                    class="btn-modal-si"
+                    onclick="reactivarRol()" data-orbit-action="primary">
+
+                Sí
+
+            </button>
+
+
+            <button type="button"
+                    class="btn-modal-no"
+                    onclick="cerrarConfirmacion()" data-orbit-action="secondary">
+
+                No
+
+            </button>
+
+
+            <button type="button"
+                    class="btn-modal-cancelar"
+                    onclick="cancelarReactivacion()" data-orbit-action="secondary">
+
+                Cancelar
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<style>
+
+    /* ================================= */
+    /* CONTENEDOR                        */
+    /* ================================= */
+
+    .contenedor-roles-inactivos {
+        width: 90%;
+        max-width: 1000px;
+        margin: 5px auto;
+    }
+
+
+    .titulo-roles-inactivos {
+        margin-bottom: 8px;
+        text-align: center;
+        color: #087bc2;
+        font-size: 32px;
+        font-weight: 700;
+    }
+
+
+    .descripcion-roles-inactivos {
+        margin-bottom: 30px;
+        text-align: center;
+        color: #687b89;
+        font-size: 16px;
+    }
+
+
+
+    /* ================================= */
+    /* MENSAJES                          */
+    /* ================================= */
+
+    .mensaje {
+        width: 100%;
+        margin-bottom: 22px;
+        padding: 14px 18px;
+
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        border-radius: 9px;
+
+        font-size: 15px;
+        font-weight: 600;
+
+        box-shadow:
+            0 4px 12px
+            rgba(0, 0, 0, 0.08);
+
+        transition:
+            opacity 0.4s ease,
+            transform 0.4s ease;
+    }
+
+
+    .mensaje.exito {
+        background: #e8f7ef;
+        border: 1px solid #9fd8b7;
+        color: #176b3a;
+    }
+
+
+    .mensaje.error {
+        background: #fdecec;
+        border: 1px solid #e5aaaa;
+        color: #a12828;
+    }
+
+
+    .mensaje-icono {
+        width: 28px;
+        height: 28px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background: currentColor;
+        color: white;
+
+        font-weight: bold;
+    }
+
+
+
+    /* ================================= */
+    /* TARJETA                           */
+    /* ================================= */
+
+    .tarjeta-roles-inactivos {
+        padding: 30px;
+
+        background:
+            rgba(255, 255, 255, 0.96);
+
+        border-radius: 14px;
+
+        box-shadow:
+            0 7px 20px
+            rgba(28, 65, 95, 0.15);
+    }
+
+
+
+    /* ================================= */
+    /* TABLA                             */
+    /* ================================= */
+
+    .tabla-contenedor {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+
+    .tabla-roles {
+        width: 100%;
+
+        border-collapse: collapse;
+
+        background: white;
+    }
+
+
+    .tabla-roles thead {
+        background: #0f5278;
+        color: white;
+    }
+
+
+    .tabla-roles th,
+    .tabla-roles td {
+        padding: 14px;
+
+        text-align: left;
+
+        border-bottom:
+            1px solid #dce6ec;
+    }
+
+
+    .tabla-roles th {
+        color: white;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+
+    .tabla-roles td {
+        color: #425d70;
+        font-size: 14px;
+    }
+
+
+    .tabla-roles tbody tr:hover {
+        background: #f5fafc;
+    }
+
+
+
+    /* ================================= */
+    /* ESTADO                            */
+    /* ================================= */
+
+    .estado-inactivo {
+        display: inline-block;
+
+        padding: 5px 10px;
+
+        background: #fdecec;
+
+        color: #a12828;
+
+        border-radius: 20px;
+
+        font-size: 12px;
+
+        font-weight: 600;
+    }
+
+
+
+    /* ================================= */
+    /* FORMULARIO REACTIVAR              */
+    /* ================================= */
+
+    .form-reactivar-rol {
+        width: auto !important;
+        max-width: none !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        background: transparent !important;
+
+        border-radius: 0 !important;
+
+        box-shadow: none !important;
+    }
+
+
+
+    /* ================================= */
+    /* BOTON REACTIVAR                   */
+    /* ================================= */
+
+    .btn-reactivar {
+        width: auto !important;
+
+        margin: 0 !important;
+
+        padding: 9px 15px !important;
+
+        background: #0b8f9c !important;
+
+        color: white !important;
+
+        border: none !important;
+
+        border-radius: 6px !important;
+
+        font-size: 13px !important;
+
+        font-weight: 600;
+
+        cursor: pointer;
+
+        transition:
+            background 0.2s ease,
+            transform 0.2s ease;
+    }
+
+
+    .btn-reactivar:hover {
+        background: #087580 !important;
+
+        transform:
+            translateY(-1px);
+    }
+
+
+
+    /* ================================= */
+    /* SIN ROLES                         */
+    /* ================================= */
+
+    .sin-registros {
+        padding: 35px;
+
+        text-align: center;
+
+        color: #687b89;
+
+        background: #f8fbfd;
+
+        border:
+            1px dashed #c5d5df;
+
+        border-radius: 8px;
+    }
+
+
+
+    /* ================================= */
+    /* VOLVER                            */
+    /* ================================= */
+
+    .volver-roles {
+        margin-top: 30px;
+
+        text-align: center;
+    }
+
+
+    .btn-volver-roles {
+        display: inline-block;
+
+        padding: 11px 20px;
+
+        background: #0b8f9c;
+
+        color: white;
+
+        text-decoration: none;
+
+        border-radius: 7px;
+
+        font-weight: 600;
+    }
+
+
+    .btn-volver-roles:hover {
+        background: #087580;
+
+        color: white;
+    }
+
+
+
+    /* ================================= */
+    /* MODAL                             */
+    /* ================================= */
+
+    .modal-fondo {
+        display: none;
+
+        position: fixed;
+
+        inset: 0;
+
+        width: 100%;
+        height: 100%;
+
+        background:
+            rgba(0, 0, 0, 0.45);
+
+        align-items: center;
+
+        justify-content: center;
+
+        z-index: 99999;
+    }
+
+
+    .modal-contenido {
+        width: 90%;
+
+        max-width: 430px;
+
+        padding: 30px;
+
+        background: white;
+
+        border-radius: 15px;
+
+        text-align: center;
+
+        box-shadow:
+            0 12px 35px
+            rgba(0, 0, 0, 0.25);
+    }
+
+
+    .modal-icono {
+        width: 55px;
+        height: 55px;
+
+        margin:
+            0 auto 15px auto;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        background: #1198a5;
+
+        color: white;
+
+        border-radius: 50%;
+
+        font-size: 30px;
+
+        font-weight: bold;
+    }
+
+
+    .modal-titulo {
+        margin: 0;
+
+        color: #003b64;
+
+        font-size: 25px;
+
+        font-weight: 700;
+    }
+
+
+    .modal-contenido p {
+        margin-top: 15px;
+
+        margin-bottom: 25px;
+
+        color: #444;
+
+        font-size: 17px;
+    }
+
+
+    .modal-botones {
+        display: flex;
+
+        justify-content: center;
+
+        gap: 10px;
+
+        flex-wrap: wrap;
+    }
+
+
+    .modal-botones button {
+        width: auto !important;
+
+        min-width: 90px;
+
+        margin: 0 !important;
+
+        padding: 10px 18px !important;
+
+        border: none !important;
+
+        border-radius: 7px !important;
+
+        color: white !important;
+
+        font-weight: 600;
+
+        cursor: pointer;
+    }
+
+
+    .btn-modal-si {
+        background: #198754 !important;
+    }
+
+
+    .btn-modal-si:hover {
+        background: #157347 !important;
+    }
+
+
+    .btn-modal-no {
+        background: #c82333 !important;
+    }
+
+
+    .btn-modal-no:hover {
+        background: #a91d2a !important;
+    }
+
+
+    .btn-modal-cancelar {
+        background: #59636b !important;
+    }
+
+
+    .btn-modal-cancelar:hover {
+        background: #474f55 !important;
+    }
+
+
+
+    /* ================================= */
+    /* RESPONSIVE                        */
+    /* ================================= */
+
+    @@media (max-width: 600px) {
+
+        .contenedor-roles-inactivos {
+            width: 94%;
+        }
+
+
+        .tarjeta-roles-inactivos {
+            padding: 18px;
+        }
+
+
+        .modal-botones {
+            flex-direction: column;
+        }
+
+
+        .modal-botones button {
+            width: 100% !important;
+        }
+
+    }
+
+</style>
+
+
+
+<script>
+
+    /*
+        Guarda el formulario correspondiente
+        al rol que se quiere reactivar.
+    */
+
+    let formularioRolPendiente = null;
+
+
+
+    // =================================
+    // PREGUNTAR ANTES DE REACTIVAR
+    // =================================
+
+    function confirmarReactivacionRol(formulario) {
+
+        formularioRolPendiente =
+            formulario;
+
+
+        document.getElementById(
+            "modalConfirmacion"
+        ).style.display =
+            "flex";
+
+
+        return false;
+    }
+
+
+
+    // =================================
+    // BOTON SI
+    // =================================
+
+    function reactivarRol() {
+
+        if (formularioRolPendiente == null) {
+
+            return;
+
+        }
+
+
+        document.getElementById(
+            "modalConfirmacion"
+        ).style.display =
+            "none";
+
+
+        formularioRolPendiente.submit();
+    }
+
+
+
+    // =================================
+    // BOTON NO
+    // =================================
+
+    function cerrarConfirmacion() {
+
+        document.getElementById(
+            "modalConfirmacion"
+        ).style.display =
+            "none";
+
+
+        formularioRolPendiente =
+            null;
+    }
+
+
+
+    // =================================
+    // BOTON CANCELAR
+    // =================================
+
+    function cancelarReactivacion() {
+
+        document.getElementById(
+            "modalConfirmacion"
+        ).style.display =
+            "none";
+
+
+        formularioRolPendiente =
+            null;
+    }
+
+
+
+    // =================================
+    // OCULTAR MENSAJE
+    // =================================
+
+    setTimeout(
+        function () {
+
+            let mensaje =
+                document.getElementById(
+                    "mensaje"
+                );
+
+
+            if (mensaje) {
+
+                mensaje.style.opacity =
+                    "0";
+
+
+                mensaje.style.transform =
+                    "translateY(-5px)";
+
+
+                setTimeout(
+                    function () {
+
+                        mensaje.style.display =
+                            "none";
+
+                    },
+                    400
+                );
+
+            }
+
+        },
+        4000
+    );
+
+</script>

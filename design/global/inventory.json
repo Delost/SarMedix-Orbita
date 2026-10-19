@@ -1,0 +1,1353 @@
+[
+  {
+    "path": "LoginSARMedix/Views/Home/AccesoDenegado.cshtml",
+    "family": "access",
+    "forms": [],
+    "modals": [],
+    "buttons": [
+      "<a asp-controller=\"Home\" asp-action=\"Modulos\" class=\"btn-volver\">"
+    ],
+    "headings": [
+      "Acceso denegado"
+    ],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/BajaInventario.cshtml",
+    "family": "movements",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"RegistrarBajaInventario\" method=\"post\" id=\"formBaja\">"
+    ],
+    "modals": [],
+    "buttons": [
+      "<a asp-controller=\"Home\" asp-action=\"MovimientoHistorial\" class=\"btn volver\">",
+      "<button type=\"submit\" id=\"btnBaja\" class=\"btn confirmar\" disabled>"
+    ],
+    "headings": [
+      "Baja / merma de inventario",
+      "Resumen"
+    ],
+    "selectors": [
+      "loteBaja",
+      "cantidadBaja",
+      "btnBaja",
+      "rProducto",
+      "rLote",
+      "rSector",
+      "rVence",
+      "rStock",
+      "rCantidad",
+      "formBaja"
+    ],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/Bienvenida.cshtml",
+    "family": "home",
+    "forms": [],
+    "modals": [],
+    "buttons": [
+      "<button class=\"sm-motion-toggle\" type=\"button\" aria-pressed=\"false\" aria-label=\"Pausar efectos ambientales\">"
+    ],
+    "headings": [
+      "Todo conectado.<br /><em>Mejor cuidado.</em>",
+      "¿Por dónde empezamos?"
+    ],
+    "selectors": [
+      "mensajeNavegacion"
+    ],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/CrearLote.cshtml",
+    "family": "products",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"NuevoLote\" method=\"post\" id=\"formCrearLote\" class=\"formulario-entrada\" onsubmit=\"return validarYConfirmar()\" novalidate>"
+    ],
+    "modals": [
+      "<div id=\"modalConfirmacion\" class=\"modal-fondo sm-confirmation\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"smConfirmTitle\">",
+      "<div class=\"modal-contenido\">"
+    ],
+    "buttons": [
+      "<button type=\"button\" id=\"btnModoScanner\" class=\"btn-modo activo\" onclick=\"cambiarModo('scanner')\">",
+      "<button type=\"button\" id=\"btnModoManual\" class=\"btn-modo\" onclick=\"cambiarModo('manual')\">",
+      "<button type=\"button\" class=\"btn-buscar-codigo\" onclick=\"buscarProductoEscaneado()\">",
+      "<button type=\"submit\" id=\"btnRegistrarEntrada\" class=\"btn-registrar-entrada\">",
+      "<a asp-controller=\"Home\" asp-action=\"Lotes\" class=\"btn-volver-inventario\">",
+      "<button type=\"button\" class=\"btn-modal-si\" onclick=\"registrarLote()\">",
+      "<button type=\"button\" class=\"btn-modal-no\" onclick=\"cerrarConfirmacion()\">",
+      "<button type=\"button\" class=\"btn-modal-cancelar\" onclick=\"cancelarRegistro()\">"
+    ],
+    "headings": [
+      "Registrar entrada",
+      "Identificar producto",
+      "Datos del lote",
+      "Recepción",
+      "Revisar entrada",
+      "Confirmar entrada"
+    ],
+    "selectors": [
+      "cantidadEnvases",
+      "calculoRecepcion",
+      "calculoContenido",
+      "calculoTotal",
+      "cantidadTotalStock",
+      "modoManual",
+      "modoScanner",
+      "btnModoManual",
+      "btnModoScanner",
+      "codigoScanner",
+      "producto",
+      "productoIdentificado",
+      "productoIdentificadoNombre",
+      "productoIdentificadoDetalle",
+      "datosEntrada",
+      "productoIdentificado",
+      "datosEntrada",
+      "producto",
+      "producto",
+      "codigoScanner",
+      "estadoLote",
+      "estadoFecha",
+      "estadoLote",
+      "estadoFecha",
+      "codigoScanner",
+      "resultadoScanner",
+      "producto",
+      "numeroLote",
+      "fechaVencimiento",
+      "cantidadEnvases",
+      "fechaVencimiento",
+      "avisoVencimiento",
+      "ubicacion",
+      "numeroLote",
+      "fechaVencimiento",
+      "cantidadEnvases",
+      "ubicacion",
+      "resumenProducto",
+      "resumenLote",
+      "resumenVencimiento",
+      "resumenEnvases",
+      "resumenCantidad",
+      "resumenUbicacion",
+      "resumenEstado",
+      "mensajeFormulario",
+      "producto",
+      "numeroLote",
+      "fechaVencimiento",
+      "cantidadEnvases",
+      "ubicacion",
+      "codigoScanner",
+      "modalResumen",
+      "modalConfirmacion",
+      "modalConfirmacion",
+      "formCrearLote",
+      "modalConfirmacion",
+      "modalConfirmacion",
+      "producto",
+      "codigoScanner",
+      "numeroLote",
+      "fechaVencimiento",
+      "cantidadEnvases",
+      "cantidadTotalStock",
+      "ubicacion",
+      "resultadoScanner",
+      "mensajeFormulario",
+      "codigoScanner",
+      "producto",
+      "producto",
+      "numeroLote",
+      "fechaVencimiento",
+      "cantidadEnvases",
+      "ubicacion",
+      "producto",
+      "mensajeFormulario"
+    ],
+    "dynamic": 10
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/CrearProducto.cshtml",
+    "family": "products",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"NuevoProducto\" method=\"post\" enctype=\"multipart/form-data\" class=\"formulario-principal\" id=\"formCrearProducto\" onsubmit=\"return validarYConfirmar()\" novalidate>"
+    ],
+    "modals": [
+      "<div id=\"modalConfirmacion\" class=\"modal-fondo\">",
+      "<div class=\"modal-contenido\">"
+    ],
+    "buttons": [
+      "<button type=\"submit\" id=\"btnRegistrarProducto\">",
+      "<a asp-controller=\"Home\" asp-action=\"Productos\" class=\"btn-volver-productos\">",
+      "<button type=\"button\" class=\"btn-modal-si\" onclick=\"registrarProducto()\">",
+      "<button type=\"button\" class=\"btn-modal-no\" onclick=\"cerrarConfirmacion()\">",
+      "<button type=\"button\" class=\"btn-modal-cancelar\" onclick=\"cancelarRegistro()\">"
+    ],
+    "headings": [
+      "Registrar producto",
+      "Confirmar acción"
+    ],
+    "selectors": [
+      "estadoCodigoBarras",
+      "estadoCodigoBarras",
+      "btnRegistrarProducto",
+      "codigoBarras",
+      "btnRegistrarProducto",
+      "codigoBarras",
+      "tipoProducto",
+      "camposMedicamento",
+      "camposInsumo",
+      "formaFarmaceutica",
+      "unidadSelector",
+      "unidadSelector",
+      "unidadMedidaReal",
+      "unidadOtroContenedor",
+      "unidadOtro",
+      "unidadSelector",
+      "unidadMedidaReal",
+      "unidadOtro",
+      "unidadSelector",
+      "unidadMedidaReal",
+      "stockMinimo",
+      "labelStockMinimo",
+      "ayudaStock",
+      "advertenciaUnidad",
+      "formaFarmaceutica",
+      "mensajeFormulario",
+      "tipoProducto",
+      "nombreProducto",
+      "contenidoPorEnvase",
+      "unidadSelector",
+      "unidadOtro",
+      "stockMinimo",
+      "codigoBarras",
+      "formaFarmaceutica",
+      "principioActivo",
+      "concentracion",
+      "material",
+      "modalConfirmacion",
+      "modalConfirmacion",
+      "formCrearProducto",
+      "modalConfirmacion",
+      "modalConfirmacion",
+      "formCrearProducto",
+      "codigoInterno",
+      "unidadMedidaReal",
+      "unidadOtroContenedor",
+      "mensajeFormulario",
+      "tipoProducto",
+      "unidadSelector",
+      "unidadMedidaReal",
+      "unidadOtro",
+      "unidadOtroContenedor",
+      "codigoBarras",
+      "btnRegistrarProducto",
+      "mensajeFormulario"
+    ],
+    "dynamic": 6
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/CrearRol.cshtml",
+    "family": "users",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"NuevoRol\" method=\"post\" id=\"formCrearRol\" onsubmit=\"return validarYConfirmarRol()\" novalidate>"
+    ],
+    "modals": [
+      "<div id=\"modalConfirmacion\" class=\"modal-fondo\">",
+      "<div class=\"modal-contenido\">"
+    ],
+    "buttons": [
+      "<button type=\"submit\" class=\"btn-guardar-rol\">",
+      "<a asp-controller=\"Home\" asp-action=\"RolesPermisos\" class=\"btn-volver-rol\">",
+      "<button type=\"button\" class=\"btn-modal-si\" onclick=\"crearRol()\">",
+      "<button type=\"button\" class=\"btn-modal-no\" onclick=\"cerrarConfirmacionRol()\">",
+      "<button type=\"button\" class=\"btn-modal-cancelar\" onclick=\"cancelarCreacionRol()\">"
+    ],
+    "headings": [
+      "Crear Nuevo Rol"
+    ],
+    "selectors": [
+      "mensajeRol",
+      "textoMensajeRol",
+      "nombreRol",
+      "descripcionRol",
+      "modalConfirmacion",
+      "modalConfirmacion",
+      "formCrearRol",
+      "modalConfirmacion",
+      "modalConfirmacion",
+      "nombreRol",
+      "descripcionRol",
+      "mensajeRol",
+      "textoMensajeRol",
+      "nombreRol"
+    ],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/CrearUsuario.cshtml",
+    "family": "users",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"NuevoUsuario\" method=\"post\" class=\"formulario-principal\" id=\"formCrearUsuario\" novalidate>"
+    ],
+    "modals": [
+      "<div id=\"modalConfirmacion\" class=\"modal-fondo\">",
+      "<div class=\"modal-contenido\">"
+    ],
+    "buttons": [
+      "<button type=\"submit\">",
+      "<a asp-controller=\"Home\" asp-action=\"UsuariosPermisos\" class=\"btn-volver-usuarios\">",
+      "<button type=\"button\" class=\"btn-modal-si\" onclick=\"crearUsuario()\">",
+      "<button type=\"button\" class=\"btn-modal-no\" onclick=\"cerrarConfirmacion()\">",
+      "<button type=\"button\" class=\"btn-modal-cancelar\" onclick=\"cancelarCreacion()\">"
+    ],
+    "headings": [
+      "Ingrese los datos del nuevo usuario",
+      "Confirmar acción"
+    ],
+    "selectors": [
+      "nombre",
+      "apellido",
+      "email",
+      "rut",
+      "id_rol",
+      "nombre_usuario",
+      "contrasena",
+      "mensajeFormulario",
+      "mensajeFormulario",
+      "rut",
+      "estadoRut",
+      "email",
+      "estadoEmail",
+      "nombre_usuario",
+      "estadoNombreUsuario",
+      "#formCrearUsuario .campo-error",
+      "modalConfirmacion",
+      "modalConfirmacion",
+      "formCrearUsuario",
+      "modalConfirmacion",
+      "modalConfirmacion",
+      "formCrearUsuario",
+      "estadoRut",
+      "estadoEmail",
+      "estadoNombreUsuario",
+      "#formCrearUsuario .campo-error",
+      "#formCrearUsuario input:not(#email):not(#rut):not(#nombre_usuario)",
+      "id_rol",
+      "mensajeFormulario"
+    ],
+    "dynamic": 4
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/Dosificaciones.cshtml",
+    "family": "dosing",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"GuardarDosificacionProgramada\" method=\"post\" id=\"formDosificacion\">",
+      "<form asp-controller=\"Home\" asp-action=\"ImprimirDosificacion\" method=\"get\" class=\"reimpresion\">"
+    ],
+    "modals": [],
+    "buttons": [
+      "<button type=\"submit\" class=\"btn-principal\" id=\"btnCrearDosif\" disabled>",
+      "<a asp-controller=\"Home\" asp-action=\"EntregaDosificacion\" class=\"btn-scan\">",
+      "<button type=\"submit\" class=\"btn-reimprimir\">"
+    ],
+    "headings": [
+      "Preparar hoy.<br /><em>Entregar con precisión.</em>",
+      "Nueva programación",
+      "Programaciones guardadas"
+    ],
+    "selectors": [
+      "clinicaDosif",
+      "productoDosif",
+      "cantidadDosif",
+      "copiasDosif",
+      "resumenDosif",
+      "btnCrearDosif"
+    ],
+    "dynamic": 6
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/EditarLote.cshtml",
+    "family": "products",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"ActualizarLote\" method=\"post\" class=\"formulario-principal\" id=\"formEditarLote\" onsubmit=\"return validarYConfirmar()\" novalidate>"
+    ],
+    "modals": [
+      "<div id=\"modalConfirmacion\" class=\"modal-fondo sm-confirmation\" role=\"dialog\" aria-modal=\"true\" aria-labelledby=\"smConfirmTitle\">",
+      "<div class=\"modal-contenido\">"
+    ],
+    "buttons": [
+      "<button type=\"submit\">",
+      "<a asp-controller=\"Home\" asp-action=\"Lotes\" class=\"btn-volver-listado\">",
+      "<a asp-controller=\"Home\" asp-action=\"Productos\" class=\"btn-volver-productos\">",
+      "<button type=\"button\" class=\"btn-modal-si\" onclick=\"actualizarLote()\">",
+      "<button type=\"button\" class=\"btn-modal-no\" onclick=\"cerrarConfirmacion()\">",
+      "<button type=\"button\" class=\"btn-modal-cancelar\" onclick=\"cancelarEdicion()\">"
+    ],
+    "headings": [
+      "Editar lote",
+      "Confirmar acción"
+    ],
+    "selectors": [
+      "mensajeFormulario",
+      "producto",
+      "numeroLote",
+      "fechaVencimiento",
+      "cantidadActual",
+      "ubicacion",
+      "modalConfirmacion",
+      "modalConfirmacion",
+      "formEditarLote",
+      "modalConfirmacion",
+      "modalConfirmacion",
+      "formEditarLote",
+      "mensajeFormulario",
+      "numeroLote",
+      "mensajeFormulario"
+    ],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/EditarProducto.cshtml",
+    "family": "products",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"ActualizarProducto\" method=\"post\" class=\"formulario-principal\" id=\"formEditarProducto\" onsubmit=\"return validarYConfirmar()\" novalidate>"
+    ],
+    "modals": [
+      "<div id=\"modalConfirmacion\" class=\"modal-fondo\">",
+      "<div class=\"modal-contenido\">"
+    ],
+    "buttons": [
+      "<button type=\"submit\">",
+      "<a asp-controller=\"Home\" asp-action=\"ListadoProductos2\" class=\"btn-volver-listado\">",
+      "<a asp-controller=\"Home\" asp-action=\"Productos\" class=\"btn-volver-productos\">",
+      "<button type=\"button\" class=\"btn-modal-si\" onclick=\"actualizarProducto()\">",
+      "<button type=\"button\" class=\"btn-modal-no\" onclick=\"cerrarConfirmacion()\">",
+      "<button type=\"button\" class=\"btn-modal-cancelar\" onclick=\"cancelarEdicion()\">"
+    ],
+    "headings": [
+      "Editar producto",
+      "Confirmar acción"
+    ],
+    "selectors": [
+      "formaFarmaceutica",
+      "unidadSelector",
+      "unidadSelector",
+      "unidadMedidaReal",
+      "unidadOtroContenedor",
+      "unidadOtro",
+      "unidadSelector",
+      "unidadMedidaReal",
+      "unidadOtro",
+      "unidadSelector",
+      "unidadMedidaReal",
+      "stockMinimo",
+      "labelStockMinimo",
+      "ayudaStock",
+      "advertenciaUnidad",
+      "formaFarmaceutica",
+      "mensajeFormulario",
+      "nombreProducto",
+      "contenidoPorEnvase",
+      "unidadSelector",
+      "unidadOtro",
+      "stockMinimo",
+      "formaFarmaceutica",
+      "principioActivo",
+      "concentracion",
+      "material",
+      "modalConfirmacion",
+      "modalConfirmacion",
+      "formEditarProducto",
+      "modalConfirmacion",
+      "modalConfirmacion",
+      "formEditarProducto",
+      "unidadSelector",
+      "unidadMedidaReal",
+      "unidadOtro",
+      "unidadOtroContenedor",
+      "mensajeFormulario"
+    ],
+    "dynamic": 4
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/EditarRol.cshtml",
+    "family": "users",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"ActualizarRol\" method=\"post\" class=\"form-editar-rol\">"
+    ],
+    "modals": [],
+    "buttons": [
+      "<button type=\"submit\" class=\"btn-guardar-rol\">",
+      "<a asp-controller=\"Home\" asp-action=\"RolesPermisos\" asp-route-idRol=\"@Model.id_rol\" class=\"btn-volver-rol\">"
+    ],
+    "headings": [
+      "Editar Rol"
+    ],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/EditarUsuario.cshtml",
+    "family": "users",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"ActualizarUsuario\" method=\"post\" class=\"formulario-principal\">"
+    ],
+    "modals": [],
+    "buttons": [
+      "<button type=\"submit\">",
+      "<a asp-controller=\"Home\" asp-action=\"Usuarios\" class=\"btn-volver\">"
+    ],
+    "headings": [
+      "Editar usuario"
+    ],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/EntregaDosificacion.cshtml",
+    "family": "dosing",
+    "forms": [
+      "<form id=\"formScan\">"
+    ],
+    "modals": [],
+    "buttons": [
+      "<button type=\"button\" id=\"btnProcesarScan\" class=\"btn-procesar-scan\">",
+      "<a asp-controller=\"Home\" asp-action=\"HistorialSalidasTurno\" class=\"btn-historial-turno\">",
+      "<a asp-controller=\"Home\" asp-action=\"Dosificaciones\" class=\"btn-volver\">"
+    ],
+    "headings": [
+      "Entrega por escáner"
+    ],
+    "selectors": [
+      "codigoScan",
+      "resultadoScan",
+      "btnProcesarScan"
+    ],
+    "dynamic": 4
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/Historial.cshtml",
+    "family": "history",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"Historial\" method=\"get\" class=\"form-busqueda\">",
+      "<form asp-controller=\"Home\" asp-action=\"Historial\" method=\"get\" class=\"form-filtros\">"
+    ],
+    "modals": [],
+    "buttons": [
+      "<button type=\"submit\" class=\"btn-buscar\">",
+      "<button type=\"submit\" class=\"btn-aplicar-filtros\">",
+      "<a asp-controller=\"Home\" asp-action=\"Historial\" asp-route-buscar=\"@buscarActual\" class=\"btn-limpiar-filtros\">",
+      "<a asp-controller=\"Home\" asp-action=\"Historial\" asp-route-pagina=\"@(ViewBag.PaginaActual - 1)\" asp-route-buscar=\"@buscarActual\" asp-route-filtro=\"@filtroActual\" asp-route-periodo=\"@periodoActual\" class=\"pagina-boton\">",
+      "<a asp-controller=\"Home\" asp-action=\"Historial\" asp-route-pagina=\"@i\" asp-route-buscar=\"@buscarActual\" asp-route-filtro=\"@filtroActual\" asp-route-periodo=\"@periodoActual\" class=\"pagina-boton @(i == ViewBag.PaginaActual ? \"pagina-activa\" : \"\")\">",
+      "<a asp-controller=\"Home\" asp-action=\"Historial\" asp-route-pagina=\"@(ViewBag.PaginaActual + 1)\" asp-route-buscar=\"@buscarActual\" asp-route-filtro=\"@filtroActual\" asp-route-periodo=\"@periodoActual\" class=\"pagina-boton\">",
+      "<a asp-controller=\"Home\" asp-action=\"MovimientoHistorial\" class=\"btn-volver\">"
+    ],
+    "headings": [
+      "La memoria del sistema.",
+      "Encuentra el contexto"
+    ],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/HistorialProductos.cshtml",
+    "family": "history",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"HistorialProductos\" method=\"get\" class=\"form-busqueda\">",
+      "<form asp-controller=\"Home\" asp-action=\"HistorialProductos\" method=\"get\" class=\"form-filtros\">"
+    ],
+    "modals": [],
+    "buttons": [
+      "<button type=\"submit\" class=\"btn-buscar\">",
+      "<button type=\"submit\" class=\"btn-aplicar-filtros\">",
+      "<a asp-controller=\"Home\" asp-action=\"HistorialProductos\" asp-route-buscar=\"@buscarActual\" class=\"btn-limpiar-filtros\">",
+      "<a asp-controller=\"Home\" asp-action=\"HistorialProductos\" asp-route-pagina=\"@(ViewBag.PaginaActual - 1)\" asp-route-buscar=\"@buscarActual\" asp-route-filtro=\"@filtroActual\" asp-route-periodo=\"@periodoActual\" class=\"pagina-boton\">",
+      "<a asp-controller=\"Home\" asp-action=\"HistorialProductos\" asp-route-pagina=\"@i\" asp-route-buscar=\"@buscarActual\" asp-route-filtro=\"@filtroActual\" asp-route-periodo=\"@periodoActual\" class=\"pagina-boton @(i == ViewBag.PaginaActual ? \"pagina-activa\" : \"\")\">",
+      "<a asp-controller=\"Home\" asp-action=\"HistorialProductos\" asp-route-pagina=\"@(ViewBag.PaginaActual + 1)\" asp-route-buscar=\"@buscarActual\" asp-route-filtro=\"@filtroActual\" asp-route-periodo=\"@periodoActual\" class=\"pagina-boton\">",
+      "<a asp-controller=\"Home\" asp-action=\"MovimientoHistorial\" class=\"btn-volver\">"
+    ],
+    "headings": [
+      "Historial de Productos"
+    ],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/HistorialSalidasTurno.cshtml",
+    "family": "history",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"HistorialSalidasTurno\" method=\"get\" class=\"filtro-turno\" id=\"formTurno\">"
+    ],
+    "modals": [],
+    "buttons": [
+      "<a asp-controller=\"Home\" asp-action=\"EntregaDosificacion\" class=\"btn-volver-scan\">",
+      "<button type=\"submit\" class=\"btn-aplicar\">",
+      "<button type=\"button\" class=\"preset\" data-inicio=\"08:00\" data-fin=\"00:00\">",
+      "<button type=\"button\" class=\"preset\" data-inicio=\"08:00\" data-fin=\"20:00\">",
+      "<button type=\"button\" class=\"preset\" data-inicio=\"20:00\" data-fin=\"08:00\">",
+      "<a asp-controller=\"Home\" asp-action=\"InformeSalidasTurno\" asp-route-fecha=\"@Model.fecha.ToString(\"yyyy-MM-dd\")\" asp-route-horaInicio=\"@Model.hora_inicio\" asp-route-horaFin=\"@Model.hora_fin\" target=\"_blank\" class=\"btn-informe\">"
+    ],
+    "headings": [
+      "Salidas del turno",
+      "Resumen total del corte"
+    ],
+    "selectors": [
+      "horaInicio",
+      "horaFin",
+      "formTurno",
+      ".preset"
+    ],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/HistorialSectores.cshtml",
+    "family": "history",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"HistorialSectores\" method=\"get\" class=\"filtro\">"
+    ],
+    "modals": [],
+    "buttons": [
+      "<button type=\"submit\">"
+    ],
+    "headings": [
+      "Historial por sector"
+    ],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/HistorialUsuarios.cshtml",
+    "family": "history",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"HistorialUsuarios\" method=\"get\" class=\"form-busqueda\">",
+      "<form asp-controller=\"Home\" asp-action=\"HistorialUsuarios\" method=\"get\" class=\"form-filtros\">"
+    ],
+    "modals": [],
+    "buttons": [
+      "<button type=\"submit\" class=\"btn-buscar\">",
+      "<button type=\"submit\" class=\"btn-aplicar-filtros\">",
+      "<a asp-controller=\"Home\" asp-action=\"HistorialUsuarios\" asp-route-buscar=\"@buscarActual\" class=\"btn-limpiar-filtros\">",
+      "<a asp-controller=\"Home\" asp-action=\"HistorialUsuarios\" asp-route-pagina=\"@(ViewBag.PaginaActual - 1)\" asp-route-buscar=\"@buscarActual\" asp-route-filtro=\"@filtroActual\" asp-route-periodo=\"@periodoActual\" class=\"pagina-boton\">",
+      "<a asp-controller=\"Home\" asp-action=\"HistorialUsuarios\" asp-route-pagina=\"@i\" asp-route-buscar=\"@buscarActual\" asp-route-filtro=\"@filtroActual\" asp-route-periodo=\"@periodoActual\" class=\"pagina-boton @(i == ViewBag.PaginaActual ? \"pagina-activa\" : \"\")\">",
+      "<a asp-controller=\"Home\" asp-action=\"HistorialUsuarios\" asp-route-pagina=\"@(ViewBag.PaginaActual + 1)\" asp-route-buscar=\"@buscarActual\" asp-route-filtro=\"@filtroActual\" asp-route-periodo=\"@periodoActual\" class=\"pagina-boton\">",
+      "<a asp-controller=\"Home\" asp-action=\"MovimientoHistorial\" class=\"btn-volver\">"
+    ],
+    "headings": [
+      "Historial de Usuarios"
+    ],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/ImprimirDosificacion.cshtml",
+    "family": "dosing",
+    "forms": [],
+    "modals": [],
+    "buttons": [
+      "<a asp-controller=\"Home\" asp-action=\"Dosificaciones\" class=\"btn-volver\">",
+      "<button type=\"button\" class=\"btn-print\" onclick=\"window.print()\">"
+    ],
+    "headings": [
+      "@Model.nombre_producto @if (!string.IsNullOrWhiteSpace(Model.concentracion)) { <text> @Model.concentracion</text> }"
+    ],
+    "selectors": [
+      ".barcode"
+    ],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/Index.cshtml",
+    "family": "access",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"InicioSesion\" method=\"post\" class=\"formulario-principal\">"
+    ],
+    "modals": [],
+    "buttons": [
+      "<button type=\"submit\">"
+    ],
+    "headings": [
+      "Inicio de sesión SARMedix"
+    ],
+    "selectors": [
+      "mensajeLogin"
+    ],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/InformeSalidasTurno.cshtml",
+    "family": "history",
+    "forms": [],
+    "modals": [],
+    "buttons": [
+      "<a href=\"javascript:history.back();\" class=\"btn-volver\">",
+      "<a asp-controller=\"Home\" asp-action=\"DescargarInformeSalidasTurno\" asp-route-fecha=\"@Model.fecha.ToString(\"yyyy-MM-dd\")\" asp-route-horaInicio=\"@Model.hora_inicio\" asp-route-horaFin=\"@Model.hora_fin\" class=\"btn-descargar\">",
+      "<button type=\"button\" class=\"btn-imprimir\" onclick=\"window.print()\">"
+    ],
+    "headings": [
+      "Informe de salidas por turno",
+      "1. Resumen total de salidas",
+      "2. Detalle cronológico por hora"
+    ],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/InventarioUbicacion.cshtml",
+    "family": "sectors",
+    "forms": [],
+    "modals": [],
+    "buttons": [],
+    "headings": [
+      "@nombreUbicacion",
+      "Esta ubicación está vacía"
+    ],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/ListadoEliminarUsuarios.cshtml",
+    "family": "users",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"ReactivarUsuario\" method=\"post\" onsubmit=\"return confirmarReactivar(this)\">",
+      "<form asp-controller=\"Home\" asp-action=\"EliminarUsuario\" method=\"post\" onsubmit=\"return confirmarEliminar(this)\">"
+    ],
+    "modals": [
+      "<div id=\"modalConfirmacion\" class=\"modal-fondo\">",
+      "<div class=\"modal-contenido\">"
+    ],
+    "buttons": [
+      "<button type=\"submit\" class=\"btn-reactivar\">",
+      "<button type=\"submit\" class=\"btn-eliminar\">",
+      "<a asp-controller=\"Home\" asp-action=\"Usuarios\" class=\"btn-listado\">",
+      "<a asp-controller=\"Home\" asp-action=\"UsuariosPermisos\" class=\"btn-volver-usuarios\">",
+      "<button type=\"button\" class=\"btn-modal-si\" onclick=\"realizarAccion()\">",
+      "<button type=\"button\" class=\"btn-modal-no\" onclick=\"cerrarConfirmacion()\">",
+      "<button type=\"button\" class=\"btn-modal-cancelar\" onclick=\"cancelarAccion()\">"
+    ],
+    "headings": [
+      "Usuarios inactivos"
+    ],
+    "selectors": [
+      "textoConfirmacion",
+      "modalConfirmacion",
+      "textoConfirmacion",
+      "modalConfirmacion",
+      "modalConfirmacion",
+      "modalConfirmacion",
+      "modalConfirmacion"
+    ],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/Lotes.cshtml",
+    "family": "products",
+    "forms": [],
+    "modals": [],
+    "buttons": [
+      "<a asp-controller=\"Home\" asp-action=\"CrearLote\" class=\"btn-nuevo-lote\">",
+      "<a asp-controller=\"Home\" asp-action=\"ListadoProductos2\" class=\"btn-listado-productos\">",
+      "<a asp-controller=\"Home\" asp-action=\"Productos\" class=\"btn-volver-productos\">",
+      "<a asp-controller=\"Home\" asp-action=\"EditarLote\" asp-route-idLote=\"@lote.id_lote\" class=\"btn-editar\">"
+    ],
+    "headings": [
+      "Todo el stock.<br /><em>En perspectiva.</em>",
+      "Mapa de existencias",
+      "@lote.nombre_producto"
+    ],
+    "selectors": [
+      "mensajeListado"
+    ],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/Modulos/MedicamentosControlados.cshtml",
+    "family": "controlled",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"RegistrarMovimientoControlado\" method=\"post\" id=\"formMovimientoControlado\" novalidate>"
+    ],
+    "modals": [
+      "<div id=\"modalMovimientoControlado\" class=\"mc-overlay\">",
+      "<div class=\"mc-modal\">",
+      "<div id=\"modalConfirmacionMovimiento\" class=\"mcc-overlay\">",
+      "<div class=\"mcc-modal\">"
+    ],
+    "buttons": [
+      "<button type=\"button\" class=\"controlados-btn-buscar\" onclick=\"buscarMedicamentosControlados()\">",
+      "<button type=\"button\" class=\"controlados-btn-aplicar\" onclick=\"aplicarFiltroControlados()\">",
+      "<button type=\"button\" class=\"controlados-btn-limpiar\" onclick=\"limpiarFiltroControlados()\">",
+      "<button type=\"button\" class=\"controlados-btn-lotes\" onclick=\"alternarLotesControlado( @medicamento.id_producto, this )\" aria-expanded=\"false\">",
+      "<button type=\"button\" class=\"controlados-btn-movimiento controlados-btn-entrada\" data-id-lote=\"@lote.id_lote\" data-tipo=\"Entrada\" data-medicamento=\"@(medicamento.nombre ?? \"\")\" data-lote=\"@(lote.numero_lote ?? \"\")\" data-stock=\"@lote.cantidad_actual\" onclick=\"abrirModalMovimiento(this)\">",
+      "<button type=\"button\" class=\"controlados-btn-movimiento controlados-btn-salida\" data-id-lote=\"@lote.id_lote\" data-tipo=\"Salida\" data-medicamento=\"@(medicamento.nombre ?? \"\")\" data-lote=\"@(lote.numero_lote ?? \"\")\" data-stock=\"@lote.cantidad_actual\" onclick=\"abrirModalMovimiento(this)\">",
+      "<button type=\"button\" class=\"controlados-btn-movimiento controlados-btn-salida\" disabled>",
+      "<button type=\"button\" class=\"controlados-btn-movimiento controlados-btn-historial\" onclick=\"alternarHistorialLote( @lote.id_lote, this )\" aria-expanded=\"false\">",
+      "<button type=\"button\" class=\"mc-cerrar\" onclick=\"cerrarModalMovimiento()\">",
+      "<button type=\"button\" class=\"mc-btn-cancelar\" onclick=\"cerrarModalMovimiento()\">",
+      "<button type=\"submit\" id=\"btnConfirmarMovimiento\" class=\"mc-btn-confirmar\">",
+      "<button type=\"button\" class=\"mcc-btn mcc-btn-si\" onclick=\"confirmarMovimientoControlado()\">",
+      "<button type=\"button\" class=\"mcc-btn mcc-btn-no\" onclick=\"cerrarConfirmacionMovimiento()\">",
+      "<button type=\"button\" class=\"mcc-btn mcc-btn-cancelar\" onclick=\"cancelarConfirmacionMovimiento()\">"
+    ],
+    "headings": [
+      "Medicamentos Controlados",
+      "Registrar entrada",
+      "Confirmar acción"
+    ],
+    "selectors": [
+      "buscadorControlados",
+      "buscadorControlados",
+      "filtroEstadoControlados",
+      "filtroEstadoControlados",
+      ".fila-medicamento-controlado",
+      "detalle-controlado-",
+      ".controlados-btn-lotes",
+      ".controlados-fila-historial",
+      "cantidadResultadosControlados",
+      "etiquetaBusquedaControlados",
+      "etiquetaFiltroControlados",
+      "sinResultadosControlados",
+      "detalle-controlado-",
+      ".controlados-fila-historial",
+      ".controlados-btn-historial",
+      "historial-lote-",
+      ".controlados-subtabla",
+      ".controlados-fila-historial",
+      ".controlados-btn-historial",
+      "mensajeErrorMovimiento",
+      "movimientoCantidad",
+      "movimientoObservacion",
+      "mensajeErrorMovimiento",
+      "modalMovimientoControlado",
+      "movimientoIdLote",
+      "movimientoTipo",
+      "movimientoStockActual",
+      "modalMedicamento",
+      "modalLote",
+      "modalStock",
+      "modalMovimientoEtiqueta",
+      "modalMovimientoTitulo",
+      "movimientoCantidad",
+      "movimientoAyudaCantidad",
+      "movimientoAyudaCantidad",
+      "movimientoObservacion",
+      "contadorObservacion",
+      "btnConfirmarMovimiento",
+      "movimientoTipo",
+      "movimientoCantidad",
+      "movimientoObservacion",
+      "movimientoStockActual",
+      "modalMovimientoControlado",
+      "modalConfirmacionMovimiento",
+      "movimientoObservacion",
+      "contadorObservacion",
+      "movimientoCantidad",
+      "modalConfirmacionMovimiento",
+      "mensajeConfirmacionMovimiento",
+      "movimientoTipo",
+      "modalConfirmacionMovimiento",
+      "formMovimientoControlado",
+      "btnConfirmarMovimiento",
+      "formMovimientoControlado",
+      "modalMovimientoControlado",
+      "modalConfirmacionMovimiento",
+      "modalConfirmacionMovimiento"
+    ],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/Modulos/MovimientoHistorial.cshtml",
+    "family": "movements",
+    "forms": [],
+    "modals": [],
+    "buttons": [
+      "<a asp-controller=\"Home\" asp-action=\"Modulos\" class=\"btn-volver-submenu\">"
+    ],
+    "headings": [],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/Modulos/Productos.cshtml",
+    "family": "products",
+    "forms": [],
+    "modals": [],
+    "buttons": [
+      "<a asp-controller=\"Home\" asp-action=\"Modulos\" class=\"btn-volver-submenu\">"
+    ],
+    "headings": [],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/Modulos/UsuariosPermisos.cshtml",
+    "family": "users",
+    "forms": [],
+    "modals": [],
+    "buttons": [
+      "<a asp-controller=\"Home\" asp-action=\"Modulos\" class=\"btn-volver-submenu\">"
+    ],
+    "headings": [],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/NuevaContrasena.cshtml",
+    "family": "access",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"CambiarContrasena\" method=\"post\" class=\"formulario-recuperacion\">"
+    ],
+    "modals": [],
+    "buttons": [
+      "<button type=\"submit\">"
+    ],
+    "headings": [
+      "Nueva contraseña"
+    ],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/Productos.cshtml",
+    "family": "products",
+    "forms": [],
+    "modals": [],
+    "buttons": [
+      "<a asp-controller=\"Home\" asp-action=\"CrearProducto\" class=\"btn-nuevo-producto\">",
+      "<button type=\"button\" id=\"btnMedicamentos\" class=\"selector-btn activo\" onclick=\"mostrarTipo('medicamentos')\">",
+      "<button type=\"button\" id=\"btnInsumos\" class=\"selector-btn\" onclick=\"mostrarTipo('insumos')\">",
+      "<a asp-controller=\"Home\" asp-action=\"Productos\" class=\"btn-volver-productos\">"
+    ],
+    "headings": [
+      "Listado de productos"
+    ],
+    "selectors": [
+      "seccionMedicamentos",
+      "seccionInsumos",
+      "btnMedicamentos",
+      "btnInsumos",
+      "mensajeListado"
+    ],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/RecuperarContrasena.cshtml",
+    "family": "access",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"RecuperarContrasena\" method=\"post\">"
+    ],
+    "modals": [],
+    "buttons": [
+      "<button type=\"submit\">"
+    ],
+    "headings": [
+      "Recuperar contraseña"
+    ],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/RolesInactivos.cshtml",
+    "family": "users",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"ReactivarRol\" method=\"post\" class=\"form-reactivar-rol\" onsubmit=\"return confirmarReactivacionRol(this)\">"
+    ],
+    "modals": [
+      "<div id=\"modalConfirmacion\" class=\"modal-fondo\">",
+      "<div class=\"modal-contenido\">"
+    ],
+    "buttons": [
+      "<button type=\"submit\" class=\"btn-reactivar\">",
+      "<a asp-controller=\"Home\" asp-action=\"RolesPermisos\" class=\"btn-volver-roles\">",
+      "<button type=\"button\" class=\"btn-modal-si\" onclick=\"reactivarRol()\">",
+      "<button type=\"button\" class=\"btn-modal-no\" onclick=\"cerrarConfirmacion()\">",
+      "<button type=\"button\" class=\"btn-modal-cancelar\" onclick=\"cancelarReactivacion()\">"
+    ],
+    "headings": [
+      "Roles Inactivos"
+    ],
+    "selectors": [
+      "modalConfirmacion",
+      "modalConfirmacion",
+      "modalConfirmacion",
+      "modalConfirmacion",
+      "mensaje"
+    ],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/RolesPermisos.cshtml",
+    "family": "users",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"RolesPermisos\" method=\"get\">",
+      "<form asp-controller=\"Home\" asp-action=\"DesactivarRol\" method=\"post\">",
+      "<form asp-controller=\"Home\" asp-action=\"GuardarPermisos\" method=\"post\">"
+    ],
+    "modals": [],
+    "buttons": [
+      "<a asp-controller=\"Home\" asp-action=\"RolesInactivos\" class=\"btn-inactivos\">",
+      "<a asp-controller=\"Home\" asp-action=\"CrearRol\" class=\"btn-crear-rol\">",
+      "<a asp-controller=\"Home\" asp-action=\"EditarRol\" asp-route-idRol=\"@idRol\" class=\"btn-editar\">",
+      "<button type=\"button\" class=\"btn-desactivar\" onclick=\"mostrarConfirmacion()\">",
+      "<button type=\"submit\" class=\"btn-confirmar\">",
+      "<button type=\"button\" class=\"btn-cancelar\" onclick=\"ocultarConfirmacion()\">",
+      "<button type=\"submit\" class=\"btn-guardar\">",
+      "<a asp-controller=\"Home\" asp-action=\"UsuariosPermisos\" class=\"btn-volver\">"
+    ],
+    "headings": [
+      "Roles y Permisos"
+    ],
+    "selectors": [
+      "confirmacionDesactivar",
+      "confirmacionDesactivar",
+      "mensaje"
+    ],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/SalidaExtraordinaria.cshtml",
+    "family": "movements",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"RegistrarSalidaExtraordinaria\" method=\"post\" id=\"formExtra\">"
+    ],
+    "modals": [],
+    "buttons": [
+      "<a asp-controller=\"Home\" asp-action=\"MovimientoHistorial\" class=\"btn volver\">",
+      "<button type=\"submit\" id=\"btnExtra\" class=\"btn confirmar\" disabled>"
+    ],
+    "headings": [
+      "Salida extraordinaria",
+      "Resumen"
+    ],
+    "selectors": [
+      "clinicaExtra",
+      "productoExtra",
+      "cantidadExtra",
+      "servicioExtra",
+      "btnExtra",
+      "rClinica",
+      "rProducto",
+      "rDestino",
+      "rCantidad",
+      "formExtra"
+    ],
+    "dynamic": 5
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/TrasladarStock.cshtml",
+    "family": "movements",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"RegistrarTraslado\" method=\"post\" id=\"formTraslado\">"
+    ],
+    "modals": [],
+    "buttons": [
+      "<a asp-controller=\"Home\" asp-action=\"MovimientoHistorial\" class=\"btn-volver\">",
+      "<button type=\"submit\" id=\"btnTrasladar\" class=\"btn-trasladar\" disabled>"
+    ],
+    "headings": [
+      "Trasladar stock",
+      "1. Origen y destino",
+      "Resumen del traslado"
+    ],
+    "selectors": [
+      "loteOrigen",
+      "sectorDestino",
+      "cantidadTraslado",
+      "btnTrasladar",
+      "advertenciaTraslado",
+      "resProducto",
+      "resLote",
+      "resOrigen",
+      "resDestino",
+      "resVencimiento",
+      "resCantidad",
+      "ayudaCantidad"
+    ],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/Ubicaciones.cshtml",
+    "family": "sectors",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"InactivarUbicacion\" method=\"post\">",
+      "<form asp-controller=\"Home\" asp-action=\"ReactivarUbicacion\" method=\"post\">",
+      "<form asp-controller=\"Home\" asp-action=\"EliminarUbicacion\" method=\"post\">",
+      "<form asp-controller=\"Home\" asp-action=\"CrearUbicacion\" method=\"post\" id=\"formAgregarUbicacion\">",
+      "<form asp-controller=\"Home\" asp-action=\"EditarUbicacion\" method=\"post\" id=\"formEditarUbicacion\">"
+    ],
+    "modals": [
+      "<div id=\"modalAgregarUbicacion\" class=\"ubicacion-modal-fondo\">",
+      "<div class=\"ubicacion-modal\">",
+      "<div class=\"ubicacion-modal-cabecera\">",
+      "<div class=\"ubicacion-modal-cuerpo\">",
+      "<div class=\"ubicacion-modal-grupo\">",
+      "<div class=\"ubicacion-modal-grupo\">",
+      "<div class=\"ubicacion-modal-pie\">",
+      "<div id=\"modalEditarUbicacion\" class=\"ubicacion-modal-fondo\">",
+      "<div class=\"ubicacion-modal\">",
+      "<div class=\"ubicacion-modal-cabecera\">",
+      "<div class=\"ubicacion-modal-cuerpo\">",
+      "<div class=\"ubicacion-modal-grupo\">",
+      "<div class=\"ubicacion-modal-grupo\">",
+      "<div class=\"ubicacion-modal-pie\">",
+      "<div id=\"modalConfirmacionUbicacion\" class=\"ubicacion-modal-fondo\">",
+      "<div class=\"ubicacion-modal\">"
+    ],
+    "buttons": [
+      "<button type=\"button\" class=\"btn-agregar-ubicacion\" onclick=\"abrirModalUbicacion()\">",
+      "<button type=\"button\" class=\"ubicacion-menu\" onclick=\"alternarMenuUbicacion(this)\" title=\"Opciones\">",
+      "<button type=\"button\" class=\"ubicacion-menu-opcion\" data-id=\"@ubicacion.id_ubicacion\" data-nombre=\"@ubicacion.nombre_sector\" data-tipo=\"@ubicacion.tipo_sector\" onclick=\"abrirModalEditarUbicacion(this)\">",
+      "<button type=\"button\" class=\"ubicacion-menu-opcion ubicacion-menu-opcion-inactivar\" data-accion=\"inactivar\" data-nombre=\"@ubicacion.nombre_sector\" onclick=\"abrirModalConfirmacionUbicacion(this)\">",
+      "<button type=\"button\" class=\"ubicacion-menu-opcion ubicacion-menu-opcion-reactivar\" data-accion=\"reactivar\" data-nombre=\"@ubicacion.nombre_sector\" onclick=\"abrirModalConfirmacionUbicacion(this)\">",
+      "<button type=\"button\" class=\"ubicacion-menu-opcion ubicacion-menu-opcion-eliminar\" data-accion=\"eliminar\" data-nombre=\"@ubicacion.nombre_sector\" onclick=\"abrirModalConfirmacionUbicacion(this)\">",
+      "<a asp-controller=\"Home\" asp-action=\"InventarioUbicacion\" asp-route-idUbicacion=\"@ubicacion.id_ubicacion\" class=\"btn-ver-inventario\">",
+      "<button type=\"button\" class=\"ubicacion-card ubicacion-card-agregar\" onclick=\"abrirModalUbicacion()\">",
+      "<button type=\"button\" class=\"ubicacion-modal-cerrar\" onclick=\"cerrarModalUbicacion()\">",
+      "<button type=\"button\" class=\"btn-ubicacion-cancelar\" onclick=\"cerrarModalUbicacion()\">",
+      "<button type=\"button\" class=\"btn-ubicacion-guardar\" data-accion=\"crear\" data-formulario=\"formAgregarUbicacion\" onclick=\"abrirConfirmacionFormularioUbicacion(this)\">",
+      "<button type=\"button\" class=\"ubicacion-modal-cerrar\" onclick=\"cerrarModalEditarUbicacion()\">",
+      "<button type=\"button\" class=\"btn-ubicacion-cancelar\" onclick=\"cerrarModalEditarUbicacion()\">",
+      "<button type=\"button\" class=\"btn-ubicacion-guardar\" data-accion=\"editar\" data-formulario=\"formEditarUbicacion\" onclick=\"abrirConfirmacionFormularioUbicacion(this)\">",
+      "<button type=\"button\" class=\"btn-confirmacion-cancelar\" onclick=\"cerrarModalConfirmacionUbicacion()\">",
+      "<button type=\"button\" id=\"btnConfirmarAccionUbicacion\" class=\"btn-confirmacion-aceptar\" onclick=\"confirmarAccionUbicacion()\">"
+    ],
+    "headings": [
+      "Sectores",
+      "@ubicacion.nombre_sector",
+      "No existen sectores registrados",
+      "Agregar sector",
+      "Agregar sector",
+      "Editar sector",
+      "Confirmar acción"
+    ],
+    "selectors": [
+      "modalAgregarUbicacion",
+      "formAgregarUbicacion",
+      "nombreSector",
+      "modalAgregarUbicacion",
+      ".ubicacion-menu-contenedor",
+      ".ubicacion-menu-opciones",
+      ".ubicacion-menu-opciones",
+      "modalEditarUbicacion",
+      "editarIdUbicacion",
+      "editarNombreSector",
+      "editarTipoSector",
+      "modalEditarUbicacion",
+      "nombreSector",
+      "editarNombreSector",
+      "form",
+      "modalConfirmacionUbicacion",
+      "confirmacionUbicacionIcono",
+      "confirmacionUbicacionTitulo",
+      "confirmacionUbicacionTexto",
+      "confirmacionUbicacionAviso",
+      "btnConfirmarAccionUbicacion",
+      "modalConfirmacionUbicacion",
+      "modalConfirmacionUbicacion",
+      "buscarUbicacion",
+      "filtroEstado",
+      "filtroTipo",
+      "filtroAlertas",
+      "#contenedorUbicaciones .ubicacion-card:not(.ubicacion-card-agregar)",
+      ".ubicacion-menu-opciones",
+      ".ubicacion-menu-contenedor",
+      "modalAgregarUbicacion",
+      "modalEditarUbicacion",
+      "modalConfirmacionUbicacion",
+      "filtroAlertas"
+    ],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/Usuarios.cshtml",
+    "family": "users",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"DesactivarUsuario\" method=\"post\" class=\"form-desactivar\" onsubmit=\"return confirmarDesactivar(this)\">"
+    ],
+    "modals": [
+      "<div id=\"modalConfirmacion\" class=\"modal-fondo\">",
+      "<div class=\"modal-contenido\">"
+    ],
+    "buttons": [
+      "<a asp-controller=\"Home\" asp-action=\"EditarUsuario\" asp-route-idUsuario=\"@usuario.id_usuario\" class=\"btn-editar\" onclick=\"return confirmarEditar(this)\">",
+      "<button type=\"submit\" class=\"btn-desactivar\">",
+      "<a asp-controller=\"Home\" asp-action=\"Usuarios\" asp-route-pagina=\"@(ViewBag.PaginaActual - 1)\" class=\"pagina-boton\">",
+      "<a asp-controller=\"Home\" asp-action=\"Usuarios\" asp-route-pagina=\"@i\" class=\"pagina-boton @(i == ViewBag.PaginaActual ? \"pagina-activa\" : \"\")\">",
+      "<a asp-controller=\"Home\" asp-action=\"Usuarios\" asp-route-pagina=\"@(ViewBag.PaginaActual + 1)\" class=\"pagina-boton\">",
+      "<a asp-controller=\"Home\" asp-action=\"ListadoEliminarUsuarios\" class=\"btn-inactivos\">",
+      "<a asp-controller=\"Home\" asp-action=\"UsuariosPermisos\" class=\"btn-volver-usuarios\">",
+      "<button type=\"button\" class=\"btn-modal-si\" onclick=\"realizarAccion()\">",
+      "<button type=\"button\" class=\"btn-modal-no\" onclick=\"cerrarConfirmacion()\">",
+      "<button type=\"button\" class=\"btn-modal-cancelar\" onclick=\"cerrarConfirmacion()\">"
+    ],
+    "headings": [
+      "Listado de usuarios",
+      "Confirmar acción"
+    ],
+    "selectors": [
+      "textoConfirmacion",
+      "modalConfirmacion",
+      "textoConfirmacion",
+      "modalConfirmacion",
+      "modalConfirmacion"
+    ],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Home/VerificarCodigo.cshtml",
+    "family": "access",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"VerificarCodigo\" method=\"post\">"
+    ],
+    "modals": [],
+    "buttons": [
+      "<button type=\"submit\">"
+    ],
+    "headings": [
+      "Verificar código"
+    ],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Shared/Components/Alertas/Default.cshtml",
+    "forms": [],
+    "modals": [],
+    "buttons": [
+      "<button type=\"button\" class=\"alertas-boton\" id=\"botonAlertasSarmedix\" onclick=\"alternarAlertasSarmedix(event)\" aria-label=\"Ver alertas\" aria-expanded=\"false\">"
+    ],
+    "headings": [
+      "Alertas"
+    ],
+    "selectors": [
+      "panelAlertasSarmedix",
+      "botonAlertasSarmedix",
+      "panelAlertasSarmedix",
+      "panelAlertasSarmedix",
+      "botonAlertasSarmedix",
+      "panelAlertasSarmedix",
+      "botonAlertasSarmedix"
+    ],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Shared/Error.cshtml",
+    "family": "error",
+    "forms": [],
+    "modals": [],
+    "buttons": [],
+    "headings": [
+      "Error.",
+      "An error occurred while processing your request.",
+      "Development Mode"
+    ],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Shared/_Layout.cshtml",
+    "forms": [
+      "<form asp-controller=\"Home\" asp-action=\"CerrarSesion\" method=\"post\" id=\"formCerrarSesion\" class=\"form-cerrar-layout\">"
+    ],
+    "modals": [
+      "<div id=\"modalCerrarSesion\" class=\"modal-fondo-sesion\">",
+      "<div class=\"modal-contenido-sesion\">"
+    ],
+    "buttons": [
+      "<button class=\"sm-motion-control\" type=\"button\" data-sm-motion-control aria-pressed=\"false\" aria-label=\"Pausar efectos visuales\" hidden>",
+      "<button type=\"button\" class=\"btn-cerrar-layout\" onclick=\"abrirConfirmacionCerrarSesion()\">",
+      "<button type=\"button\" class=\"btn-sesion-si\" onclick=\"confirmarCerrarSesion()\">",
+      "<button type=\"button\" class=\"btn-sesion-no\" onclick=\"cerrarConfirmacionCerrarSesion()\">"
+    ],
+    "headings": [
+      "Confirmar acción"
+    ],
+    "selectors": [
+      "modalCerrarSesion",
+      "modalCerrarSesion",
+      "formCerrarSesion"
+    ],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Shared/_ModuleIcons.cshtml",
+    "forms": [],
+    "modals": [],
+    "buttons": [],
+    "headings": [],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Shared/_OrbitalMark.cshtml",
+    "forms": [],
+    "modals": [],
+    "buttons": [],
+    "headings": [],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Shared/_OrbitInstrument.cshtml",
+    "forms": [],
+    "modals": [],
+    "buttons": [],
+    "headings": [],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Shared/_ScreenIdentity.cshtml",
+    "forms": [],
+    "modals": [],
+    "buttons": [],
+    "headings": [],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Shared/_Sidebar.cshtml",
+    "forms": [],
+    "modals": [],
+    "buttons": [
+      "<button type=\"button\" class=\"sidebar-toggle\" onclick=\"alternarSubmenu(this)\" aria-label=\"Mostrar submódulos de Usuarios y Permisos\" aria-expanded=\"false\">",
+      "<button type=\"button\" class=\"sidebar-toggle\" onclick=\"alternarSubmenu(this)\" aria-label=\"Mostrar submódulos de Productos\" aria-expanded=\"false\">",
+      "<button type=\"button\" class=\"sidebar-toggle\" onclick=\"alternarSubmenu(this)\" aria-label=\"Mostrar submódulos de Inventario\" aria-expanded=\"false\">",
+      "<button type=\"button\" class=\"sidebar-toggle\" onclick=\"alternarSubmenu(this)\" aria-label=\"Mostrar submódulos de Movimientos\" aria-expanded=\"false\">",
+      "<button type=\"button\" class=\"sidebar-toggle\" onclick=\"alternarSubmenu(this)\" aria-label=\"Mostrar submódulos de Medicamentos Controlados\" aria-expanded=\"false\">"
+    ],
+    "headings": [],
+    "selectors": [
+      ".sidebar-grupo",
+      ".sidebar-grupo",
+      ".sidebar-toggle"
+    ],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/Shared/_ValidationScriptsPartial.cshtml",
+    "forms": [],
+    "modals": [],
+    "buttons": [],
+    "headings": [],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/_ViewImports.cshtml",
+    "forms": [],
+    "modals": [],
+    "buttons": [],
+    "headings": [],
+    "selectors": [],
+    "dynamic": 0
+  },
+  {
+    "path": "LoginSARMedix/Views/_ViewStart.cshtml",
+    "forms": [],
+    "modals": [],
+    "buttons": [],
+    "headings": [],
+    "selectors": [],
+    "dynamic": 0
+  }
+]

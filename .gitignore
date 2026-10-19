@@ -1,0 +1,43 @@
+.vs/
+**/bin/
+**/obj/
+**/appsettings.Production.json
+
+# =========================================
+# SARMedix ORBITA 2.0
+# Archivos privados y temporales
+# =========================================
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+
+# Compilacion .NET
+**/bin/
+**/obj/
+**/publish/
+**/Publish/
+
+# Configuraciones con credenciales
+**/appsettings*.json
+**/Properties/PublishProfiles/
+
+# Variables de entorno y claves
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+*.p12
+
+# Bases de datos y respaldos
+*.sql
+*.sql.gz
+*.bak
+*.backup
+
+# Archivos temporales
+*.tmp
+*.log
+

@@ -1,0 +1,1483 @@
+﻿
+@* SM-ORBITA-METADATA *@
+@{
+    ViewData["SmScreen"] = "Historial";
+    ViewData["SmFamily"] = "history";
+}
+
+@using System.Text.RegularExpressions
+@model List<LoginSARMedix.Models.Historial>
+
+@{
+    ViewData["Title"] = "Historial";
+    ViewData["TituloBarra"] = "Historial";
+
+    string buscarActual = ViewBag.Buscar?.ToString() ?? "";
+    string filtroActual = (ViewBag.Filtro?.ToString() ?? "todos").ToLowerInvariant();
+    string periodoActual = (ViewBag.Periodo?.ToString() ?? "todos").ToLowerInvariant();
+
+    int totalRegistros = ViewBag.TotalRegistros != null
+        ? Convert.ToInt32(ViewBag.TotalRegistros)
+        : 0;
+
+    int paginaActual = ViewBag.PaginaActual != null
+        ? Convert.ToInt32(ViewBag.PaginaActual)
+        : 1;
+
+    int totalPaginas = ViewBag.TotalPaginas != null
+        ? Convert.ToInt32(ViewBag.TotalPaginas)
+        : 0;
+}
+
+<link rel="stylesheet"
+      href="~/css/sarmedix-structural.css"
+      asp-append-version="true" />
+
+<link rel="stylesheet"
+      href="~/css/sarmedix-refinement.css"
+      asp-append-version="true" />
+
+<div class="historial-card sm-reimagined sm-history-workspace historial-general-original">
+
+    <!-- ENCABEZADO ORBITA 2.0 -->
+
+    <header class="sm-history-heading">
+
+        <span class="sm-workspace-symbol">
+            <svg class="sm-icon"
+                 viewBox="0 0 24 24"
+                 aria-hidden="true">
+                <use href="#sm-icon-movements" />
+            </svg>
+        </span>
+
+        <div>
+            <span class="sm-overline">
+                ÓRBITA / TRAZABILIDAD
+            </span>
+
+            <h1>La memoria del sistema.</h1>
+
+            <p>
+                Cada acción, su responsable y su momento.
+                Historial del sistema.
+            </p>
+        </div>
+
+    </header>
+
+    <div class="sm-history-grid">
+
+        <!-- PANEL SUPERIOR -->
+
+        <aside class="sm-history-console">
+
+            <div class="sm-console-heading">
+
+                <span class="sm-overline">
+                    EXPLORAR REGISTROS
+                </span>
+
+                <h2>Encuentra el contexto</h2>
+
+                <p>
+                    Busca por responsable o descripción
+                    y delimita la consulta.
+                </p>
+
+            </div>
+
+            <div class="historial-herramientas">
+
+                <!-- BUSQUEDA -->
+
+                <form asp-controller="Home"
+                      asp-action="Historial"
+                      method="get"
+                      class="form-busqueda"
+                      data-orbit-form="Historial">
+
+                    <input type="hidden"
+                           name="filtro"
+                           value="@filtroActual" />
+
+                    <input type="hidden"
+                           name="periodo"
+                           value="@periodoActual" />
+
+                    <label for="buscarHistorialGeneral">
+                        Responsable o descripción
+                    </label>
+
+                    <div class="filtro-busqueda">
+
+                        <span aria-hidden="true">
+                            🔎
+                        </span>
+
+                        <input type="text"
+                               id="buscarHistorialGeneral"
+                               name="buscar"
+                               value="@buscarActual"
+                               placeholder="Buscar en el historial..."
+                               autocomplete="off" />
+
+                    </div>
+
+                    <button type="submit"
+                            class="btn-buscar"
+                            data-orbit-action="quiet">
+                        Buscar
+                    </button>
+
+                </form>
+
+                <!-- FILTROS -->
+
+                <form asp-controller="Home"
+                      asp-action="Historial"
+                      method="get"
+                      class="form-filtros"
+                      data-orbit-form="Historial">
+
+                    <input type="hidden"
+                           name="buscar"
+                           value="@buscarActual" />
+
+                    <!-- CATEGORIA -->
+
+                    <div class="filtro-campo">
+
+                        <label for="filtroGeneral">
+                            Categoría
+                        </label>
+
+                        <select id="filtroGeneral"
+                                name="filtro">
+
+                            <option value="todos"
+                                    selected="@(filtroActual == "todos")">
+                                Todas las categorías
+                            </option>
+
+                            <option value="sistema"
+                                    selected="@(filtroActual == "sistema")">
+                                Sistema
+                            </option>
+
+                            <option value="usuarios"
+                                    selected="@(filtroActual == "usuarios")">
+                                Usuarios
+                            </option>
+
+                            <option value="productos"
+                                    selected="@(filtroActual == "productos")">
+                                Productos
+                            </option>
+
+                            <option value="lotes"
+                                    selected="@(filtroActual == "lotes")">
+                                Lotes
+                            </option>
+
+                            <option value="medicamentos"
+                                    selected="@(filtroActual == "medicamentos")">
+                                Medicamentos
+                            </option>
+
+                            <option value="roles"
+                                    selected="@(filtroActual == "roles")">
+                                Roles y permisos
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- PERIODO -->
+
+                    <div class="filtro-campo">
+
+                        <label for="periodoGeneral">
+                            Período
+                        </label>
+
+                        <select id="periodoGeneral"
+                                name="periodo">
+
+                            <option value="todos"
+                                    selected="@(periodoActual == "todos")">
+                                Todo el historial
+                            </option>
+
+                            <option value="hoy"
+                                    selected="@(periodoActual == "hoy")">
+                                Hoy
+                            </option>
+
+                            <option value="7"
+                                    selected="@(periodoActual == "7")">
+                                Últimos 7 días
+                            </option>
+
+                            <option value="30"
+                                    selected="@(periodoActual == "30")">
+                                Últimos 30 días
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <button type="submit"
+                            class="btn-aplicar-filtros"
+                            data-orbit-action="quiet">
+                        Aplicar
+                    </button>
+
+                    <a asp-controller="Home"
+                       asp-action="Historial"
+                       asp-route-buscar="@buscarActual"
+                       class="btn-limpiar-filtros"
+                       data-orbit-action="quiet">
+                        Limpiar
+                    </a>
+
+                </form>
+
+            </div>
+
+        </aside>
+
+        <!-- TABLA DEL HISTORIAL GENERAL -->
+
+        <section class="sm-history-ledger">
+
+            <!-- RESUMEN -->
+
+            <div class="historial-resumen-filtros">
+
+                <span>
+                    Registros encontrados:
+                    <strong>@totalRegistros</strong>
+                </span>
+
+                @if (!string.IsNullOrWhiteSpace(buscarActual))
+                {
+                    <span class="filtro-activo">
+                        🔎 “@buscarActual”
+                    </span>
+                }
+
+                @if (filtroActual != "todos")
+                {
+                    <span class="filtro-activo">
+                        Categoría:
+                        @(filtroActual == "sistema" ? "Sistema"
+                            : filtroActual == "usuarios" ? "Usuarios"
+                            : filtroActual == "productos" ? "Productos"
+                            : filtroActual == "lotes" ? "Lotes"
+                            : filtroActual == "medicamentos" ? "Medicamentos"
+                            : "Roles y permisos")
+                    </span>
+                }
+
+                @if (periodoActual != "todos")
+                {
+                    <span class="filtro-activo">
+                        Período:
+                        @(periodoActual == "hoy" ? "Hoy"
+                            : periodoActual == "7" ? "Últimos 7 días"
+                            : "Últimos 30 días")
+                    </span>
+                }
+
+            </div>
+
+            @if (Model != null && Model.Count > 0)
+            {
+                <div class="tabla-contenedor">
+
+                    <table class="tabla-historial">
+
+                        <thead>
+                            <tr>
+
+                                <th class="columna-id">
+                                    ID
+                                </th>
+
+                                <th class="columna-responsable">
+                                    Responsable
+                                </th>
+
+                                <th class="columna-descripcion">
+                                    Descripción
+                                </th>
+
+                                <th class="columna-fecha">
+                                    Fecha y hora
+                                </th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var registro in Model)
+                            {
+                                string descripcion =
+                                    registro.descripcion ?? "";
+
+                                // IDENTIFICAR MOVIMIENTOS DE STOCK
+
+                                Match movimiento = Regex.Match(
+                                    descripcion,
+                                    @"^Registró\s+(entrada|salida)\s+de\s+(\d+)\s+unidad\(es\)\s+del medicamento\s+(.+?),\s+lote\s+(.+?)\.\s+Stock:\s+(\d+)\s+→\s+(\d+)\.\s+Motivo:\s+(.+)$",
+                                    RegexOptions.IgnoreCase
+                                );
+
+                                bool esMovimiento = movimiento.Success;
+
+                                // IDENTIFICAR CATEGORIA
+
+                                string categoria = "Sistema";
+                                string claseCategoria = "categoria-sistema";
+                                string iconoCategoria = "●";
+
+                                if (descripcion.Contains(
+                                    "usuario",
+                                    StringComparison.OrdinalIgnoreCase))
+                                {
+                                    categoria = "Usuarios";
+                                    claseCategoria = "categoria-usuarios";
+                                    iconoCategoria = "👤";
+                                }
+
+                                if (descripcion.Contains(
+                                    "producto",
+                                    StringComparison.OrdinalIgnoreCase))
+                                {
+                                    categoria = "Productos";
+                                    claseCategoria = "categoria-productos";
+                                    iconoCategoria = "📦";
+                                }
+
+                                if (descripcion.Contains(
+                                    "lote",
+                                    StringComparison.OrdinalIgnoreCase))
+                                {
+                                    categoria = "Lotes";
+                                    claseCategoria = "categoria-lotes";
+                                    iconoCategoria = "📋";
+                                }
+
+                                if (descripcion.Contains(
+                                    "rol",
+                                    StringComparison.OrdinalIgnoreCase)
+                                    ||
+                                    descripcion.Contains(
+                                        "permis",
+                                        StringComparison.OrdinalIgnoreCase))
+                                {
+                                    categoria = "Roles y permisos";
+                                    claseCategoria = "categoria-permisos";
+                                    iconoCategoria = "⚙";
+                                }
+
+                                if (descripcion.Contains(
+                                    "medicamento",
+                                    StringComparison.OrdinalIgnoreCase)
+                                    ||
+                                    descripcion.Contains(
+                                        "controlado",
+                                        StringComparison.OrdinalIgnoreCase))
+                                {
+                                    categoria = "Medicamentos";
+                                    claseCategoria = "categoria-medicamentos";
+                                    iconoCategoria = "💊";
+                                }
+
+                                // IDENTIFICAR ACCION IMPORTANTE
+
+                                bool esAccionImportante =
+                                    descripcion.StartsWith(
+                                        "Creó",
+                                        StringComparison.OrdinalIgnoreCase)
+                                    ||
+                                    descripcion.StartsWith(
+                                        "Actualizó",
+                                        StringComparison.OrdinalIgnoreCase)
+                                    ||
+                                    descripcion.StartsWith(
+                                        "Desactivó",
+                                        StringComparison.OrdinalIgnoreCase)
+                                    ||
+                                    descripcion.StartsWith(
+                                        "Reactivó",
+                                        StringComparison.OrdinalIgnoreCase)
+                                    ||
+                                    descripcion.StartsWith(
+                                        "Eliminó",
+                                        StringComparison.OrdinalIgnoreCase)
+                                    ||
+                                    descripcion.StartsWith(
+                                        "Registró",
+                                        StringComparison.OrdinalIgnoreCase);
+
+                                <tr>
+
+                                    <!-- ID -->
+
+                                    <td>
+                                        <span class="historial-id">
+                                            @registro.id_historial
+                                        </span>
+                                    </td>
+
+                                    <!-- RESPONSABLE -->
+
+                                    <td>
+
+                                        <div class="responsable-historial">
+
+                                            <span class="responsable-icono">
+                                                👤
+                                            </span>
+
+                                            <span>
+                                                @registro.usuario_responsable
+                                            </span>
+
+                                        </div>
+
+                                    </td>
+
+                                    <!-- DESCRIPCION DETALLADA -->
+
+                                    <td class="descripcion-historial">
+
+                                        <!-- MOVIMIENTOS DE STOCK -->
+
+                                        @if (esMovimiento)
+                                        {
+                                            string tipoMovimiento =
+                                                movimiento.Groups[1].Value;
+
+                                            string cantidad =
+                                                movimiento.Groups[2].Value;
+
+                                            string medicamento =
+                                                movimiento.Groups[3].Value;
+
+                                            string lote =
+                                                movimiento.Groups[4].Value;
+
+                                            string stockAnterior =
+                                                movimiento.Groups[5].Value;
+
+                                            string stockResultante =
+                                                movimiento.Groups[6].Value;
+
+                                            string motivo =
+                                                movimiento.Groups[7].Value;
+
+                                            bool esEntrada = tipoMovimiento.Equals(
+                                                "entrada",
+                                                StringComparison.OrdinalIgnoreCase
+                                            );
+
+                                            <div class="descripcion-movimiento">
+
+                                                <!-- CABECERA -->
+
+                                                <div class="movimiento-cabecera">
+
+                                                    <span class="movimiento-icono">
+                                                        💊
+                                                    </span>
+
+                                                    <span class="movimiento-tipo @(esEntrada ? "movimiento-entrada" : "movimiento-salida")">
+
+                                                        @(esEntrada
+                                                            ? "↑ Entrada"
+                                                            : "↓ Salida")
+
+                                                    </span>
+
+                                                    <strong class="movimiento-producto">
+                                                        @medicamento
+                                                    </strong>
+
+                                                </div>
+
+                                                <!-- EXPLICACION -->
+
+                                                <div class="movimiento-accion">
+
+                                                    <span class="movimiento-label">
+                                                        Acción realizada
+                                                    </span>
+
+                                                    <p>
+                                                        Se registró una
+
+                                                        <strong>
+                                                            @tipoMovimiento.ToLower()
+                                                        </strong>
+
+                                                        de
+
+                                                        <strong>
+                                                            @cantidad unidad(es)
+                                                        </strong>
+
+                                                        del medicamento
+
+                                                        <strong>
+                                                            @medicamento
+                                                        </strong>
+
+                                                        correspondiente al lote
+
+                                                        <strong>
+                                                            @lote
+                                                        </strong>.
+                                                    </p>
+
+                                                </div>
+
+                                                <!-- DATOS DEL MOVIMIENTO -->
+
+                                                <div class="movimiento-datos">
+
+                                                    <div class="movimiento-dato">
+
+                                                        <span class="movimiento-label">
+                                                            Lote
+                                                        </span>
+
+                                                        <strong>
+                                                            @lote
+                                                        </strong>
+
+                                                    </div>
+
+                                                    <div class="movimiento-dato">
+
+                                                        <span class="movimiento-label">
+                                                            Cantidad
+                                                        </span>
+
+                                                        <strong class="@(esEntrada ? "cantidad-entrada" : "cantidad-salida")">
+
+                                                            @((esEntrada ? "+" : "-") + cantidad)
+
+                                                        </strong>
+
+                                                    </div>
+
+                                                    <div class="movimiento-dato">
+
+                                                        <span class="movimiento-label">
+                                                            Stock
+                                                        </span>
+
+                                                        <strong>
+
+                                                            @stockAnterior
+
+                                                            <span class="movimiento-flecha">
+                                                                →
+                                                            </span>
+
+                                                            @stockResultante
+
+                                                        </strong>
+
+                                                    </div>
+
+                                                </div>
+
+                                                <!-- MOTIVO -->
+
+                                                <div class="movimiento-motivo">
+
+                                                    <span class="movimiento-label">
+                                                        Motivo
+                                                    </span>
+
+                                                    <span>
+                                                        @motivo
+                                                    </span>
+
+                                                </div>
+
+                                            </div>
+                                        }
+
+                                        <!-- ACCIONES IMPORTANTES -->
+
+                                        @if (!esMovimiento && esAccionImportante)
+                                        {
+                                            <div class="descripcion-evento">
+
+                                                <div class="evento-cabecera">
+
+                                                    <span class="evento-categoria @claseCategoria">
+
+                                                        <span>
+                                                            @iconoCategoria
+                                                        </span>
+
+                                                        @categoria
+
+                                                    </span>
+
+                                                </div>
+
+                                                <div class="evento-contenido">
+
+                                                    <span class="evento-label">
+                                                        Acción realizada
+                                                    </span>
+
+                                                    <p>
+                                                        @descripcion
+                                                    </p>
+
+                                                </div>
+
+                                            </div>
+                                        }
+
+                                        <!-- OTROS EVENTOS -->
+
+                                        @if (!esMovimiento && !esAccionImportante)
+                                        {
+                                            <div class="descripcion-simple">
+
+                                                <span class="descripcion-simple-icono @claseCategoria">
+                                                    @iconoCategoria
+                                                </span>
+
+                                                <div class="descripcion-simple-contenido">
+
+                                                    <span class="descripcion-simple-categoria">
+                                                        @categoria
+                                                    </span>
+
+                                                    <span class="descripcion-simple-texto">
+                                                        @descripcion
+                                                    </span>
+
+                                                </div>
+
+                                            </div>
+                                        }
+
+                                    </td>
+
+                                    <!-- FECHA Y HORA -->
+
+                                    <td>
+
+                                        <div class="fecha-historial">
+
+                                            <span class="fecha-dia">
+                                                @registro.fecha_hora.ToString("dd-MM-yyyy")
+                                            </span>
+
+                                            <span class="fecha-hora">
+                                                @registro.fecha_hora.ToString("HH:mm:ss")
+                                            </span>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <!-- PAGINACION -->
+
+                @if (totalPaginas > 1)
+                {
+                    <div class="paginacion">
+
+                        @if (paginaActual > 1)
+                        {
+                            <a asp-controller="Home"
+                               asp-action="Historial"
+                               asp-route-pagina="@(paginaActual - 1)"
+                               asp-route-buscar="@buscarActual"
+                               asp-route-filtro="@filtroActual"
+                               asp-route-periodo="@periodoActual"
+                               class="pagina-boton"
+                               data-orbit-action="quiet">
+                                ← Anterior
+                            </a>
+                        }
+
+                        @for (int i = 1; i <= totalPaginas; i++)
+                        {
+                            <a asp-controller="Home"
+                               asp-action="Historial"
+                               asp-route-pagina="@i"
+                               asp-route-buscar="@buscarActual"
+                               asp-route-filtro="@filtroActual"
+                               asp-route-periodo="@periodoActual"
+                               class="pagina-boton @(i == paginaActual ? "pagina-activa" : "")"
+                               data-orbit-action="quiet">
+                                @i
+                            </a>
+                        }
+
+                        @if (paginaActual < totalPaginas)
+                        {
+                            <a asp-controller="Home"
+                               asp-action="Historial"
+                               asp-route-pagina="@(paginaActual + 1)"
+                               asp-route-buscar="@buscarActual"
+                               asp-route-filtro="@filtroActual"
+                               asp-route-periodo="@periodoActual"
+                               class="pagina-boton"
+                               data-orbit-action="quiet">
+                                Siguiente →
+                            </a>
+                        }
+
+                    </div>
+                }
+            }
+            else
+            {
+                <!-- SIN REGISTROS -->
+
+                <div class="sin-registros">
+
+                    @if (!string.IsNullOrWhiteSpace(buscarActual)
+                         || filtroActual != "todos"
+                         || periodoActual != "todos")
+                    {
+                        <strong>
+                            No se encontraron registros con esos criterios.
+                        </strong>
+
+                        <span>
+                            Prueba cambiando la búsqueda o modificando los filtros.
+                        </span>
+                    }
+                    else
+                    {
+                        <strong>
+                            No existen registros en el historial.
+                        </strong>
+                    }
+
+                </div>
+            }
+
+        </section>
+
+    </div>
+
+    <!-- VOLVER -->
+
+    <div class="contenedor-volver">
+
+        <a asp-controller="Home"
+           asp-action="MovimientoHistorial"
+           class="btn-volver"
+           data-orbit-action="secondary">
+
+            ← Volver a Movimientos e Historial
+
+        </a>
+
+    </div>
+
+</div>
+
+<style>
+
+    /* CONTENEDOR GENERAL */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-card.historial-general-original {
+        display: block !important;
+        width: 100% !important;
+        max-width: 1500px !important;
+        margin: 5px auto !important;
+        box-sizing: border-box;
+    }
+
+    /* COMPOSICION VERTICAL */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .sm-history-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 18px !important;
+        width: 100% !important;
+    }
+
+    /* PANEL SUPERIOR */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .sm-history-console {
+        display: block !important;
+        position: static !important;
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 20px 22px !important;
+        border: 1px solid #bdd1eb;
+        border-radius: 18px;
+        background: linear-gradient(135deg, #eef5ff, #e7f0ff);
+        box-sizing: border-box;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .sm-console-heading {
+        margin: 0 0 16px !important;
+        padding: 0 0 12px !important;
+        border-bottom: 1px solid #cadaf0;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .sm-console-heading h2 {
+        margin: 3px 0 4px;
+        font-size: 20px;
+        color: #173d69;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .sm-console-heading p {
+        margin: 0;
+        color: #526f8f;
+    }
+
+    /* BUSQUEDA Y FILTROS */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .historial-herramientas {
+        display: grid !important;
+        grid-template-columns:
+            minmax(260px, 1fr)
+            minmax(440px, 1.45fr) !important;
+        align-items: end !important;
+        gap: 16px !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .form-busqueda {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) auto !important;
+        align-items: end !important;
+        gap: 6px 10px !important;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .form-busqueda > label {
+        grid-column: 1 / -1;
+        margin: 0;
+        color: #526f8e;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .filtro-busqueda {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+        min-height: 43px;
+        padding: 0 12px;
+        border: 1px solid #afc6e5;
+        border-radius: 10px;
+        background: #fbfdff;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .filtro-busqueda input {
+        flex: 1;
+        width: 100%;
+        min-width: 0;
+        margin: 0 !important;
+        padding: 8px 0 !important;
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        outline: none;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .form-filtros {
+        display: grid !important;
+        grid-template-columns:
+            minmax(140px, 1fr)
+            minmax(140px, 1fr)
+            auto
+            auto !important;
+        align-items: end !important;
+        gap: 10px !important;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .filtro-campo {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        min-width: 0;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .filtro-campo label {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #526f8e;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .filtro-campo select {
+        width: 100%;
+        min-height: 43px;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original :is(
+        .btn-buscar,
+        .btn-aplicar-filtros,
+        .btn-limpiar-filtros
+    ) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 43px !important;
+        white-space: nowrap;
+    }
+
+    /* RESULTADOS */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .sm-history-ledger {
+        display: block !important;
+        position: static !important;
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* BARRA DE RESUMEN */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .historial-resumen-filtros {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        min-height: 62px;
+        margin: 0 0 14px;
+        padding: 15px 18px;
+        border-radius: 15px;
+        background: linear-gradient(115deg, #193e66, #255485);
+        color: white;
+        font-size: 12px;
+        box-sizing: border-box;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .historial-resumen-filtros strong {
+        color: white;
+        font-size: 17px;
+        margin-left: 4px;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .filtro-activo {
+        padding: 5px 9px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.12);
+        color: white;
+        font-weight: 700;
+    }
+
+    /* TABLA ORIGINAL */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .tabla-contenedor {
+        width: 100%;
+        overflow-x: auto;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 7px 20px rgba(28, 65, 95, 0.12);
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .tabla-historial {
+        width: 100%;
+        min-width: 900px;
+        table-layout: fixed;
+        border-collapse: collapse;
+        background: white;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .tabla-historial th {
+        padding: 14px !important;
+        background: #0f5278 !important;
+        color: white !important;
+        text-align: left;
+        font-weight: 600;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .tabla-historial td {
+        padding: 12px 14px !important;
+        border-bottom: 1px solid #dce6ec;
+        color: #17324d;
+        vertical-align: top;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .tabla-historial tbody tr:nth-child(even) {
+        background: #f0f5ff;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .tabla-historial tbody tr:hover {
+        background: #e8f2ff;
+    }
+
+    /* ANCHO DE COLUMNAS */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .columna-id {
+        width: 7%;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .columna-responsable {
+        width: 16%;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .columna-descripcion {
+        width: 59%;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .columna-fecha {
+        width: 18%;
+    }
+
+    /* ID */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .historial-id {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 34px;
+        padding: 5px 7px;
+        border-radius: 6px;
+        background: #edf5f9;
+        color: #31566d;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    /* RESPONSABLE */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .responsable-historial {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .responsable-icono {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: #eef6fa;
+        font-size: 12px;
+    }
+
+    /* FICHAS DE DESCRIPCION */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .descripcion-evento,
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .descripcion-movimiento {
+        width: 100%;
+        padding: 11px 13px;
+        border: 1px solid #dce7ec;
+        border-radius: 9px;
+        background: #fbfdfe;
+        box-sizing: border-box;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .evento-cabecera,
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .movimiento-cabecera {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    /* CATEGORIAS */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .evento-categoria {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 9px;
+        border-radius: 999px;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .categoria-sistema {
+        background: #eef4f8;
+        color: #46617a;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .categoria-usuarios {
+        background: #eef3ff;
+        color: #3659b5;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .categoria-productos {
+        background: #fff2e7;
+        color: #a15c1b;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .categoria-lotes {
+        background: #eef5fa;
+        color: #315c79;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .categoria-permisos {
+        background: #f4efff;
+        color: #7050a3;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .categoria-medicamentos {
+        background: #fff0f3;
+        color: #b02a55;
+    }
+
+    /* ACCION REALIZADA */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .evento-contenido,
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .movimiento-accion {
+        padding: 8px 10px;
+        border-radius: 7px;
+        background: #f2f7f9;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .evento-label,
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .movimiento-label {
+        color: #71838e;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .evento-contenido p,
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .movimiento-accion p {
+        margin: 4px 0 0;
+        color: #385563;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    /* MOVIMIENTOS */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .movimiento-icono {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        background: #fff0f3;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .movimiento-tipo {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 9px;
+        border-radius: 999px;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .movimiento-entrada {
+        background: #e7f7ef;
+        color: #18794e;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .movimiento-salida {
+        background: #fff0f0;
+        color: #b42318;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .movimiento-producto {
+        color: #073b64;
+        font-size: 13px;
+    }
+
+    /* LOTE, CANTIDAD Y STOCK */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .movimiento-datos {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin: 8px 0;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .movimiento-dato {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        min-width: 0;
+        padding: 8px 10px;
+        border-radius: 7px;
+        background: #f1f6f8;
+        overflow-wrap: anywhere;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .cantidad-entrada {
+        color: #18794e;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .cantidad-salida {
+        color: #b42318;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .movimiento-flecha {
+        margin: 0 4px;
+        color: #1198a5;
+    }
+
+    /* MOTIVO */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .movimiento-motivo {
+        display: grid;
+        grid-template-columns: 55px minmax(0, 1fr);
+        gap: 8px;
+        padding-top: 8px;
+        border-top: 1px solid #e1eaee;
+        font-size: 12.5px;
+        overflow-wrap: anywhere;
+    }
+
+    /* EVENTOS SIMPLES */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .descripcion-simple {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 13px;
+        border: 1px solid #dce7ec;
+        border-radius: 9px;
+        background: #fbfdfe;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .descripcion-simple-icono {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .descripcion-simple-contenido {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 0;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .descripcion-simple-categoria {
+        color: #315c79;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .descripcion-simple-texto {
+        color: #385563;
+        font-size: 13px;
+        overflow-wrap: anywhere;
+    }
+
+    /* FECHA Y HORA */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .fecha-historial {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .fecha-dia {
+        color: #244a62;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .fecha-hora {
+        color: #6f818c;
+        font-size: 12px;
+    }
+
+    /* PAGINACION */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .paginacion {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-top: 25px;
+    }
+
+    /* SIN REGISTROS */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .sin-registros {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding: 28px;
+        border: 1px solid #d8e2e8;
+        border-radius: 10px;
+        background: #f5f8fa;
+        color: #60798b;
+        text-align: center;
+    }
+
+    /* VOLVER */
+
+    body.sm-app[data-sm-screen="Historial"]
+    .historial-general-original .contenedor-volver {
+        margin: 30px 0;
+        text-align: center;
+    }
+
+    /* PANTALLAS MEDIANAS */
+
+    @@media screen and (max-width: 1200px) {
+
+        body.sm-app[data-sm-screen="Historial"]
+        .historial-general-original .historial-herramientas {
+            grid-template-columns: minmax(0, 1fr) !important;
+        }
+
+    }
+
+    /* CELULARES */
+
+    @@media screen and (max-width: 700px) {
+
+        body.sm-app[data-sm-screen="Historial"]
+        .historial-general-original .sm-history-console {
+            padding: 16px !important;
+        }
+
+        body.sm-app[data-sm-screen="Historial"]
+        .historial-general-original .form-busqueda,
+        body.sm-app[data-sm-screen="Historial"]
+        .historial-general-original .form-filtros {
+            grid-template-columns: minmax(0, 1fr) !important;
+        }
+
+        body.sm-app[data-sm-screen="Historial"]
+        .historial-general-original :is(
+            .btn-buscar,
+            .btn-aplicar-filtros,
+            .btn-limpiar-filtros
+        ) {
+            width: 100%;
+        }
+
+        body.sm-app[data-sm-screen="Historial"]
+        .historial-general-original .movimiento-datos {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+    }
+
+</style>

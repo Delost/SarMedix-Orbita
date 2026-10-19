@@ -1,0 +1,92 @@
+@* Explicit visual routing. Unknown screens deliberately render nothing. No model/session access. *@
+@{
+    var screen = ViewData["SmScreen"]?.ToString() ?? "";
+    var mini = screen switch
+    {
+        "ModuloUsuariosPermisos" => ("security", ".submenu-titulo", "heading"),
+        "Usuarios" or "ListadoEliminarUsuarios" => ("security", ".usuarios-titulo", "heading"),
+        "CrearUsuario" or "EditarUsuario" => ("security", ".orbit-editor-heading", "heading"),
+        "RolesPermisos" => ("security", "h1.titulo", "heading"),
+        "RolesInactivos" => ("security", ".titulo-roles-inactivos", "heading"),
+        "CrearRol" => ("security", ".descripcion-crear-rol", "below"),
+        "EditarRol" => ("security", ".descripcion-editar-rol", "below"),
+        "ModuloProductos" => ("inventory", ".submenu-titulo", "heading"),
+        "Productos" => ("inventory", ".productos-titulo", "heading"),
+        "CrearProducto" or "EditarProducto" => ("inventory", ".orbit-editor-heading", "heading"),
+        "Lotes" => ("trace", ".sm-workspace-heading", "heading"),
+        "CrearLote" => ("trace", ".entrada-encabezado", "heading"),
+        "EditarLote" => ("trace", ".sm-edit-heading", "heading"),
+        "ModuloMovimientoHistorial" => ("transfer", ".submenu-titulo", "heading"),
+        "TrasladarStock" => ("transfer", ".traslado-encabezado", "heading"),
+        "BajaInventario" => ("transfer", ".salida-titulo", "heading"),
+        "SalidaExtraordinaria" => ("transfer", ".extra-titulo", "heading"),
+        "Dosificaciones" => ("preparation", ".sm-dose-orbit", "slot"),
+        "EntregaDosificacion" => ("preparation", ".scan-encabezado", "heading"),
+        "ImprimirDosificacion" => ("preparation", ".print-controles", "heading"),
+        "ModuloMedicamentosControlados" => ("protection", ".controlados-encabezado", "heading"),
+        "Ubicaciones" => ("distribution", ".ubicaciones-encabezado", "heading"),
+        "InventarioUbicacion" => ("distribution", ".inventario-encabezado-superior", "heading"),
+        "Historial" or "HistorialUsuarios" or "HistorialProductos" or "HistorialSectores" => ("memory", ".sm-history-heading", "heading"),
+        "HistorialSalidasTurno" => ("memory", ".turno-encabezado", "heading"),
+        _ => ("", "", "")
+    };
+}
+@if (mini.Item1 != "")
+{
+    <template id="sm-mini-template" data-mini-target="@mini.Item2" data-mini-placement="@mini.Item3">
+        <span class="sm-mini sm-mini--@mini.Item1" aria-hidden="true">
+            <svg viewBox="0 0 160 128" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">
+                <ellipse class="sm-mini-base" cx="80" cy="64" rx="57" ry="53" />
+                <g class="sm-mini-track"><circle cx="80" cy="64" r="49" /><path d="M31 64a49 49 0 0 1 49-49" /><circle class="sm-mini-light" cx="80" cy="15" r="2.5" /></g>
+                @if (mini.Item1 == "inventory")
+                {
+                    <g class="sm-mini-ellipses"><ellipse cx="80" cy="64" rx="68" ry="25" transform="rotate(-25 80 64)" /><ellipse cx="80" cy="64" rx="68" ry="25" transform="rotate(25 80 64)" /></g>
+                }
+                <g class="sm-mini-icon">
+                    @switch (mini.Item1)
+                    {
+                        case "security":
+                            <circle cx="72" cy="48" r="9" /><path d="M54 82v-7a18 18 0 0 1 29-14" />
+                            <path class="sm-mini-pulse" d="M93 59l15 6v11c0 10-15 17-15 17s-15-7-15-17V65z" /><path d="m86 75 5 5 9-11M49 59h10" />
+                            break;
+                        case "inventory":
+                            <path d="m56 50 24-12 24 12v32L80 94 56 82zm0 0 24 13 24-13M80 63v31M68 44l24 13" /><path d="M88 72h10m-5-5v10" />
+                            break;
+                        case "trace":
+                            <rect x="65" y="34" width="30" height="10" rx="2" /><rect x="61" y="44" width="38" height="49" rx="7" /><path d="M65 61h30v22H65zM70 68h20M70 76h6m4 0h10" />
+                            <path class="sm-mini-scan" d="M64 63h32" /><circle class="sm-mini-pulse sm-mini-light" cx="104" cy="84" r="3" />
+                            break;
+                        case "transfer":
+                            <path class="sm-mini-arrow-a" d="M53 53h51m-12-11 12 11-12 11" /><path class="sm-mini-arrow-b" d="M107 76H56m12-11L56 76l12 11" /><path class="sm-mini-connection" d="M45 64h70" />
+                            <circle class="sm-mini-transfer-a sm-mini-light" cx="48" cy="64" r="2.5" /><circle class="sm-mini-transfer-b sm-mini-light" cx="112" cy="64" r="2.5" />
+                            break;
+                        case "preparation":
+                        case "protection":
+                            <path d="M58 66a12 12 0 0 1-17-17l21-21a12 12 0 0 1 17 17z" transform="translate(12 13)" /><path d="m66 51 17 17" />
+                            @if (mini.Item1 == "preparation")
+                            {
+                                <path d="M87 65h20v27H80V72zM86 82h15M86 87h10" /><circle cx="88" cy="72" r="1.5" /><path class="sm-mini-scan" d="M83 76h22" /><circle class="sm-mini-pulse sm-mini-light" cx="59" cy="88" r="3" />
+                            }
+                            else
+                            {
+                                <circle class="sm-mini-pulse sm-mini-lock-halo" cx="95" cy="81" r="22" /><rect x="82" y="75" width="26" height="22" rx="4" /><path d="M87 75v-7a8 8 0 0 1 16 0v7M95 83v6" />
+                            }
+                            break;
+                        case "distribution":
+                            <path d="M80 76S62 59 62 49a18 18 0 1 1 36 0c0 10-18 27-18 27z" /><circle cx="80" cy="49" r="6" /><path class="sm-mini-connection" d="m46 88 34 14 34-14" />
+                            <circle class="sm-mini-node sm-mini-node-a" cx="46" cy="88" r="3" /><circle class="sm-mini-node sm-mini-node-b" cx="80" cy="102" r="3" /><circle class="sm-mini-node sm-mini-node-c" cx="114" cy="88" r="3" /><circle class="sm-mini-route sm-mini-light" cx="46" cy="88" r="2" />
+                            break;
+                        case "memory":
+                            <circle cx="80" cy="62" r="22" /><path d="M80 47v16l11 6M67 92h26M72 98h16" />
+                            break;
+                    }
+                </g>
+                @if (mini.Item1 == "security" || mini.Item1 == "memory")
+                {
+                    <g class="sm-mini-events"><circle class="sm-mini-node sm-mini-node-a" cx="38" cy="40" r="2.5" /><circle class="sm-mini-node sm-mini-node-b" cx="124" cy="43" r="2.5" /><circle class="sm-mini-node sm-mini-node-c" cx="80" cy="113" r="2.5" /></g>
+                }
+                <path class="sm-mini-marks" d="M12 61v6m-3-3h6m130 0h6M39 109h8m66-90h8" />
+            </svg>
+        </span>
+    </template>
+}

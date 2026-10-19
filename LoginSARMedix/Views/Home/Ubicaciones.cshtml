@@ -1,0 +1,2525 @@
+﻿@* SM-ORBITA-METADATA *@
+@{ ViewData["SmScreen"] = "Ubicaciones"; ViewData["SmFamily"] = "sectors"; }
+@using LoginSARMedix.Models
+@model List<Ubicacion>
+
+@{
+    ViewData["Title"] = "Sectores";
+    ViewData["TituloBarra"] = "Sectores";
+
+    string mensaje = TempData["Mensaje"]?.ToString() ?? "";
+    string tipoMensaje = TempData["TipoMensaje"]?.ToString() ?? "";
+
+    var lotesUbicaciones =
+        ViewBag.LotesUbicaciones as List<Lote>
+        ?? new List<Lote>();
+
+    var productosUbicaciones =
+        ViewBag.ProductosUbicaciones as List<Producto>
+        ?? new List<Producto>();
+
+    DateTime hoy = DateTime.Today;
+    DateTime limiteVencimiento = hoy.AddDays(30);
+
+    bool abrirConAlertas =
+        Context.Request.Query["soloAlertas"]
+            .ToString()
+            .Equals(
+                "true",
+                StringComparison.OrdinalIgnoreCase
+            );
+}
+
+<style>
+    .ubicaciones-pagina {
+        width: 100%;
+        max-width: 1500px;
+        margin: 0 auto;
+        padding: 10px 10px 30px;
+    }
+
+    .ubicaciones-encabezado {
+        margin-bottom: 25px;
+    }
+
+    .ubicaciones-encabezado h1 {
+        margin: 0;
+        color: #093b62;
+        font-size: 34px;
+        font-weight: 750;
+    }
+
+    .ubicaciones-encabezado p {
+        margin: 7px 0 0;
+        color: #657d90;
+        font-size: 16px;
+    }
+
+    .ubicaciones-mensaje {
+        margin-bottom: 18px;
+        padding: 13px 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-radius: 9px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .ubicaciones-mensaje-icono {
+        width: 24px;
+        height: 24px;
+        min-width: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-weight: 800;
+    }
+
+    .ubicaciones-mensaje-exito {
+        border: 1px solid #b7dfc2;
+        background: #e9f8ed;
+        color: #17733a;
+    }
+
+    .ubicaciones-mensaje-exito .ubicaciones-mensaje-icono {
+        background: #17733a;
+        color: white;
+    }
+
+    .ubicaciones-mensaje-error {
+        border: 1px solid #f1b9b9;
+        background: #fff0f0;
+        color: #b42318;
+    }
+
+    .ubicaciones-mensaje-error .ubicaciones-mensaje-icono {
+        background: #b42318;
+        color: white;
+    }
+
+    .ubicaciones-herramientas {
+        display: grid;
+        grid-template-columns: minmax(260px, 1fr) 180px 210px auto auto;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+    .ubicaciones-buscador {
+        position: relative;
+    }
+
+    .ubicaciones-buscador span {
+        position: absolute;
+        top: 50%;
+        left: 16px;
+        transform: translateY(-50%);
+        color: #7890a3;
+        font-size: 18px;
+    }
+
+    .ubicaciones-buscador input,
+    .ubicaciones-select {
+        width: 100%;
+        height: 48px;
+        border: 1px solid #c9d9e3;
+        border-radius: 9px;
+        background: rgba(255, 255, 255, 0.96);
+        color: #17324d;
+        font-size: 14px;
+        outline: none;
+        box-sizing: border-box;
+    }
+
+    .ubicaciones-buscador input {
+        padding: 0 15px 0 46px;
+        font-size: 15px;
+    }
+
+    .ubicaciones-select {
+        padding: 0 14px;
+    }
+
+    .ubicaciones-buscador input:focus,
+    .ubicaciones-select:focus {
+        border-color: #0d7898;
+        box-shadow: 0 0 0 3px rgba(13, 120, 152, 0.10);
+    }
+
+    .ubicaciones-alertas-filtro {
+        height: 48px;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        border: 1px solid #c9d9e3;
+        border-radius: 9px;
+        background: rgba(255, 255, 255, 0.96);
+        color: #17324d;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        white-space: nowrap;
+    }
+
+    .ubicaciones-alertas-filtro input {
+        width: 17px;
+        height: 17px;
+        cursor: pointer;
+    }
+
+    .btn-agregar-ubicacion {
+        height: 48px;
+        padding: 0 21px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border: none;
+        border-radius: 9px;
+        background: linear-gradient(90deg, #087ca0, #0f6fc5);
+        color: white;
+        font-size: 15px;
+        font-weight: 650;
+        cursor: pointer;
+        box-shadow: 0 7px 16px rgba(7, 89, 133, 0.18);
+        white-space: nowrap;
+    }
+
+    .btn-agregar-ubicacion:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 22px rgba(7, 89, 133, 0.24);
+    }
+
+    .btn-agregar-icono {
+        font-size: 23px;
+        line-height: 1;
+    }
+
+    .ubicaciones-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 20px;
+    }
+
+    .ubicacion-card {
+        min-height: 330px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.97);
+        border: 1px solid #dce6ed;
+        border-radius: 14px;
+        box-shadow: 0 10px 25px rgba(16, 65, 95, 0.10);
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .ubicacion-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 35px rgba(16, 65, 95, 0.16);
+    }
+
+    .ubicacion-card-superior {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .ubicacion-icono {
+        width: 54px;
+        height: 54px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 15px;
+        background: #e6f3fb;
+        font-size: 30px;
+    }
+
+    .ubicacion-datos-principales {
+        flex: 1;
+    }
+
+    .ubicacion-datos-principales h2 {
+        margin: 2px 0 4px;
+        color: #123a5d;
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .ubicacion-tipo {
+        display: inline-block;
+        padding: 3px 9px;
+        border-radius: 6px;
+        background: #e9f2fb;
+        color: #27618d;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .ubicacion-menu-contenedor {
+        position: relative;
+    }
+
+    .ubicacion-menu {
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 8px;
+        background: transparent;
+        color: #587086;
+        font-size: 22px;
+        cursor: pointer;
+    }
+
+    .ubicacion-menu:hover {
+        background: #eef5f8;
+    }
+
+    .ubicacion-menu-opciones {
+        position: absolute;
+        top: 40px;
+        right: 0;
+        z-index: 100;
+        min-width: 190px;
+        display: none;
+        padding: 6px;
+        border: 1px solid #d9e5ec;
+        border-radius: 9px;
+        background: white;
+        box-shadow: 0 10px 25px rgba(20, 60, 85, 0.18);
+    }
+
+    .ubicacion-menu-opciones.abierto {
+        display: block;
+    }
+
+    .ubicacion-menu-opciones form {
+        margin: 0;
+    }
+
+    .ubicacion-menu-opcion {
+        width: 100%;
+        padding: 10px 12px;
+        border: none;
+        border-radius: 7px;
+        background: transparent;
+        color: #27485c;
+        font-size: 13px;
+        font-weight: 600;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .ubicacion-menu-opcion:hover {
+        background: #edf6fb;
+    }
+
+    .ubicacion-menu-opcion-inactivar {
+        color: #9b6200;
+    }
+
+    .ubicacion-menu-opcion-inactivar:hover {
+        background: #fff5df;
+    }
+
+    .ubicacion-menu-opcion-reactivar {
+        color: #17733a;
+    }
+
+    .ubicacion-menu-opcion-reactivar:hover {
+        background: #e8f7ed;
+    }
+
+    .ubicacion-menu-opcion-eliminar {
+        color: #b42318;
+    }
+
+    .ubicacion-menu-opcion-eliminar:hover {
+        background: #fff0f0;
+    }
+
+    .ubicacion-resumen {
+        margin-top: 20px;
+        padding: 16px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        border: 1px solid #e1eaf0;
+        border-radius: 10px;
+        background: #f8fbfd;
+    }
+
+    .ubicacion-resumen-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .ubicacion-resumen-icono {
+        font-size: 23px;
+    }
+
+    .ubicacion-resumen-numero {
+        display: block;
+        color: #123a5d;
+        font-size: 19px;
+        font-weight: 750;
+        line-height: 1.1;
+    }
+
+    .ubicacion-resumen-texto {
+        display: block;
+        margin-top: 3px;
+        color: #718696;
+        font-size: 13px;
+    }
+
+    .ubicacion-alertas {
+        margin-top: 16px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .ubicacion-alerta {
+        padding: 7px 11px;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        border-radius: 7px;
+        font-size: 13px;
+        font-weight: 650;
+    }
+
+    .ubicacion-alerta-ok {
+        background: #dff5e5;
+        color: #17733a;
+    }
+
+    .ubicacion-alerta-vencido {
+        background: #fde5e5;
+        color: #b42318;
+    }
+
+    .ubicacion-alerta-proximo {
+        background: #fff0dd;
+        color: #c45c00;
+    }
+
+    .ubicacion-alerta-stock {
+        background: #fff4cc;
+        color: #9a6800;
+    }
+
+    .ubicacion-acciones {
+        margin-top: auto;
+        padding-top: 20px;
+    }
+
+    .btn-ver-inventario {
+        width: 100%;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        border: 1px solid #cbddea;
+        border-radius: 8px;
+        background: #eef6ff;
+        color: #0f67b1;
+        font-size: 14px;
+        font-weight: 650;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .btn-ver-inventario:hover {
+        background: #e2f0fc;
+        color: #0b5797;
+    }
+
+    .ubicacion-card-agregar {
+        min-height: 330px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px dashed #b9d1e2;
+        background: rgba(255, 255, 255, 0.72);
+        cursor: pointer;
+    }
+
+    .ubicacion-card-agregar:hover {
+        background: rgba(255, 255, 255, 0.92);
+        border-color: #6daed0;
+    }
+
+    .ubicacion-agregar-contenido {
+        text-align: center;
+    }
+
+    .ubicacion-agregar-circulo {
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #e5f2fc;
+        color: #1976c8;
+        font-size: 42px;
+        font-weight: 300;
+    }
+
+    .ubicacion-agregar-contenido h3 {
+        margin: 0;
+        color: #0f5d9d;
+        font-size: 19px;
+        font-weight: 700;
+    }
+
+    .ubicacion-agregar-contenido p {
+        margin: 7px 0 0;
+        color: #718696;
+        font-size: 14px;
+    }
+
+    .ubicaciones-info {
+        margin-top: 24px;
+        padding: 13px 17px;
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        border: 1px solid #b9d9f4;
+        border-radius: 9px;
+        background: #e8f4ff;
+        color: #1f5f93;
+        font-size: 14px;
+    }
+
+    .ubicaciones-info-icono {
+        width: 25px;
+        height: 25px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #2387d8;
+        color: white;
+        font-weight: 700;
+    }
+
+    .ubicaciones-vacio {
+        grid-column: 1 / -1;
+        padding: 35px;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid #dce6ed;
+        border-radius: 14px;
+        color: #657d90;
+        box-shadow: 0 10px 25px rgba(16, 65, 95, 0.08);
+    }
+
+    .ubicaciones-vacio h3 {
+        margin: 0 0 7px;
+        color: #123a5d;
+        font-size: 20px;
+    }
+
+    .ubicacion-oculta {
+        display: none !important;
+    }
+
+    .ubicacion-modal-fondo {
+        position: fixed;
+        inset: 0;
+        z-index: 20000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(5, 35, 55, 0.48);
+    }
+
+    .ubicacion-modal-fondo.abierto {
+        display: flex;
+    }
+
+    .ubicacion-modal {
+        width: 100%;
+        max-width: 520px;
+        overflow: hidden;
+        border-radius: 14px;
+        background: white;
+        box-shadow: 0 22px 60px rgba(0, 40, 70, 0.28);
+    }
+
+    .ubicacion-modal-cabecera {
+        padding: 20px 22px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 20px;
+        border-bottom: 1px solid #e2ebf0;
+    }
+
+    .ubicacion-modal-cabecera h2 {
+        margin: 0;
+        color: #123a5d;
+        font-size: 22px;
+    }
+
+    .ubicacion-modal-cabecera p {
+        margin: 5px 0 0;
+        color: #718696;
+        font-size: 14px;
+    }
+
+    .ubicacion-modal-cerrar {
+        width: 36px;
+        height: 36px;
+        border: none;
+        border-radius: 8px;
+        background: #eef4f7;
+        color: #587086;
+        font-size: 25px;
+        cursor: pointer;
+    }
+
+    .ubicacion-modal-cuerpo {
+        padding: 22px;
+    }
+
+    .ubicacion-modal-cuerpo label {
+        display: block;
+        margin-bottom: 8px;
+        color: #173d55;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .ubicacion-modal-cuerpo input,
+    .ubicacion-modal-cuerpo select {
+        width: 100%;
+        height: 46px;
+        padding: 0 13px;
+        box-sizing: border-box;
+        border: 1px solid #c9d9e3;
+        border-radius: 8px;
+        background: white;
+        color: #17324d;
+        font-size: 15px;
+        outline: none;
+    }
+
+    .ubicacion-modal-cuerpo input:focus,
+    .ubicacion-modal-cuerpo select:focus {
+        border-color: #0d7898;
+        box-shadow: 0 0 0 3px rgba(13, 120, 152, 0.10);
+    }
+
+    .ubicacion-modal-grupo + .ubicacion-modal-grupo {
+        margin-top: 18px;
+    }
+
+    .ubicacion-modal-ayuda {
+        display: block;
+        margin-top: 7px;
+        color: #7b8d99;
+        font-size: 12px;
+    }
+
+    .ubicacion-modal-pie,
+    .ubicacion-confirmacion-pie {
+        padding: 16px 22px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        border-top: 1px solid #e2ebf0;
+        background: #f8fbfd;
+    }
+
+    .ubicacion-confirmacion-pie {
+        justify-content: center;
+    }
+
+    .btn-ubicacion-cancelar,
+    .btn-ubicacion-guardar,
+    .btn-confirmacion-cancelar,
+    .btn-confirmacion-aceptar {
+        min-width: 120px;
+        height: 42px;
+        padding: 0 17px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 650;
+        cursor: pointer;
+    }
+
+    .btn-ubicacion-cancelar,
+    .btn-confirmacion-cancelar {
+        border: 1px solid #cbd9e2;
+        background: white;
+        color: #506979;
+    }
+
+    .btn-ubicacion-guardar {
+        border: none;
+        background: linear-gradient(90deg, #087ca0, #0f6fc5);
+        color: white;
+    }
+
+    .ubicacion-confirmacion-contenido {
+        padding: 28px 24px 23px;
+        text-align: center;
+    }
+
+    .ubicacion-confirmacion-icono {
+        width: 62px;
+        height: 62px;
+        margin: 0 auto 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #e8f4fb;
+        color: #0d7898;
+        font-size: 28px;
+        font-weight: 800;
+    }
+
+    .ubicacion-confirmacion-titulo {
+        margin: 0;
+        color: #123a5d;
+        font-size: 23px;
+        font-weight: 750;
+    }
+
+    .ubicacion-confirmacion-texto {
+        margin: 10px 0 0;
+        color: #5f7688;
+        font-size: 14px;
+        line-height: 1.55;
+    }
+
+    .ubicacion-confirmacion-aviso {
+        margin-top: 16px;
+        padding: 12px 14px;
+        border-radius: 9px;
+        background: #f3f7fa;
+        color: #526b7d;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .btn-confirmacion-aceptar {
+        border: none;
+        background: #0d7898;
+        color: white;
+    }
+
+    .btn-confirmacion-aceptar.accion-inactivar {
+        background: #b26a00;
+    }
+
+    .btn-confirmacion-aceptar.accion-reactivar {
+        background: #17733a;
+    }
+
+    .btn-confirmacion-aceptar.accion-eliminar {
+        background: #b42318;
+    }
+
+    .ubicacion-confirmacion-icono.accion-inactivar {
+        background: #fff4df;
+        color: #9b6200;
+    }
+
+    .ubicacion-confirmacion-icono.accion-reactivar {
+        background: #e7f6ec;
+        color: #17733a;
+    }
+
+    .ubicacion-confirmacion-icono.accion-eliminar {
+        background: #fdeaea;
+        color: #b42318;
+    }
+
+    @@media (max-width: 1200px) {
+        .ubicaciones-herramientas {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .ubicaciones-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @@media (max-width: 760px) {
+        .ubicaciones-herramientas,
+        .ubicaciones-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .ubicaciones-encabezado h1 {
+            font-size: 28px;
+        }
+
+        .ubicacion-modal-pie,
+        .ubicacion-confirmacion-pie {
+            flex-direction: column;
+        }
+
+        .btn-ubicacion-cancelar,
+        .btn-ubicacion-guardar,
+        .btn-confirmacion-cancelar,
+        .btn-confirmacion-aceptar {
+            width: 100%;
+        }
+    }
+    /* =========================================================
+       ÓRBITA 2.0 - ÚNICAMENTE ICONOS DE CABECERA DE SECTORES
+       (Los contadores de unidades/productos permanecen intactos)
+       ========================================================= */
+
+    body.sm-app .ubicaciones-pagina .ubicacion-icono {
+        width: 54px;
+        height: 54px;
+        flex: 0 0 54px;
+        background: linear-gradient(145deg, #f1f7ff, #e2efff);
+        border: 1px solid #c4d9fb;
+        border-radius: 15px;
+        box-shadow: 0 3px 10px rgba(41, 100, 176, 0.06);
+        font-size: initial;
+        box-sizing: border-box;
+    }
+
+    body.sm-app .ubicaciones-pagina .ubicacion-icono svg {
+        display: block;
+        width: 28px;
+        height: 28px;
+        fill: none;
+        stroke: #2b70ca;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        overflow: visible;
+    }
+
+    /* =========================================================
+       BUSCADOR Y FILTROS: MISMO CRITERIO DE LOS HISTORIALES
+       ========================================================= */
+
+    body.sm-app .ubicaciones-pagina .ubicaciones-herramientas {
+        display: grid;
+        grid-template-columns: minmax(220px, 1.35fr) minmax(125px, .55fr) minmax(150px, .65fr) auto auto;
+        align-items: end;
+        gap: 12px;
+        padding: 17px 18px;
+        background: linear-gradient(135deg, #eef5ff, #e7f0ff);
+        border: 1px solid #bdd1eb;
+        border-radius: 16px;
+        box-sizing: border-box;
+    }
+
+    body.sm-app .ubicaciones-pagina .ubicaciones-filtro-campo {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        min-width: 0;
+    }
+
+    body.sm-app .ubicaciones-pagina .ubicaciones-filtro-campo > label {
+        display: block;
+        margin: 0;
+        padding: 0;
+        color: #526f8e;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    body.sm-app .ubicaciones-pagina .ubicaciones-buscador {
+        display: flex !important;
+        position: relative;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+        height: 46px;
+        padding: 0 13px;
+        border: 1px solid #afc6e5;
+        border-radius: 10px;
+        background: #fff;
+        box-sizing: border-box;
+    }
+
+    body.sm-app .ubicaciones-pagina .ubicaciones-buscador > span {
+        position: static !important;
+        display: inline-flex;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: center;
+        transform: none !important;
+        margin: 0 !important;
+        font-size: 16px;
+        line-height: 1;
+    }
+
+    body.sm-app .ubicaciones-pagina .ubicaciones-buscador input#buscarUbicacion {
+        display: block !important;
+        flex: 1 1 auto;
+        width: 100% !important;
+        min-width: 0 !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        outline: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        color: #17324d;
+        font-size: 14px;
+    }
+
+    body.sm-app .ubicaciones-pagina .ubicaciones-buscador:focus-within {
+        border-color: #458cd2;
+        box-shadow: 0 0 0 3px rgba(55, 126, 206, .10);
+    }
+
+    body.sm-app .ubicaciones-pagina .ubicaciones-filtro-campo select.ubicaciones-select {
+        display: block;
+        width: 100%;
+        height: 46px;
+        margin: 0;
+        background: #fff;
+        border: 1px solid #afc6e5;
+        border-radius: 10px;
+        color: #17324d;
+        box-sizing: border-box;
+    }
+
+    body.sm-app .ubicaciones-pagina .ubicaciones-herramientas .ubicaciones-alertas-filtro {
+        min-height: 46px;
+        height: 46px;
+        margin: 0;
+        padding: 0 12px;
+        background: #fff;
+        border: 1px solid #afc6e5;
+        border-radius: 10px;
+        box-sizing: border-box;
+    }
+
+    body.sm-app .ubicaciones-pagina .ubicaciones-herramientas .btn-agregar-ubicacion {
+        min-height: 46px;
+        height: 46px;
+        margin: 0;
+        align-self: end;
+    }
+
+    @@media screen and (max-width: 1200px) {
+        body.sm-app .ubicaciones-pagina .ubicaciones-herramientas {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        body.sm-app .ubicaciones-pagina .ubicaciones-campo-busqueda {
+            grid-column: 1 / -1;
+        }
+    }
+
+    @@media screen and (max-width: 760px) {
+        body.sm-app .ubicaciones-pagina .ubicaciones-herramientas {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        body.sm-app .ubicaciones-pagina .ubicaciones-campo-busqueda {
+            grid-column: auto;
+        }
+
+        body.sm-app .ubicaciones-pagina .ubicaciones-herramientas .btn-agregar-ubicacion {
+            width: 100%;
+        }
+    }
+
+    /* =========================================================
+       ORBITA 2.0 - ICONOS DE CONTADORES DE SECTORES
+       Unidades: caja vectorial azul estilo Lotes
+       Productos: reutiliza la capsula holografica del listado
+       ========================================================= */
+
+    body.sm-app .ubicaciones-pagina .ubicacion-resumen-icono--unidades,
+    body.sm-app .ubicaciones-pagina .ubicacion-resumen-icono--productos {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 42px;
+        width: 42px;
+        height: 42px;
+        line-height: 0;
+        font-size: initial;
+    }
+
+    body.sm-app .ubicaciones-pagina .ubicacion-resumen-icono--unidades {
+        background: linear-gradient(145deg, #f1f7ff, #e2efff);
+        border: 1px solid #c4d9fb;
+        border-radius: 12px;
+        box-sizing: border-box;
+    }
+
+    body.sm-app .ubicaciones-pagina .ubicacion-resumen-icono--unidades > svg {
+        display: block;
+        width: 25px;
+        height: 25px;
+        fill: none;
+        stroke: #2b70ca;
+        stroke-width: 1.65;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    body.sm-app .ubicaciones-pagina .ubicacion-resumen-icono--productos .sm-holo-capsule {
+        display: block;
+        flex: 0 0 auto;
+        width: 56px;
+        max-width: none;
+        margin: 0;
+    }
+
+    body.sm-app .ubicaciones-pagina .ubicacion-resumen-icono--productos .sm-holo-capsule svg {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+</style>
+
+<div class="ubicaciones-pagina">
+
+    <section class="ubicaciones-encabezado">
+        <h1>Sectores</h1>
+
+        <p>
+            Administra las bodegas y clínicas donde se almacena y utiliza el stock de SARMedix.
+        </p>
+    </section>
+
+    @if (!string.IsNullOrWhiteSpace(mensaje))
+    {
+        <div class="ubicaciones-mensaje
+                    @(tipoMensaje == "exito"
+                        ? "ubicaciones-mensaje-exito"
+                        : "ubicaciones-mensaje-error")">
+
+            <span class="ubicaciones-mensaje-icono">
+                @(tipoMensaje == "exito" ? "✓" : "!")
+            </span>
+
+            <span>
+                @mensaje
+            </span>
+        </div>
+    }
+
+    <section class="ubicaciones-herramientas">
+
+        <div class="ubicaciones-filtro-campo ubicaciones-campo-busqueda">
+            <label for="buscarUbicacion">Buscar sector</label>
+            <div class="ubicaciones-buscador">
+                <span aria-hidden="true">🔎</span>
+                <input type="text"
+                       id="buscarUbicacion"
+                       placeholder="Buscar sector..."
+                       autocomplete="off"
+                       oninput="filtrarUbicaciones()" />
+            </div>
+        </div>
+
+        <div class="ubicaciones-filtro-campo">
+            <label for="filtroEstado">Estado</label>
+            <select id="filtroEstado"
+                    class="ubicaciones-select"
+                    onchange="filtrarUbicaciones()">
+                <option value="todas">Todas</option>
+                <option value="activas">Activas</option>
+                <option value="inactivas">Inactivas</option>
+            </select>
+        </div>
+
+        <div class="ubicaciones-filtro-campo">
+            <label for="filtroTipo">Tipo</label>
+            <select id="filtroTipo"
+                    class="ubicaciones-select"
+                    onchange="filtrarUbicaciones()">
+                <option value="todos">Todos los tipos</option>
+                <option value="bodega">Bodegas</option>
+                <option value="clinica">Clínicas</option>
+            </select>
+        </div>
+
+        <label class="ubicaciones-alertas-filtro">
+
+            <input type="checkbox"
+                   id="filtroAlertas"
+                   onchange="filtrarUbicaciones()" />
+
+            <span>
+                ⚠ Con alertas
+            </span>
+        </label>
+
+        <button type="button"
+                class="btn-agregar-ubicacion"
+                onclick="abrirModalUbicacion()" data-orbit-action="primary">
+
+            <span class="btn-agregar-icono">
+                +
+            </span>
+
+            <span>
+                Agregar sector
+            </span>
+        </button>
+
+    </section>
+
+    <section class="ubicaciones-grid"
+             id="contenedorUbicaciones">
+
+        @if (Model != null && Model.Any())
+        {
+            foreach (var ubicacion in Model)
+            {
+                var lotesDeUbicacion =
+                    lotesUbicaciones
+                        .Where(
+                            lote =>
+                                lote.id_ubicacion
+                                ==
+                                ubicacion.id_ubicacion
+                        )
+                        .ToList();
+
+                int totalUnidades =
+                    lotesDeUbicacion.Sum(
+                        lote =>
+                            lote.cantidad_actual
+                    );
+
+                int totalProductos =
+                    lotesDeUbicacion
+                        .Where(
+                            lote =>
+                                lote.cantidad_actual > 0
+                        )
+                        .Select(
+                            lote =>
+                                lote.id_producto
+                        )
+                        .Distinct()
+                        .Count();
+
+                int vencidos =
+                    lotesDeUbicacion.Count(
+                        lote =>
+                            lote.cantidad_actual > 0
+                            &&
+                            lote.fecha_vencimiento.HasValue
+                            &&
+                            lote.fecha_vencimiento.Value.Date < hoy
+                    );
+
+                int proximosVencer =
+                    lotesDeUbicacion.Count(
+                        lote =>
+                            lote.cantidad_actual > 0
+                            &&
+                            lote.fecha_vencimiento.HasValue
+                            &&
+                            lote.fecha_vencimiento.Value.Date >= hoy
+                            &&
+                            lote.fecha_vencimiento.Value.Date <= limiteVencimiento
+                    );
+
+                int stockBajo =
+                    productosUbicaciones.Count(
+                        producto =>
+                        {
+                            int stockProductoUbicacion =
+                                lotesDeUbicacion
+                                    .Where(
+                                        lote =>
+                                            lote.id_producto
+                                            ==
+                                            producto.id_producto
+                                    )
+                                    .Sum(
+                                        lote =>
+                                            lote.cantidad_actual
+                                    );
+
+                            return
+                                stockProductoUbicacion > 0
+                                &&
+                                stockProductoUbicacion <= producto.stock_minimo;
+                        }
+                    );
+
+                bool tieneAlertas =
+                    vencidos > 0
+                    ||
+                    proximosVencer > 0
+                    ||
+                    stockBajo > 0;
+
+                bool puedeEliminar =
+                    !lotesDeUbicacion.Any();
+
+                <article class="ubicacion-card"
+                         data-nombre="@(ubicacion.nombre_sector?.ToLower())"
+                         data-tipo="@(ubicacion.tipo_sector?.ToLower())"
+                         data-activa="@(ubicacion.activo ? "true" : "false")"
+                         data-alertas="@(tieneAlertas ? "true" : "false")">
+
+                    <div class="ubicacion-card-superior">
+
+                        <div class="ubicacion-icono" aria-hidden="true">
+                            @if (string.Equals(ubicacion.tipo_sector, "Bodega", StringComparison.OrdinalIgnoreCase))
+                            {
+                                @* Bodega: almacén de inventario, icono vectorial Órbita 2.0 *@
+                                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                                    <path d="M3 10.5 12 5l9 5.5V21H3V10.5Z" />
+                                    <path d="M3 10.5 12 5l9 5.5" />
+                                    <path d="M7.5 21v-8h9v8" />
+                                    <path d="M7.5 16.7h9M10.5 13v8M13.5 13v8" />
+                                </svg>
+                            }
+                            else
+                            {
+                                @* Clínica: edificio clínico con cruz sanitaria *@
+                                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+                                    <path d="M5 21V7.5c0-.8.7-1.5 1.5-1.5h11c.8 0 1.5.7 1.5 1.5V21" />
+                                    <path d="M3 21h18M9.5 21v-5h5v5" />
+                                    <path d="M12 8.6v4.6M9.7 10.9h4.6" />
+                                </svg>
+                            }
+                        </div>
+
+                        <div class="ubicacion-datos-principales">
+
+                            <h2>
+                                @ubicacion.nombre_sector
+                            </h2>
+
+                            <span class="ubicacion-tipo">
+                                @(ubicacion.tipo_sector == "Clinica" ? "Clínica" : "Bodega")
+                            </span>
+                        </div>
+
+                        <div class="ubicacion-menu-contenedor">
+
+                            <button type="button"
+                                    class="ubicacion-menu"
+                                    onclick="alternarMenuUbicacion(this)"
+                                    title="Opciones" data-orbit-action="icon">
+                                ⋮
+                            </button>
+
+                            <div class="ubicacion-menu-opciones">
+
+                                <button type="button"
+                                        class="ubicacion-menu-opcion"
+                                        data-id="@ubicacion.id_ubicacion"
+                                        data-nombre="@ubicacion.nombre_sector"
+                                        data-tipo="@ubicacion.tipo_sector"
+                                        onclick="abrirModalEditarUbicacion(this)" data-orbit-action="secondary">
+
+                                    ✏️ Editar sector
+                                </button>
+
+                                @if (ubicacion.activo)
+                                {
+                                    <form asp-controller="Home"
+                                          asp-action="InactivarUbicacion"
+                                          method="post" data-orbit-form="Ubicaciones">
+
+                                        @Html.AntiForgeryToken()
+
+                                        <input type="hidden"
+                                               name="idUbicacion"
+                                               value="@ubicacion.id_ubicacion" />
+
+                                        <input type="hidden"
+                                               name="nombreUbicacion"
+                                               value="@ubicacion.nombre_sector" />
+
+                                        <button type="button"
+                                                class="ubicacion-menu-opcion ubicacion-menu-opcion-inactivar"
+                                                data-accion="inactivar"
+                                                data-nombre="@ubicacion.nombre_sector"
+                                                onclick="abrirModalConfirmacionUbicacion(this)" data-orbit-action="warning">
+
+                                            ⏸ Inactivar sector
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <form asp-controller="Home"
+                                          asp-action="ReactivarUbicacion"
+                                          method="post" data-orbit-form="Ubicaciones">
+
+                                        @Html.AntiForgeryToken()
+
+                                        <input type="hidden"
+                                               name="idUbicacion"
+                                               value="@ubicacion.id_ubicacion" />
+
+                                        <input type="hidden"
+                                               name="nombreUbicacion"
+                                               value="@ubicacion.nombre_sector" />
+
+                                        <button type="button"
+                                                class="ubicacion-menu-opcion ubicacion-menu-opcion-reactivar"
+                                                data-accion="reactivar"
+                                                data-nombre="@ubicacion.nombre_sector"
+                                                onclick="abrirModalConfirmacionUbicacion(this)" data-orbit-action="primary">
+
+                                            ▶ Reactivar sector
+                                        </button>
+                                    </form>
+                                }
+
+                                @if (puedeEliminar)
+                                {
+                                    <form asp-controller="Home"
+                                          asp-action="EliminarUbicacion"
+                                          method="post" data-orbit-form="Ubicaciones">
+
+                                        @Html.AntiForgeryToken()
+
+                                        <input type="hidden"
+                                               name="idUbicacion"
+                                               value="@ubicacion.id_ubicacion" />
+
+                                        <input type="hidden"
+                                               name="nombreUbicacion"
+                                               value="@ubicacion.nombre_sector" />
+
+                                        <button type="button"
+                                                class="ubicacion-menu-opcion ubicacion-menu-opcion-eliminar"
+                                                data-accion="eliminar"
+                                                data-nombre="@ubicacion.nombre_sector"
+                                                onclick="abrirModalConfirmacionUbicacion(this)" data-orbit-action="danger">
+
+                                            🗑 Eliminar sector
+                                        </button>
+                                    </form>
+                                }
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="ubicacion-resumen">
+
+                        <div class="ubicacion-resumen-item">
+
+                            <span class="ubicacion-resumen-icono ubicacion-resumen-icono--unidades" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" focusable="false">
+                                    <path d="M3.5 7.1 12 2.5l8.5 4.6v9.8L12 21.5l-8.5-4.6Z" />
+                                    <path d="m3.5 7.1 8.5 4.6 8.5-4.6M12 11.7v9.8" />
+                                    <path d="m8 4.7 8.5 4.6v4" />
+                                </svg>
+                            </span>
+
+                            <div>
+
+                                <span class="ubicacion-resumen-numero">
+                                    @totalUnidades
+                                </span>
+
+                                <span class="ubicacion-resumen-texto">
+                                    unidades
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="ubicacion-resumen-item">
+
+                            <span class="ubicacion-resumen-icono ubicacion-resumen-icono--productos" aria-hidden="true">
+                                <partial name="_OrbitCapsule" />
+                            </span>
+
+                            <div>
+
+                                <span class="ubicacion-resumen-numero">
+                                    @totalProductos
+                                </span>
+
+                                <span class="ubicacion-resumen-texto">
+                                    productos
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="ubicacion-alertas">
+
+                        @if (!tieneAlertas)
+                        {
+                            <span class="ubicacion-alerta ubicacion-alerta-ok">
+                                ✓ Sin alertas
+                            </span>
+                        }
+
+                        @if (vencidos > 0)
+                        {
+                            <span class="ubicacion-alerta ubicacion-alerta-vencido">
+                                ⛔ @vencidos vencido@(vencidos == 1 ? "" : "s")
+                            </span>
+                        }
+
+                        @if (proximosVencer > 0)
+                        {
+                            <span class="ubicacion-alerta ubicacion-alerta-proximo">
+                                ◷ @proximosVencer próximo@(proximosVencer == 1 ? "" : "s") a vencer
+                            </span>
+                        }
+
+                        @if (stockBajo > 0)
+                        {
+                            <span class="ubicacion-alerta ubicacion-alerta-stock">
+                                ⚠ @stockBajo stock bajo
+                            </span>
+                        }
+
+                    </div>
+
+                    <div class="ubicacion-acciones">
+
+                        <a asp-controller="Home"
+                           asp-action="InventarioUbicacion"
+                           asp-route-idUbicacion="@ubicacion.id_ubicacion"
+                           class="btn-ver-inventario" data-orbit-action="secondary">
+
+                            <span>
+                                ≡
+                            </span>
+
+                            Ver inventario
+                        </a>
+                    </div>
+
+                </article>
+            }
+        }
+        else
+        {
+            <div class="ubicaciones-vacio">
+
+                <h3>
+                    No existen sectores registrados
+                </h3>
+
+                <p>
+                    Puedes registrar el primer sector utilizando el botón Agregar sector.
+                </p>
+            </div>
+        }
+
+        <button type="button"
+                class="ubicacion-card ubicacion-card-agregar"
+                onclick="abrirModalUbicacion()" data-orbit-action="navigation">
+
+            <div class="ubicacion-agregar-contenido">
+
+                <div class="ubicacion-agregar-circulo">
+                    +
+                </div>
+
+                <h3>
+                    Agregar sector
+                </h3>
+
+                <p>
+                    Registra una nueva bodega o clínica.
+                </p>
+            </div>
+        </button>
+
+    </section>
+
+    <!-- AGREGAR -->
+
+    <div id="modalAgregarUbicacion"
+         class="ubicacion-modal-fondo">
+
+        <div class="ubicacion-modal" data-orbit-dialog="surface">
+
+            <div class="ubicacion-modal-cabecera">
+
+                <div>
+                    <h2>
+                        Agregar sector
+                    </h2>
+
+                    <p>
+                        Registra una nueva bodega o clínica.
+                    </p>
+                </div>
+
+                <button type="button"
+                        class="ubicacion-modal-cerrar"
+                        onclick="cerrarModalUbicacion()" data-orbit-action="icon" aria-label="Cerrar">
+
+                    ×
+                </button>
+            </div>
+
+            <form asp-controller="Home"
+                  asp-action="CrearUbicacion"
+                  method="post"
+                  id="formAgregarUbicacion" data-orbit-form="Ubicaciones">
+
+                @Html.AntiForgeryToken()
+
+                <div class="ubicacion-modal-cuerpo"><div class="orbit-sector-intro"><span class="orbit-eyebrow">MAPA OPERATIVO</span><p>Identidad y función del sector</p></div>
+
+                    <div class="ubicacion-modal-grupo">
+
+                        <label for="nombreSector">
+                            Nombre del sector
+                        </label>
+
+                        <input type="text"
+                               id="nombreSector"
+                               name="nombreSector"
+                               maxlength="100"
+                               placeholder="Ej: Clínica Adulto"
+                               autocomplete="off"
+                               required />
+
+                        <span class="ubicacion-modal-ayuda">
+                            Ingresa un nombre que permita identificar claramente el sector.
+                        </span>
+                    </div>
+
+                    <div class="ubicacion-modal-grupo">
+
+                        <label for="tipoSector">
+                            Tipo de sector
+                        </label>
+
+                        <select id="tipoSector"
+                                name="tipoSector"
+                                required>
+
+                            <option value=""
+                                    selected
+                                    disabled>
+
+                                Seleccione un tipo
+                            </option>
+
+                            <option value="Bodega">
+                                Bodega
+                            </option>
+
+                            <option value="Clinica">
+                                Clínica
+                            </option>
+                        </select>
+
+                        <span class="ubicacion-modal-ayuda">
+                            Bodega almacena stock general. Clínica corresponde a sectores desde donde se realizarán entregas a pacientes.
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="ubicacion-modal-pie">
+
+                    <button type="button"
+                            class="btn-ubicacion-cancelar"
+                            onclick="cerrarModalUbicacion()" data-orbit-action="secondary">
+
+                        Cancelar
+                    </button>
+
+                    <button type="button"
+                            class="btn-ubicacion-guardar"
+                            data-accion="crear"
+                            data-formulario="formAgregarUbicacion"
+                            onclick="abrirConfirmacionFormularioUbicacion(this)" data-orbit-action="primary">
+
+                        Guardar sector
+                    </button>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- EDITAR -->
+
+    <div id="modalEditarUbicacion"
+         class="ubicacion-modal-fondo">
+
+        <div class="ubicacion-modal" data-orbit-dialog="surface">
+
+            <div class="ubicacion-modal-cabecera">
+
+                <div>
+                    <h2>
+                        Editar sector
+                    </h2>
+
+                    <p>
+                        Modifica el nombre y tipo del sector seleccionado.
+                    </p>
+                </div>
+
+                <button type="button"
+                        class="ubicacion-modal-cerrar"
+                        onclick="cerrarModalEditarUbicacion()" data-orbit-action="icon" aria-label="Cerrar">
+
+                    ×
+                </button>
+            </div>
+
+            <form asp-controller="Home"
+                  asp-action="EditarUbicacion"
+                  method="post"
+                  id="formEditarUbicacion" data-orbit-form="Ubicaciones">
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden"
+                       id="editarIdUbicacion"
+                       name="idUbicacion" />
+
+                <div class="ubicacion-modal-cuerpo"><div class="orbit-sector-intro"><span class="orbit-eyebrow">MAPA OPERATIVO</span><p>Identidad y función del sector</p></div>
+
+                    <div class="ubicacion-modal-grupo">
+
+                        <label for="editarNombreSector">
+                            Nombre del sector
+                        </label>
+
+                        <input type="text"
+                               id="editarNombreSector"
+                               name="nombreSector"
+                               maxlength="100"
+                               autocomplete="off"
+                               required />
+                    </div>
+
+                    <div class="ubicacion-modal-grupo">
+
+                        <label for="editarTipoSector">
+                            Tipo de sector
+                        </label>
+
+                        <select id="editarTipoSector"
+                                name="tipoSector"
+                                required>
+
+                            <option value="Bodega">
+                                Bodega
+                            </option>
+
+                            <option value="Clinica">
+                                Clínica
+                            </option>
+                        </select>
+
+                        <span class="ubicacion-modal-ayuda">
+                            El tipo solo puede cambiarse si el sector nunca ha tenido lotes asociados.
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="ubicacion-modal-pie">
+
+                    <button type="button"
+                            class="btn-ubicacion-cancelar"
+                            onclick="cerrarModalEditarUbicacion()" data-orbit-action="secondary">
+
+                        Cancelar
+                    </button>
+
+                    <button type="button"
+                            class="btn-ubicacion-guardar"
+                            data-accion="editar"
+                            data-formulario="formEditarUbicacion"
+                            onclick="abrirConfirmacionFormularioUbicacion(this)" data-orbit-action="primary">
+
+                        Guardar cambios
+                    </button>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- CONFIRMACION -->
+
+    <div id="modalConfirmacionUbicacion"
+         class="ubicacion-modal-fondo">
+
+        <div class="ubicacion-modal" data-orbit-dialog="surface">
+
+            <div class="ubicacion-confirmacion-contenido">
+
+                <div id="confirmacionUbicacionIcono"
+                     class="ubicacion-confirmacion-icono">
+
+                    !
+                </div>
+
+                <h2 id="confirmacionUbicacionTitulo"
+                    class="ubicacion-confirmacion-titulo">
+
+                    Confirmar acción
+                </h2>
+
+                <p id="confirmacionUbicacionTexto"
+                   class="ubicacion-confirmacion-texto">
+                </p>
+
+                <div id="confirmacionUbicacionAviso"
+                     class="ubicacion-confirmacion-aviso">
+                </div>
+
+            </div>
+
+            <div class="ubicacion-confirmacion-pie">
+
+                <button type="button"
+                        class="btn-confirmacion-cancelar"
+                        onclick="cerrarModalConfirmacionUbicacion()" data-orbit-action="secondary">
+
+                    Cancelar
+                </button>
+
+                <button type="button"
+                        id="btnConfirmarAccionUbicacion"
+                        class="btn-confirmacion-aceptar"
+                        onclick="confirmarAccionUbicacion()" data-orbit-action="warning">
+
+                    Confirmar
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+
+    <section class="ubicaciones-info">
+
+        <span class="ubicaciones-info-icono">
+            i
+        </span>
+
+        <span>
+            Este módulo permite visualizar stock, vencimientos y alertas de todos los sectores.
+        </span>
+    </section>
+
+</div>
+
+@section Scripts {
+
+    <script>
+
+        let formularioAccionUbicacion =
+            null;
+
+
+        // =========================================================
+        // AGREGAR
+        // =========================================================
+
+        function abrirModalUbicacion() {
+
+            const modal =
+                document.getElementById(
+                    "modalAgregarUbicacion"
+                );
+
+            const formulario =
+                document.getElementById(
+                    "formAgregarUbicacion"
+                );
+
+            if (!modal || !formulario) {
+
+                return;
+            }
+
+            formulario.reset();
+
+            modal.classList.add(
+                "abierto"
+            );
+
+            setTimeout(
+                function () {
+
+                    document
+                        .getElementById(
+                            "nombreSector"
+                        )
+                        ?.focus();
+                },
+                100
+            );
+        }
+
+
+        function cerrarModalUbicacion() {
+
+            document
+                .getElementById(
+                    "modalAgregarUbicacion"
+                )
+                ?.classList
+                .remove(
+                    "abierto"
+                );
+        }
+
+
+        // =========================================================
+        // MENU DE OPCIONES
+        // =========================================================
+
+        function alternarMenuUbicacion(
+            boton
+        ) {
+
+            const contenedor =
+                boton.closest(
+                    ".ubicacion-menu-contenedor"
+                );
+
+            if (!contenedor) {
+
+                return;
+            }
+
+            const menu =
+                contenedor.querySelector(
+                    ".ubicacion-menu-opciones"
+                );
+
+            document
+                .querySelectorAll(
+                    ".ubicacion-menu-opciones"
+                )
+                .forEach(
+                    function (
+                        otroMenu
+                    ) {
+
+                        if (otroMenu !== menu) {
+
+                            otroMenu.classList.remove(
+                                "abierto"
+                            );
+                        }
+                    }
+                );
+
+            menu
+                ?.classList
+                .toggle(
+                    "abierto"
+                );
+        }
+
+
+        // =========================================================
+        // EDITAR
+        // =========================================================
+
+        function abrirModalEditarUbicacion(
+            boton
+        ) {
+
+            const modal =
+                document.getElementById(
+                    "modalEditarUbicacion"
+                );
+
+            const inputId =
+                document.getElementById(
+                    "editarIdUbicacion"
+                );
+
+            const inputNombre =
+                document.getElementById(
+                    "editarNombreSector"
+                );
+
+            const selectTipo =
+                document.getElementById(
+                    "editarTipoSector"
+                );
+
+            if (
+                !modal
+                ||
+                !inputId
+                ||
+                !inputNombre
+                ||
+                !selectTipo
+            ) {
+
+                return;
+            }
+
+            inputId.value =
+                boton.dataset.id
+                ??
+                "";
+
+            inputNombre.value =
+                boton.dataset.nombre
+                ??
+                "";
+
+            selectTipo.value =
+                boton.dataset.tipo
+                ??
+                "";
+
+            cerrarMenusUbicacion();
+
+            modal.classList.add(
+                "abierto"
+            );
+
+            setTimeout(
+                function () {
+
+                    inputNombre.focus();
+                    inputNombre.select();
+                },
+                100
+            );
+        }
+
+
+        function cerrarModalEditarUbicacion() {
+
+            document
+                .getElementById(
+                    "modalEditarUbicacion"
+                )
+                ?.classList
+                .remove(
+                    "abierto"
+                );
+        }
+
+
+        // =========================================================
+        // CONFIRMAR CREAR / EDITAR
+        // =========================================================
+
+        function abrirConfirmacionFormularioUbicacion(
+            boton
+        ) {
+
+            const formulario =
+                document.getElementById(
+                    boton.dataset.formulario
+                );
+
+            const accion =
+                boton.dataset.accion
+                ??
+                "";
+
+            if (!formulario) {
+
+                return;
+            }
+
+            if (!formulario.reportValidity()) {
+
+                return;
+            }
+
+            let nombre =
+                "";
+
+            if (accion === "crear") {
+
+                nombre =
+                    document
+                        .getElementById(
+                            "nombreSector"
+                        )
+                        ?.value
+                        .trim()
+                    ??
+                    "";
+            }
+            else if (accion === "editar") {
+
+                nombre =
+                    document
+                        .getElementById(
+                            "editarNombreSector"
+                        )
+                        ?.value
+                        .trim()
+                    ??
+                    "";
+            }
+
+            abrirModalConfirmacion(
+                formulario,
+                accion,
+                nombre
+            );
+        }
+
+
+        // =========================================================
+        // INACTIVAR / REACTIVAR / ELIMINAR
+        // =========================================================
+
+        function abrirModalConfirmacionUbicacion(
+            boton
+        ) {
+
+            const formulario =
+                boton.closest(
+                    "form"
+                );
+
+            if (!formulario) {
+
+                return;
+            }
+
+            abrirModalConfirmacion(
+                formulario,
+                boton.dataset.accion
+                    ??
+                    "",
+                boton.dataset.nombre
+                    ??
+                    "este sector"
+            );
+        }
+
+
+        // =========================================================
+        // MODAL GENERICO
+        // =========================================================
+
+        function abrirModalConfirmacion(
+            formulario,
+            accion,
+            nombre
+        ) {
+
+            const modal =
+                document.getElementById(
+                    "modalConfirmacionUbicacion"
+                );
+
+            const icono =
+                document.getElementById(
+                    "confirmacionUbicacionIcono"
+                );
+
+            const titulo =
+                document.getElementById(
+                    "confirmacionUbicacionTitulo"
+                );
+
+            const texto =
+                document.getElementById(
+                    "confirmacionUbicacionTexto"
+                );
+
+            const aviso =
+                document.getElementById(
+                    "confirmacionUbicacionAviso"
+                );
+
+            const botonConfirmar =
+                document.getElementById(
+                    "btnConfirmarAccionUbicacion"
+                );
+
+            if (
+                !modal
+                ||
+                !icono
+                ||
+                !titulo
+                ||
+                !texto
+                ||
+                !aviso
+                ||
+                !botonConfirmar
+            ) {
+
+                return;
+            }
+
+            formularioAccionUbicacion =
+                formulario;
+
+            icono.className =
+                "ubicacion-confirmacion-icono";
+
+            botonConfirmar.className =
+                "btn-confirmacion-aceptar";
+
+
+            if (accion === "crear") {
+
+                icono.textContent =
+                    "+";
+
+                titulo.textContent =
+                    "Confirmar nuevo sector";
+
+                texto.textContent =
+                    `¿Deseas crear el sector "${nombre}"?`;
+
+                aviso.textContent =
+                    "El sector quedará disponible inmediatamente para las operaciones permitidas.";
+
+                botonConfirmar.textContent =
+                    "Sí, crear";
+            }
+            else if (accion === "editar") {
+
+                icono.textContent =
+                    "✏";
+
+                titulo.textContent =
+                    "Confirmar cambios";
+
+                texto.textContent =
+                    `¿Deseas guardar los cambios del sector "${nombre}"?`;
+
+                aviso.textContent =
+                    "Si el sector tiene lotes asociados, SARMedix protegerá la trazabilidad e impedirá cambios de tipo no permitidos.";
+
+                botonConfirmar.textContent =
+                    "Sí, guardar";
+            }
+            else if (accion === "inactivar") {
+
+                icono.textContent =
+                    "⏸";
+
+                titulo.textContent =
+                    "Inactivar sector";
+
+                texto.textContent =
+                    `¿Deseas inactivar el sector "${nombre}"?`;
+
+                aviso.textContent =
+                    "El sector dejará de estar disponible para nuevas operaciones. Solo se podrá inactivar si no contiene stock.";
+
+                botonConfirmar.textContent =
+                    "Sí, inactivar";
+            }
+            else if (accion === "reactivar") {
+
+                icono.textContent =
+                    "▶";
+
+                titulo.textContent =
+                    "Reactivar sector";
+
+                texto.textContent =
+                    `¿Deseas reactivar el sector "${nombre}"?`;
+
+                aviso.textContent =
+                    "El sector volverá a estar disponible para las operaciones permitidas por SARMedix.";
+
+                botonConfirmar.textContent =
+                    "Sí, reactivar";
+            }
+            else if (accion === "eliminar") {
+
+                icono.textContent =
+                    "🗑";
+
+                titulo.textContent =
+                    "Eliminar sector";
+
+                texto.textContent =
+                    `¿Deseas eliminar definitivamente el sector "${nombre}"?`;
+
+                aviso.textContent =
+                    "Esta acción solo se realizará si el sector no tiene stock ni lotes asociados. No se puede deshacer.";
+
+                botonConfirmar.textContent =
+                    "Sí, eliminar";
+            }
+            else {
+
+                formularioAccionUbicacion =
+                    null;
+
+                return;
+            }
+
+            icono.classList.add(
+                `accion-${accion}`
+            );
+
+            botonConfirmar.classList.add(
+                `accion-${accion}`
+            );
+
+            cerrarMenusUbicacion();
+
+            modal.classList.add(
+                "abierto"
+            );
+        }
+
+
+        function cerrarModalConfirmacionUbicacion() {
+
+            document
+                .getElementById(
+                    "modalConfirmacionUbicacion"
+                )
+                ?.classList
+                .remove(
+                    "abierto"
+                );
+
+            formularioAccionUbicacion =
+                null;
+        }
+
+
+        function confirmarAccionUbicacion() {
+
+            if (!formularioAccionUbicacion) {
+
+                return;
+            }
+
+            const formulario =
+                formularioAccionUbicacion;
+
+            formularioAccionUbicacion =
+                null;
+
+            document
+                .getElementById(
+                    "modalConfirmacionUbicacion"
+                )
+                ?.classList
+                .remove(
+                    "abierto"
+                );
+
+            formulario.submit();
+        }
+
+
+        // =========================================================
+        // FILTROS
+        // =========================================================
+
+        function filtrarUbicaciones() {
+
+            const texto =
+                document
+                    .getElementById(
+                        "buscarUbicacion"
+                    )
+                    .value
+                    .toLowerCase()
+                    .trim();
+
+            const estado =
+                document
+                    .getElementById(
+                        "filtroEstado"
+                    )
+                    .value;
+
+            const tipo =
+                document
+                    .getElementById(
+                        "filtroTipo"
+                    )
+                    .value;
+
+            const soloAlertas =
+                document
+                    .getElementById(
+                        "filtroAlertas"
+                    )
+                    .checked;
+
+            const tarjetas =
+                document
+                    .querySelectorAll(
+                        "#contenedorUbicaciones .ubicacion-card:not(.ubicacion-card-agregar)"
+                    );
+
+            tarjetas.forEach(
+                function (
+                    tarjeta
+                ) {
+
+                    const nombre =
+                        tarjeta.dataset.nombre
+                        ??
+                        "";
+
+                    const activa =
+                        tarjeta.dataset.activa
+                        ===
+                        "true";
+
+                    const tipoSector =
+                        tarjeta.dataset.tipo
+                        ??
+                        "";
+
+                    const tieneAlertas =
+                        tarjeta.dataset.alertas
+                        ===
+                        "true";
+
+                    let mostrar =
+                        true;
+
+                    if (
+                        texto !== ""
+                        &&
+                        !nombre.includes(
+                            texto
+                        )
+                    ) {
+
+                        mostrar =
+                            false;
+                    }
+
+                    if (
+                        estado === "activas"
+                        &&
+                        !activa
+                    ) {
+
+                        mostrar =
+                            false;
+                    }
+
+                    if (
+                        estado === "inactivas"
+                        &&
+                        activa
+                    ) {
+
+                        mostrar =
+                            false;
+                    }
+
+                    if (
+                        tipo !== "todos"
+                        &&
+                        tipoSector !== tipo
+                    ) {
+
+                        mostrar =
+                            false;
+                    }
+
+                    if (
+                        soloAlertas
+                        &&
+                        !tieneAlertas
+                    ) {
+
+                        mostrar =
+                            false;
+                    }
+
+                    tarjeta.classList.toggle(
+                        "ubicacion-oculta",
+                        !mostrar
+                    );
+                }
+            );
+        }
+
+
+        function cerrarMenusUbicacion() {
+
+            document
+                .querySelectorAll(
+                    ".ubicacion-menu-opciones"
+                )
+                .forEach(
+                    function (
+                        menu
+                    ) {
+
+                        menu.classList.remove(
+                            "abierto"
+                        );
+                    }
+                );
+        }
+
+
+        document.addEventListener(
+            "click",
+            function (
+                evento
+            ) {
+
+                if (
+                    !evento.target.closest(
+                        ".ubicacion-menu-contenedor"
+                    )
+                ) {
+
+                    cerrarMenusUbicacion();
+                }
+            }
+        );
+
+
+        document.addEventListener(
+            "keydown",
+            function (
+                evento
+            ) {
+
+                if (evento.key !== "Escape") {
+
+                    return;
+                }
+
+                cerrarMenusUbicacion();
+
+                cerrarModalConfirmacionUbicacion();
+
+                cerrarModalUbicacion();
+
+                cerrarModalEditarUbicacion();
+            }
+        );
+
+
+        document
+            .getElementById(
+                "modalAgregarUbicacion"
+            )
+            ?.addEventListener(
+                "click",
+                function (
+                    evento
+                ) {
+
+                    if (evento.target === this) {
+
+                        cerrarModalUbicacion();
+                    }
+                }
+            );
+
+
+        document
+            .getElementById(
+                "modalEditarUbicacion"
+            )
+            ?.addEventListener(
+                "click",
+                function (
+                    evento
+                ) {
+
+                    if (evento.target === this) {
+
+                        cerrarModalEditarUbicacion();
+                    }
+                }
+            );
+
+
+        document
+            .getElementById(
+                "modalConfirmacionUbicacion"
+            )
+            ?.addEventListener(
+                "click",
+                function (
+                    evento
+                ) {
+
+                    if (evento.target === this) {
+
+                        cerrarModalConfirmacionUbicacion();
+                    }
+                }
+            );
+
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const abrirConAlertas =
+                    @(abrirConAlertas ? "true" : "false");
+
+                if (!abrirConAlertas) {
+
+                    return;
+                }
+
+                const filtroAlertas =
+                    document.getElementById(
+                        "filtroAlertas"
+                    );
+
+                if (filtroAlertas) {
+
+                    filtroAlertas.checked =
+                        true;
+
+                    filtrarUbicaciones();
+                }
+            }
+        );
+
+    </script>
+}

@@ -1,0 +1,1124 @@
+﻿@* SM-ORBITA-METADATA *@
+@{
+    ViewData["SmScreen"] = "HistorialSectores";
+    ViewData["SmFamily"] = "history";
+}
+
+@using LoginSARMedix.Models
+@model List<MovimientoSectorHistorial>
+
+@{
+    ViewData["Title"] = "Historial por sector";
+    ViewData["TituloBarra"] = "Historial por sector";
+
+    var ubicaciones =
+        ViewBag.Ubicaciones as List<Ubicacion>
+        ?? new List<Ubicacion>();
+
+    int? idSeleccionado =
+        ViewBag.IdUbicacion as int?;
+
+    int cantidadRegistros =
+        Model?.Count ?? 0;
+}
+
+<link rel="stylesheet"
+      href="~/css/sarmedix-structural.css"
+      asp-append-version="true" />
+
+<link rel="stylesheet"
+      href="~/css/sarmedix-refinement.css"
+      asp-append-version="true" />
+
+
+<!-- =========================================
+     HISTORIAL POR SECTOR - ORBITA 2.0
+     ========================================= -->
+
+<section class="historial-card sm-reimagined sm-history-workspace historial-sectores-orbita">
+
+    <!-- ENCABEZADO -->
+
+    <header class="sm-history-heading">
+
+        <span class="sm-workspace-symbol">
+
+            <svg class="sm-icon"
+                 viewBox="0 0 24 24"
+                 aria-hidden="true">
+
+                <use href="#sm-icon-movements" />
+
+            </svg>
+
+        </span>
+
+        <div>
+
+            <span class="sm-overline">
+                ÓRBITA / TRAZABILIDAD
+            </span>
+
+            <h1>
+                La memoria del sistema.
+            </h1>
+
+            <p>
+                Cada movimiento, su responsable y su momento.
+                Historial por sector.
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <div class="sm-history-grid">
+
+        <!-- =====================================
+             PANEL DE BUSQUEDA DE SECTOR
+             ===================================== -->
+
+        <aside class="sm-history-console">
+
+            <div class="sm-console-heading">
+
+                <span class="sm-overline">
+                    EXPLORAR REGISTROS
+                </span>
+
+                <h2>
+                    Encuentra el contexto
+                </h2>
+
+                <p>
+                    Selecciona una Bodega o Clínica para
+                    revisar sus movimientos de inventario.
+                </p>
+
+            </div>
+
+
+            <!-- SELECTOR DE SECTOR -->
+
+            <form asp-controller="Home"
+                  asp-action="HistorialSectores"
+                  method="get"
+                  class="form-sector-historial"
+                  data-orbit-form="HistorialSectores">
+
+                <div class="sector-filtro-campo">
+
+                    <label for="sectorHistorial">
+                        Sector
+                    </label>
+
+                    <select name="idUbicacion"
+                            id="sectorHistorial"
+                            required>
+
+                        <option value=""
+                                selected="@(!idSeleccionado.HasValue)">
+                            Seleccione un sector...
+                        </option>
+
+                        @foreach (var ubicacion in ubicaciones)
+                        {
+                            <option value="@ubicacion.id_ubicacion"
+                                    selected="@(idSeleccionado == ubicacion.id_ubicacion)">
+
+                                @ubicacion.nombre_sector —
+                                @(ubicacion.tipo_sector ?? "Sin tipo")
+
+                            </option>
+                        }
+
+                    </select>
+
+                </div>
+
+
+                <button type="submit"
+                        class="btn-ver-historial-sector"
+                        data-orbit-action="primary">
+
+                    Ver historial
+
+                </button>
+
+            </form>
+
+        </aside>
+
+
+        <!-- =====================================
+             RESULTADOS
+             ===================================== -->
+
+        <section class="sm-history-ledger">
+
+            <!-- RESUMEN DE REGISTROS -->
+
+            <div class="historial-resumen-filtros">
+
+                <span>
+
+                    Movimientos mostrados:
+
+                    <strong>
+                        @cantidadRegistros
+                    </strong>
+
+                </span>
+
+                @if (idSeleccionado.HasValue)
+                {
+                    var sectorSeleccionado =
+                        ubicaciones.FirstOrDefault(
+                            u => u.id_ubicacion == idSeleccionado.Value
+                        );
+
+                    if (sectorSeleccionado != null)
+                    {
+                        <span class="sector-resumen-nombre">
+
+                            <span aria-hidden="true">
+                                📍
+                            </span>
+
+                            @sectorSeleccionado.nombre_sector
+
+                        </span>
+                    }
+                }
+
+            </div>
+
+
+            <!-- =====================================
+                 TABLA DE MOVIMIENTOS
+                 ===================================== -->
+
+            <div class="tabla-wrap">
+
+                @if (!idSeleccionado.HasValue)
+                {
+                    <div class="sector-sin-registros">
+
+                        <span class="sector-vacio-icono">
+                            🏥
+                        </span>
+
+                        <strong>
+                            Selecciona un sector
+                        </strong>
+
+                        <p>
+                            Elige una Bodega o Clínica para
+                            consultar su historial de movimientos.
+                        </p>
+
+                    </div>
+                }
+                else if (Model == null || Model.Count == 0)
+                {
+                    <div class="sector-sin-registros">
+
+                        <span class="sector-vacio-icono">
+                            📋
+                        </span>
+
+                        <strong>
+                            Sin movimientos registrados
+                        </strong>
+
+                        <p>
+                            Este sector todavía no registra
+                            movimientos en su historial.
+                        </p>
+
+                    </div>
+                }
+                else
+                {
+                    <table class="tabla-sectores-historial"
+                           data-orbit-table="HistorialSectores">
+
+                        <thead>
+
+                            <tr>
+
+                                <th scope="col">
+                                    Fecha y hora
+                                </th>
+
+                                <th scope="col">
+                                    Movimiento
+                                </th>
+
+                                <th scope="col">
+                                    Producto
+                                </th>
+
+                                <th scope="col">
+                                    Lote
+                                </th>
+
+                                <th scope="col">
+                                    Cantidad
+                                </th>
+
+                                <th scope="col">
+                                    Stock
+                                </th>
+
+                                <th scope="col">
+                                    Responsable
+                                </th>
+
+                                <th scope="col">
+                                    Detalle
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            @foreach (var mov in Model)
+                            {
+                                string tipoMovimiento =
+                                    mov.tipo_movimiento?.ToString() ?? "";
+
+                                bool esEntrada =
+                                    tipoMovimiento.IndexOf(
+                                        "entrada",
+                                        StringComparison.OrdinalIgnoreCase
+                                    ) >= 0;
+
+                                bool esSalida =
+                                    tipoMovimiento.IndexOf(
+                                        "salida",
+                                        StringComparison.OrdinalIgnoreCase
+                                    ) >= 0;
+
+                                string claseMovimiento =
+                                    esEntrada
+                                        ? "sector-tipo-entrada"
+                                        : esSalida
+                                            ? "sector-tipo-salida"
+                                            : "sector-tipo-otro";
+
+                                string iconoMovimiento =
+                                    esEntrada
+                                        ? "↑"
+                                        : esSalida
+                                            ? "↓"
+                                            : "↔";
+
+                                <tr>
+
+                                    <!-- FECHA Y HORA -->
+
+                                    <td>
+
+                                        <div class="sector-fecha">
+
+                                            <strong>
+                                                @mov.fecha_hora.ToString("dd-MM-yyyy")
+                                            </strong>
+
+                                            <span>
+                                                @mov.fecha_hora.ToString("HH:mm:ss")
+                                            </span>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <!-- TIPO DE MOVIMIENTO -->
+
+                                    <td>
+
+                                        <span class="sector-tipo @claseMovimiento">
+
+                                            <span aria-hidden="true">
+                                                @iconoMovimiento
+                                            </span>
+
+                                            @tipoMovimiento
+
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- PRODUCTO -->
+
+                                    <td>
+
+                                        <div class="sector-producto">
+
+                                            <span class="sector-producto-icono"
+                                                  aria-hidden="true">
+                                                💊
+                                            </span>
+
+                                            <strong>
+                                                @mov.producto
+                                            </strong>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <!-- LOTE -->
+
+                                    <td>
+
+                                        <span class="sector-lote">
+                                            @mov.lote
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- CANTIDAD -->
+
+                                    <td>
+
+                                        <div class="sector-cantidad">
+
+                                            <strong>
+                                                @mov.cantidad
+                                            </strong>
+
+                                            <span>
+                                                @mov.unidad_medida
+                                            </span>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <!-- STOCK ANTERIOR Y RESULTANTE -->
+
+                                    <td>
+
+                                        <div class="sector-stock">
+
+                                            <span class="sector-stock-anterior">
+                                                @mov.stock_anterior
+                                            </span>
+
+                                            <span class="sector-stock-flecha"
+                                                  aria-hidden="true">
+                                                →
+                                            </span>
+
+                                            <span class="sector-stock-resultante">
+                                                @mov.stock_resultante
+                                            </span>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <!-- RESPONSABLE -->
+
+                                    <td>
+
+                                        <div class="sector-responsable">
+
+                                            <span class="sector-responsable-icono"
+                                                  aria-hidden="true">
+                                                👤
+                                            </span>
+
+                                            <span>
+                                                @mov.responsable
+                                            </span>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <!-- OBSERVACION -->
+
+                                    <td>
+
+                                        <div class="sector-detalle">
+
+                                            <span class="sector-detalle-etiqueta">
+                                                DETALLE DEL MOVIMIENTO
+                                            </span>
+
+                                            <p>
+                                                @if (!string.IsNullOrWhiteSpace(mov.observacion))
+                                                {
+                                                    @mov.observacion
+                                                }
+                                                else
+                                                {
+                                                    <span class="sector-sin-observacion">
+                                                        Sin observación registrada
+                                                    </span>
+                                                }
+                                            </p>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+                }
+
+            </div>
+
+        </section>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     ESTILOS HISTORIAL POR SECTOR
+     ========================================= -->
+
+<style>
+
+    /* CONTENEDOR PRINCIPAL */
+
+    body.sm-app .historial-sectores-orbita {
+        display: block !important;
+        width: 100% !important;
+        max-width: 1500px !important;
+        min-width: 0 !important;
+        margin: 5px auto !important;
+        box-sizing: border-box;
+        overflow: visible !important;
+    }
+
+
+        /* COMPOSICION VERTICAL */
+
+        body.sm-app .historial-sectores-orbita
+        .sm-history-grid {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 18px !important;
+            width: 100% !important;
+            min-width: 0 !important;
+        }
+
+
+        /* =====================================
+           PANEL DE FILTROS
+           ===================================== */
+
+        body.sm-app .historial-sectores-orbita
+        .sm-history-console {
+            display: block !important;
+            width: 100% !important;
+            max-width: none !important;
+            min-width: 0 !important;
+            height: auto !important;
+            margin: 0 !important;
+            padding: 20px 22px !important;
+            border: 1px solid #bdd1eb !important;
+            border-radius: 18px !important;
+            background: linear-gradient( 135deg, #eef5ff, #e7f0ff ) !important;
+            box-sizing: border-box;
+        }
+
+
+        body.sm-app .historial-sectores-orbita
+        .sm-console-heading {
+            margin: 0 0 16px !important;
+            padding: 0 0 12px !important;
+            border-bottom: 1px solid #cadaf0 !important;
+        }
+
+
+            body.sm-app .historial-sectores-orbita
+            .sm-console-heading h2 {
+                margin: 3px 0 4px;
+                font-size: 20px;
+                color: #173d69;
+            }
+
+
+            body.sm-app .historial-sectores-orbita
+            .sm-console-heading p {
+                margin: 0;
+                color: #526f8f;
+            }
+
+
+        /* =====================================
+           SELECTOR DE SECTOR
+           ===================================== */
+
+        body.sm-app .historial-sectores-orbita
+        .form-sector-historial {
+            display: grid !important;
+            grid-template-columns: minmax(0, 1fr) auto !important;
+            align-items: end !important;
+            gap: 14px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-width: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+
+        body.sm-app .historial-sectores-orbita
+        .sector-filtro-campo {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 6px !important;
+            min-width: 0 !important;
+        }
+
+
+            body.sm-app .historial-sectores-orbita
+            .sector-filtro-campo label {
+                color: #526f8e;
+                font-size: 11px;
+                font-weight: 750;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+            }
+
+
+            body.sm-app .historial-sectores-orbita
+            .sector-filtro-campo select {
+                display: block !important;
+                width: 100% !important;
+                min-width: 0 !important;
+                min-height: 43px !important;
+                margin: 0 !important;
+                padding: 9px 12px !important;
+                border: 1px solid #afc6e5 !important;
+                border-radius: 9px !important;
+                background: #ffffff !important;
+                color: #24485d !important;
+                box-sizing: border-box;
+            }
+
+
+        body.sm-app .historial-sectores-orbita
+        .btn-ver-historial-sector {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            min-height: 43px !important;
+            margin: 0 !important;
+            padding: 0 22px !important;
+            border-radius: 9px !important;
+            font-weight: 700 !important;
+            white-space: nowrap;
+        }
+
+
+        /* =====================================
+           SECCION DE RESULTADOS
+           ===================================== */
+
+        body.sm-app .historial-sectores-orbita
+        .sm-history-ledger {
+            display: block !important;
+            position: static !important;
+            width: 100% !important;
+            max-width: none !important;
+            min-width: 0 !important;
+            margin: 0 !important;
+        }
+
+
+        /* RESUMEN AZUL */
+
+        body.sm-app .historial-sectores-orbita
+        .historial-resumen-filtros {
+            display: flex !important;
+            align-items: center !important;
+            flex-wrap: wrap !important;
+            gap: 12px !important;
+            min-height: 62px !important;
+            margin: 0 0 14px !important;
+            padding: 15px 18px !important;
+            border: none !important;
+            border-radius: 15px !important;
+            background: linear-gradient( 115deg, #193e66, #255485 ) !important;
+            color: white !important;
+            font-size: 12px !important;
+            box-sizing: border-box;
+        }
+
+
+            body.sm-app .historial-sectores-orbita
+            .historial-resumen-filtros strong {
+                color: white !important;
+                font-size: 17px;
+                margin-left: 4px;
+            }
+
+
+        body.sm-app .historial-sectores-orbita
+        .sector-resumen-nombre {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-weight: 700;
+        }
+
+
+        /* =====================================
+           CONTENEDOR DE TABLA
+           SCROLL VERTICAL INDEPENDIENTE
+           ===================================== */
+
+        body.sm-app .historial-sectores-orbita
+        .tabla-wrap {
+            display: block !important;
+            position: relative !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            height: auto !important;
+            max-height: clamp( 280px, 56vh, 680px ) !important;
+            overflow-y: auto !important;
+            overflow-x: auto !important;
+            overscroll-behavior-y: contain;
+            scrollbar-gutter: stable;
+            border: 1px solid #ccdbec;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 7px 20px rgba( 28, 65, 95, 0.12 );
+            box-sizing: border-box;
+        }
+
+
+        /* =====================================
+           TABLA ORIGINAL
+           ===================================== */
+
+        body.sm-app .historial-sectores-orbita
+        .tabla-sectores-historial {
+            width: 100% !important;
+            min-width: 1180px !important;
+            border-collapse: separate !important;
+            border-spacing: 0 !important;
+            table-layout: auto !important;
+            background: white;
+            font-size: 13px;
+        }
+
+
+            /* CABECERAS */
+
+            body.sm-app .historial-sectores-orbita
+            .tabla-sectores-historial thead th {
+                position: sticky !important;
+                top: 0 !important;
+                z-index: 6 !important;
+                padding: 14px 12px !important;
+                background: #0f5278 !important;
+                color: #ffffff !important;
+                font-size: 12px !important;
+                font-weight: 700 !important;
+                text-align: left !important;
+                white-space: nowrap;
+                border-bottom: 1px solid #174466;
+            }
+
+
+            /* CELDAS */
+
+            body.sm-app .historial-sectores-orbita
+            .tabla-sectores-historial tbody td {
+                padding: 13px 12px !important;
+                border-bottom: 1px solid #dce6ec !important;
+                vertical-align: middle !important;
+                color: #29465d;
+                line-height: 1.5;
+            }
+
+
+            /* FILAS ALTERNADAS */
+
+            body.sm-app .historial-sectores-orbita
+            .tabla-sectores-historial tbody tr:nth-child(even) {
+                background: #f0f5ff;
+            }
+
+
+            /* HOVER */
+
+            body.sm-app .historial-sectores-orbita
+            .tabla-sectores-historial tbody tr:hover {
+                background: #e8f2ff;
+            }
+
+
+            body.sm-app .historial-sectores-orbita
+            .tabla-sectores-historial tbody tr:last-child td {
+                border-bottom: none !important;
+            }
+
+
+        /* =====================================
+           FECHA Y HORA
+           ===================================== */
+
+        body.sm-app .historial-sectores-orbita
+        .sector-fecha {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            white-space: nowrap;
+        }
+
+
+            body.sm-app .historial-sectores-orbita
+            .sector-fecha strong {
+                color: #244a62;
+                font-weight: 750;
+            }
+
+
+            body.sm-app .historial-sectores-orbita
+            .sector-fecha span {
+                color: #71869a;
+                font-size: 12px;
+            }
+
+
+        /* =====================================
+           TIPO DE MOVIMIENTO
+           ===================================== */
+
+        body.sm-app .historial-sectores-orbita
+        .sector-tipo {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+
+        /* ENTRADA */
+
+        body.sm-app .historial-sectores-orbita
+        .sector-tipo-entrada {
+            background: #e4f6eb;
+            color: #147343;
+        }
+
+
+        /* SALIDA */
+
+        body.sm-app .historial-sectores-orbita
+        .sector-tipo-salida {
+            background: #fff0f0;
+            color: #b42318;
+        }
+
+
+        /* OTROS MOVIMIENTOS */
+
+        body.sm-app .historial-sectores-orbita
+        .sector-tipo-otro {
+            background: #eaf2f8;
+            color: #365b7b;
+        }
+
+
+        /* =====================================
+           PRODUCTO
+           ===================================== */
+
+        body.sm-app .historial-sectores-orbita
+        .sector-producto {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 150px;
+        }
+
+
+        body.sm-app .historial-sectores-orbita
+        .sector-producto-icono {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            flex-shrink: 0;
+            border-radius: 9px;
+            background: #fff0f3;
+        }
+
+
+        body.sm-app .historial-sectores-orbita
+        .sector-producto strong {
+            color: #244a69;
+            font-size: 13px;
+            overflow-wrap: anywhere;
+        }
+
+
+        /* =====================================
+           LOTE
+           ===================================== */
+
+        body.sm-app .historial-sectores-orbita
+        .sector-lote {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 7px;
+            background: #edf4ff;
+            color: #245183;
+            font-size: 12px;
+            font-weight: 750;
+            overflow-wrap: anywhere;
+        }
+
+
+        /* =====================================
+           CANTIDAD
+           ===================================== */
+
+        body.sm-app .historial-sectores-orbita
+        .sector-cantidad {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 65px;
+        }
+
+
+            body.sm-app .historial-sectores-orbita
+            .sector-cantidad strong {
+                color: #174d7d;
+                font-size: 15px;
+                font-weight: 800;
+            }
+
+
+            body.sm-app .historial-sectores-orbita
+            .sector-cantidad span {
+                color: #6f879a;
+                font-size: 11px;
+            }
+
+
+        /* =====================================
+           CAMBIO DE STOCK
+           ===================================== */
+
+        body.sm-app .historial-sectores-orbita
+        .sector-stock {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+
+        body.sm-app .historial-sectores-orbita
+        .sector-stock-anterior {
+            padding: 5px 8px;
+            border: 1px solid #cbdbea;
+            border-radius: 7px;
+            background: #f0f5fb;
+            color: #44617c;
+            font-weight: 750;
+        }
+
+
+        body.sm-app .historial-sectores-orbita
+        .sector-stock-flecha {
+            color: #1198a5;
+            font-weight: 800;
+        }
+
+
+        body.sm-app .historial-sectores-orbita
+        .sector-stock-resultante {
+            padding: 5px 8px;
+            border: 1px solid #adddca;
+            border-radius: 7px;
+            background: #e4f6ed;
+            color: #18794e;
+            font-weight: 800;
+        }
+
+
+        /* =====================================
+           RESPONSABLE
+           ===================================== */
+
+        body.sm-app .historial-sectores-orbita
+        .sector-responsable {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            min-width: 110px;
+        }
+
+
+        body.sm-app .historial-sectores-orbita
+        .sector-responsable-icono {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: #eef6fa;
+            font-size: 12px;
+        }
+
+
+        /* =====================================
+           DETALLE DEL MOVIMIENTO
+           ===================================== */
+
+        body.sm-app .historial-sectores-orbita
+        .sector-detalle {
+            min-width: 190px;
+            padding: 9px 11px;
+            border: 1px solid #dce7ec;
+            border-radius: 9px;
+            background: #f2f7f9;
+            box-sizing: border-box;
+        }
+
+
+        body.sm-app .historial-sectores-orbita
+        .sector-detalle-etiqueta {
+            display: block;
+            margin-bottom: 5px;
+            color: #71838e;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+        }
+
+
+        body.sm-app .historial-sectores-orbita
+        .sector-detalle p {
+            margin: 0;
+            color: #385563;
+            font-size: 12px;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+
+
+        body.sm-app .historial-sectores-orbita
+        .sector-sin-observacion {
+            color: #8799a7;
+            font-style: italic;
+        }
+
+
+        /* =====================================
+           ESTADO VACIO
+           ===================================== */
+
+        body.sm-app .historial-sectores-orbita
+        .sector-sin-registros {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            min-height: 180px;
+            padding: 30px;
+            background: #f8fbff;
+            color: #60798b;
+            text-align: center;
+        }
+
+
+        body.sm-app .historial-sectores-orbita
+        .sector-vacio-icono {
+            font-size: 32px;
+        }
+
+
+        body.sm-app .historial-sectores-orbita
+        .sector-sin-registros strong {
+            color: #284b68;
+            font-size: 16px;
+        }
+
+
+        body.sm-app .historial-sectores-orbita
+        .sector-sin-registros p {
+            margin: 0;
+            color: #60798b;
+            font-size: 13px;
+        }
+
+
+    /* =====================================
+           RESPONSIVE
+           ===================================== */
+
+    @@media screen and (max-width: 700px) {
+
+        body.sm-app .historial-sectores-orbita
+        .sm-history-console {
+            padding: 16px !important;
+        }
+
+
+        body.sm-app .historial-sectores-orbita
+        .form-sector-historial {
+            grid-template-columns: minmax(0, 1fr) !important;
+        }
+
+
+        body.sm-app .historial-sectores-orbita
+        .btn-ver-historial-sector {
+            width: 100% !important;
+        }
+
+
+        body.sm-app .historial-sectores-orbita
+        .tabla-wrap {
+            max-height: 55vh !important;
+        }
+    }
+
+</style>

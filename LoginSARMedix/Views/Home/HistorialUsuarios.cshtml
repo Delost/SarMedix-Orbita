@@ -1,0 +1,1460 @@
+﻿
+@* SM-ORBITA-METADATA *@
+@{
+    ViewData["SmScreen"] = "HistorialUsuarios";
+    ViewData["SmFamily"] = "history";
+}
+
+@using System.Text.RegularExpressions
+@model List<LoginSARMedix.Models.Historial>
+
+@{
+    ViewData["Title"] = "Historial de Usuarios";
+    ViewData["TituloBarra"] = "Historial de Usuarios";
+
+    string buscarActual = ViewBag.Buscar?.ToString() ?? "";
+    string filtroActual = ViewBag.Filtro?.ToString() ?? "todos";
+    string periodoActual = ViewBag.Periodo?.ToString() ?? "todos";
+
+    int totalRegistros = ViewBag.TotalRegistros != null
+        ? Convert.ToInt32(ViewBag.TotalRegistros)
+        : 0;
+
+    int paginaActual = ViewBag.PaginaActual != null
+        ? Convert.ToInt32(ViewBag.PaginaActual)
+        : 1;
+
+    int totalPaginas = ViewBag.TotalPaginas != null
+        ? Convert.ToInt32(ViewBag.TotalPaginas)
+        : 0;
+}
+
+<link rel="stylesheet"
+      href="~/css/sarmedix-structural.css"
+      asp-append-version="true" />
+
+<link rel="stylesheet"
+      href="~/css/sarmedix-refinement.css"
+      asp-append-version="true" />
+
+<div class="historial-card sm-reimagined sm-history-workspace historial-usuarios-original">
+
+    <!-- ENCABEZADO ORBITA -->
+
+    <header class="sm-history-heading">
+
+        <span class="sm-workspace-symbol">
+            <svg class="sm-icon"
+                 viewBox="0 0 24 24"
+                 aria-hidden="true">
+                <use href="#sm-icon-movements" />
+            </svg>
+        </span>
+
+        <div>
+            <span class="sm-overline">
+                ÓRBITA / TRAZABILIDAD
+            </span>
+
+            <h1>La memoria del sistema.</h1>
+
+            <p>
+                Cada acción, su responsable y su momento.
+                Historial de usuarios.
+            </p>
+        </div>
+
+    </header>
+
+    <div class="sm-history-grid">
+
+        <!-- PANEL SUPERIOR -->
+
+        <aside class="sm-history-console">
+
+            <div class="sm-console-heading">
+
+                <span class="sm-overline">
+                    EXPLORAR REGISTROS
+                </span>
+
+                <h2>Encuentra el contexto</h2>
+
+                <p>
+                    Busca por responsable, nombre o cuenta
+                    y delimita la consulta.
+                </p>
+
+            </div>
+
+            <div class="historial-herramientas">
+
+                <!-- BUSQUEDA -->
+
+                <form asp-controller="Home"
+                      asp-action="HistorialUsuarios"
+                      method="get"
+                      class="form-busqueda"
+                      data-orbit-form="HistorialUsuarios">
+
+                    <input type="hidden"
+                           name="filtro"
+                           value="@filtroActual" />
+
+                    <input type="hidden"
+                           name="periodo"
+                           value="@periodoActual" />
+
+                    <label for="buscarUsuarios">
+                        Responsable o descripción
+                    </label>
+
+                    <div class="filtro-busqueda">
+
+                        <span aria-hidden="true">🔎</span>
+
+                        <input type="text"
+                               id="buscarUsuarios"
+                               name="buscar"
+                               value="@buscarActual"
+                               placeholder="Buscar en el historial..."
+                               autocomplete="off" />
+
+                    </div>
+
+                    <button type="submit"
+                            class="btn-buscar"
+                            data-orbit-action="quiet">
+                        Buscar
+                    </button>
+
+                </form>
+
+                <!-- FILTROS -->
+
+                <form asp-controller="Home"
+                      asp-action="HistorialUsuarios"
+                      method="get"
+                      class="form-filtros"
+                      data-orbit-form="HistorialUsuarios">
+
+                    <input type="hidden"
+                           name="buscar"
+                           value="@buscarActual" />
+
+                    <div class="filtro-campo">
+
+                        <label for="filtroUsuarios">
+                            Acción
+                        </label>
+
+                        <select id="filtroUsuarios"
+                                name="filtro">
+
+                            <option value="todos"
+                                    selected="@(filtroActual == "todos")">
+                                Todas las acciones
+                            </option>
+
+                            <option value="crear"
+                                    selected="@(filtroActual == "crear")">
+                                Creación
+                            </option>
+
+                            <option value="actualizar"
+                                    selected="@(filtroActual == "actualizar")">
+                                Edición
+                            </option>
+
+                            <option value="desactivar"
+                                    selected="@(filtroActual == "desactivar")">
+                                Desactivación
+                            </option>
+
+                            <option value="reactivar"
+                                    selected="@(filtroActual == "reactivar")">
+                                Reactivación
+                            </option>
+
+                            <option value="eliminar"
+                                    selected="@(filtroActual == "eliminar")">
+                                Eliminación
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="filtro-campo">
+
+                        <label for="periodoUsuarios">
+                            Período
+                        </label>
+
+                        <select id="periodoUsuarios"
+                                name="periodo">
+
+                            <option value="todos"
+                                    selected="@(periodoActual == "todos")">
+                                Todo el historial
+                            </option>
+
+                            <option value="hoy"
+                                    selected="@(periodoActual == "hoy")">
+                                Hoy
+                            </option>
+
+                            <option value="7"
+                                    selected="@(periodoActual == "7")">
+                                Últimos 7 días
+                            </option>
+
+                            <option value="30"
+                                    selected="@(periodoActual == "30")">
+                                Últimos 30 días
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <button type="submit"
+                            class="btn-aplicar-filtros"
+                            data-orbit-action="quiet">
+                        Aplicar
+                    </button>
+
+                    <a asp-controller="Home"
+                       asp-action="HistorialUsuarios"
+                       asp-route-buscar="@buscarActual"
+                       class="btn-limpiar-filtros"
+                       data-orbit-action="quiet">
+                        Limpiar
+                    </a>
+
+                </form>
+
+            </div>
+
+        </aside>
+
+        <!-- TABLA ORIGINAL -->
+
+        <section class="sm-history-ledger">
+
+            <div class="historial-resumen-filtros">
+
+                <span>
+                    Registros encontrados:
+                    <strong>@totalRegistros</strong>
+                </span>
+
+                @if (!string.IsNullOrWhiteSpace(buscarActual))
+                {
+                    <span class="filtro-activo">
+                        🔎 “@buscarActual”
+                    </span>
+                }
+
+                @if (filtroActual != "todos")
+                {
+                    <span class="filtro-activo">
+                        Acción: @filtroActual
+                    </span>
+                }
+
+                @if (periodoActual != "todos")
+                {
+                    <span class="filtro-activo">
+                        Período:
+                        @(periodoActual == "hoy" ? "Hoy"
+                            : periodoActual == "7" ? "Últimos 7 días"
+                            : "Últimos 30 días")
+                    </span>
+                }
+
+            </div>
+
+            @if (Model != null && Model.Count > 0)
+            {
+                <div class="tabla-contenedor">
+
+                    <table class="tabla-historial">
+
+                        <thead>
+                            <tr>
+                                <th class="columna-id">ID</th>
+                                <th class="columna-responsable">Responsable</th>
+                                <th class="columna-descripcion">Descripción</th>
+                                <th class="columna-fecha">Fecha y hora</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var registro in Model)
+                            {
+                                string descripcion =
+                                    registro.descripcion ?? "";
+
+                                string tipoRegistro = "Simple";
+                                string nombreUsuario = "";
+                                string cuenta = "";
+                                string[] cambios = Array.Empty<string>();
+
+                                // CREAR USUARIO
+
+                                Match crearUsuario = Regex.Match(
+                                    descripcion,
+                                    @"^Creó al usuario (.+?) \((.+?)\)$",
+                                    RegexOptions.IgnoreCase
+                                );
+
+                                // ACTUALIZAR USUARIO
+
+                                Match actualizarUsuario = Regex.Match(
+                                    descripcion,
+                                    @"^Actualizó al usuario (.+?) \((.+?)\)\.\s*(.*)$",
+                                    RegexOptions.IgnoreCase
+                                );
+
+                                // DESACTIVAR USUARIO
+
+                                Match desactivarUsuario = Regex.Match(
+                                    descripcion,
+                                    @"^Desactivó al usuario (.+?) \((.+?)\)$",
+                                    RegexOptions.IgnoreCase
+                                );
+
+                                // REACTIVAR USUARIO
+
+                                Match reactivarUsuario = Regex.Match(
+                                    descripcion,
+                                    @"^Reactivó al usuario (.+?) \((.+?)\)$",
+                                    RegexOptions.IgnoreCase
+                                );
+
+                                // ELIMINAR USUARIO
+
+                                Match eliminarUsuario = Regex.Match(
+                                    descripcion,
+                                    @"^Eliminó al usuario (.+?) \((.+?)\)$",
+                                    RegexOptions.IgnoreCase
+                                );
+
+                                if (crearUsuario.Success)
+                                {
+                                    tipoRegistro = "CrearUsuario";
+                                    nombreUsuario = crearUsuario.Groups[1].Value;
+                                    cuenta = crearUsuario.Groups[2].Value;
+                                }
+                                else if (actualizarUsuario.Success)
+                                {
+                                    tipoRegistro = "ActualizarUsuario";
+                                    nombreUsuario = actualizarUsuario.Groups[1].Value;
+                                    cuenta = actualizarUsuario.Groups[2].Value;
+
+                                    cambios = actualizarUsuario.Groups[3].Value.Split(
+                                        '|',
+                                        StringSplitOptions.RemoveEmptyEntries
+                                    );
+                                }
+                                else if (desactivarUsuario.Success)
+                                {
+                                    tipoRegistro = "DesactivarUsuario";
+                                    nombreUsuario = desactivarUsuario.Groups[1].Value;
+                                    cuenta = desactivarUsuario.Groups[2].Value;
+                                }
+                                else if (reactivarUsuario.Success)
+                                {
+                                    tipoRegistro = "ReactivarUsuario";
+                                    nombreUsuario = reactivarUsuario.Groups[1].Value;
+                                    cuenta = reactivarUsuario.Groups[2].Value;
+                                }
+                                else if (eliminarUsuario.Success)
+                                {
+                                    tipoRegistro = "EliminarUsuario";
+                                    nombreUsuario = eliminarUsuario.Groups[1].Value;
+                                    cuenta = eliminarUsuario.Groups[2].Value;
+                                }
+
+                                <tr>
+
+                                    <!-- ID -->
+
+                                    <td>
+                                        <span class="historial-id">
+                                            @registro.id_historial
+                                        </span>
+                                    </td>
+
+                                    <!-- RESPONSABLE -->
+
+                                    <td>
+                                        <div class="responsable-historial">
+                                            <span class="responsable-icono">👤</span>
+                                            <span>@registro.usuario_responsable</span>
+                                        </div>
+                                    </td>
+
+                                    <!-- DESCRIPCION DETALLADA -->
+
+                                    <td class="descripcion-historial">
+
+                                        <!-- CREACION -->
+
+                                        @if (tipoRegistro == "CrearUsuario")
+                                        {
+                                            <div class="evento-card evento-usuario">
+
+                                                <div class="evento-cabecera">
+                                                    <span class="evento-tipo tipo-crear">
+                                                        ＋ Usuario creado
+                                                    </span>
+
+                                                    <strong class="evento-nombre">
+                                                        @nombreUsuario
+                                                    </strong>
+                                                </div>
+
+                                                <div class="evento-explicacion">
+
+                                                    <span class="evento-label">
+                                                        Acción realizada
+                                                    </span>
+
+                                                    <p>
+                                                        Se creó una nueva cuenta
+                                                        de usuario para
+                                                        <strong>@nombreUsuario</strong>
+                                                        con el nombre de usuario
+                                                        <strong>@cuenta</strong>.
+                                                    </p>
+
+                                                </div>
+
+                                                <div class="evento-datos">
+
+                                                    <div class="evento-dato">
+                                                        <span class="evento-label">
+                                                            Usuario
+                                                        </span>
+                                                        <strong>@nombreUsuario</strong>
+                                                    </div>
+
+                                                    <div class="evento-dato">
+                                                        <span class="evento-label">
+                                                            Cuenta
+                                                        </span>
+                                                        <strong>@cuenta</strong>
+                                                    </div>
+
+                                                    <div class="evento-dato">
+                                                        <span class="evento-label">
+                                                            Estado
+                                                        </span>
+                                                        <strong class="estado-activo">
+                                                            Activo
+                                                        </strong>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        }
+
+                                        <!-- ACTUALIZACION -->
+
+                                        @if (tipoRegistro == "ActualizarUsuario")
+                                        {
+                                            <div class="evento-card evento-usuario">
+
+                                                <div class="evento-cabecera">
+                                                    <span class="evento-tipo tipo-editar">
+                                                        ✎ Usuario actualizado
+                                                    </span>
+
+                                                    <strong class="evento-nombre">
+                                                        @nombreUsuario
+                                                    </strong>
+                                                </div>
+
+                                                <div class="evento-explicacion">
+
+                                                    <span class="evento-label">
+                                                        Acción realizada
+                                                    </span>
+
+                                                    <p>
+                                                        Se modificó la información
+                                                        del usuario
+                                                        <strong>@nombreUsuario</strong>
+                                                        asociado a la cuenta
+                                                        <strong>@cuenta</strong>.
+                                                    </p>
+
+                                                </div>
+
+                                                @if (cambios.Length > 0)
+                                                {
+                                                    <div class="cambios-contenedor">
+
+                                                        <span class="evento-label">
+                                                            Cambios realizados
+                                                        </span>
+
+                                                        <div class="lista-cambios">
+
+                                                            @foreach (string cambio in cambios)
+                                                            {
+                                                                <div class="cambio-item">
+
+                                                                    <span class="cambio-icono">
+                                                                        ↔
+                                                                    </span>
+
+                                                                    <span>
+                                                                        @cambio.Trim()
+                                                                    </span>
+
+                                                                </div>
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                            </div>
+                                        }
+
+                                        <!-- DESACTIVACION -->
+
+                                        @if (tipoRegistro == "DesactivarUsuario")
+                                        {
+                                            <div class="evento-card evento-usuario">
+
+                                                <div class="evento-cabecera">
+
+                                                    <span class="evento-tipo tipo-desactivar">
+                                                        ↓ Usuario desactivado
+                                                    </span>
+
+                                                    <strong class="evento-nombre">
+                                                        @nombreUsuario
+                                                    </strong>
+
+                                                </div>
+
+                                                <div class="evento-explicacion">
+
+                                                    <span class="evento-label">
+                                                        Acción realizada
+                                                    </span>
+
+                                                    <p>
+                                                        Se desactivó la cuenta
+                                                        del usuario
+                                                        <strong>@nombreUsuario</strong>
+                                                        identificada como
+                                                        <strong>@cuenta</strong>.
+                                                    </p>
+
+                                                </div>
+
+                                                <div class="evento-datos evento-datos-dos">
+
+                                                    <div class="evento-dato">
+
+                                                        <span class="evento-label">
+                                                            Cuenta
+                                                        </span>
+
+                                                        <strong>@cuenta</strong>
+
+                                                    </div>
+
+                                                    <div class="evento-dato">
+
+                                                        <span class="evento-label">
+                                                            Cambio de estado
+                                                        </span>
+
+                                                        <strong class="cambio-estado">
+
+                                                            <span class="estado-activo">
+                                                                Activo
+                                                            </span>
+
+                                                            <span class="flecha-cambio">→</span>
+
+                                                            <span class="estado-inactivo">
+                                                                Inactivo
+                                                            </span>
+
+                                                        </strong>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        }
+
+                                        <!-- REACTIVACION -->
+
+                                        @if (tipoRegistro == "ReactivarUsuario")
+                                        {
+                                            <div class="evento-card evento-usuario">
+
+                                                <div class="evento-cabecera">
+
+                                                    <span class="evento-tipo tipo-reactivar">
+                                                        ↑ Usuario reactivado
+                                                    </span>
+
+                                                    <strong class="evento-nombre">
+                                                        @nombreUsuario
+                                                    </strong>
+
+                                                </div>
+
+                                                <div class="evento-explicacion">
+
+                                                    <span class="evento-label">
+                                                        Acción realizada
+                                                    </span>
+
+                                                    <p>
+                                                        Se reactivó la cuenta
+                                                        del usuario
+                                                        <strong>@nombreUsuario</strong>
+                                                        identificada como
+                                                        <strong>@cuenta</strong>.
+                                                    </p>
+
+                                                </div>
+
+                                                <div class="evento-datos evento-datos-dos">
+
+                                                    <div class="evento-dato">
+
+                                                        <span class="evento-label">
+                                                            Cuenta
+                                                        </span>
+
+                                                        <strong>@cuenta</strong>
+
+                                                    </div>
+
+                                                    <div class="evento-dato">
+
+                                                        <span class="evento-label">
+                                                            Cambio de estado
+                                                        </span>
+
+                                                        <strong class="cambio-estado">
+
+                                                            <span class="estado-inactivo">
+                                                                Inactivo
+                                                            </span>
+
+                                                            <span class="flecha-cambio">→</span>
+
+                                                            <span class="estado-activo">
+                                                                Activo
+                                                            </span>
+
+                                                        </strong>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        }
+
+                                        <!-- ELIMINACION -->
+
+                                        @if (tipoRegistro == "EliminarUsuario")
+                                        {
+                                            <div class="evento-card evento-usuario">
+
+                                                <div class="evento-cabecera">
+
+                                                    <span class="evento-tipo tipo-eliminar">
+                                                        ✕ Usuario eliminado
+                                                    </span>
+
+                                                    <strong class="evento-nombre">
+                                                        @nombreUsuario
+                                                    </strong>
+
+                                                </div>
+
+                                                <div class="evento-explicacion">
+
+                                                    <span class="evento-label">
+                                                        Acción realizada
+                                                    </span>
+
+                                                    <p>
+                                                        Se eliminó del sistema
+                                                        el registro del usuario
+                                                        <strong>@nombreUsuario</strong>
+                                                        asociado a la cuenta
+                                                        <strong>@cuenta</strong>.
+                                                    </p>
+
+                                                </div>
+                                            </div>
+                                        }
+
+                                        <!-- OTROS EVENTOS -->
+
+                                        @if (tipoRegistro == "Simple")
+                                        {
+                                            <div class="descripcion-simple">
+
+                                                <span class="descripcion-simple-icono">
+                                                    👤
+                                                </span>
+
+                                                <div class="descripcion-simple-contenido">
+
+                                                    <span class="descripcion-simple-categoria">
+                                                        Usuarios
+                                                    </span>
+
+                                                    <span class="descripcion-simple-texto">
+                                                        @descripcion
+                                                    </span>
+
+                                                </div>
+
+                                            </div>
+                                        }
+
+                                    </td>
+
+                                    <!-- FECHA Y HORA -->
+
+                                    <td>
+                                        <div class="fecha-historial">
+
+                                            <span class="fecha-dia">
+                                                @registro.fecha_hora.ToString("dd-MM-yyyy")
+                                            </span>
+
+                                            <span class="fecha-hora">
+                                                @registro.fecha_hora.ToString("HH:mm:ss")
+                                            </span>
+
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <!-- PAGINACION -->
+
+                @if (totalPaginas > 1)
+                {
+                    <div class="paginacion">
+
+                        @if (paginaActual > 1)
+                        {
+                            <a asp-controller="Home"
+                               asp-action="HistorialUsuarios"
+                               asp-route-pagina="@(paginaActual - 1)"
+                               asp-route-buscar="@buscarActual"
+                               asp-route-filtro="@filtroActual"
+                               asp-route-periodo="@periodoActual"
+                               class="pagina-boton"
+                               data-orbit-action="quiet">
+                                ← Anterior
+                            </a>
+                        }
+
+                        @for (int i = 1; i <= totalPaginas; i++)
+                        {
+                            <a asp-controller="Home"
+                               asp-action="HistorialUsuarios"
+                               asp-route-pagina="@i"
+                               asp-route-buscar="@buscarActual"
+                               asp-route-filtro="@filtroActual"
+                               asp-route-periodo="@periodoActual"
+                               class="pagina-boton @(i == paginaActual ? "pagina-activa" : "")"
+                               data-orbit-action="quiet">
+                                @i
+                            </a>
+                        }
+
+                        @if (paginaActual < totalPaginas)
+                        {
+                            <a asp-controller="Home"
+                               asp-action="HistorialUsuarios"
+                               asp-route-pagina="@(paginaActual + 1)"
+                               asp-route-buscar="@buscarActual"
+                               asp-route-filtro="@filtroActual"
+                               asp-route-periodo="@periodoActual"
+                               class="pagina-boton"
+                               data-orbit-action="quiet">
+                                Siguiente →
+                            </a>
+                        }
+
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="sin-registros">
+
+                    @if (!string.IsNullOrWhiteSpace(buscarActual)
+                         || filtroActual != "todos"
+                         || periodoActual != "todos")
+                    {
+                        <strong>
+                            No se encontraron usuarios con esos criterios.
+                        </strong>
+
+                        <span>
+                            Prueba cambiando la búsqueda o modificando los filtros.
+                        </span>
+                    }
+                    else
+                    {
+                        <strong>
+                            No existen registros relacionados con usuarios.
+                        </strong>
+                    }
+
+                </div>
+            }
+
+        </section>
+
+    </div>
+
+    <div class="contenedor-volver">
+
+        <a asp-controller="Home"
+           asp-action="MovimientoHistorial"
+           class="btn-volver"
+           data-orbit-action="secondary">
+
+            ← Volver a Movimientos e Historial
+
+        </a>
+
+    </div>
+
+</div>
+
+<style>
+
+    /* CONTENEDOR */
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-card.historial-usuarios-original {
+        display: block !important;
+        width: 100% !important;
+        max-width: 1500px !important;
+        margin: 5px auto !important;
+    }
+
+    /* COMPOSICION VERTICAL */
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .sm-history-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 18px !important;
+        width: 100% !important;
+    }
+
+    /* PANEL SUPERIOR */
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .sm-history-console {
+        display: block !important;
+        position: static !important;
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        height: auto !important;
+        margin: 0 !important;
+        padding: 20px 22px !important;
+        border: 1px solid #bdd1eb;
+        border-radius: 18px;
+        background: linear-gradient(135deg, #eef5ff, #e7f0ff);
+        box-sizing: border-box;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .sm-console-heading {
+        margin: 0 0 16px !important;
+        padding: 0 0 12px !important;
+        border-bottom: 1px solid #cadaf0;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .sm-console-heading h2 {
+        margin: 3px 0 4px;
+        font-size: 20px;
+        color: #173d69;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .sm-console-heading p {
+        margin: 0;
+        color: #526f8f;
+    }
+
+    /* HERRAMIENTAS */
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .historial-herramientas {
+        display: grid !important;
+        grid-template-columns: minmax(260px, 1fr) minmax(440px, 1.45fr) !important;
+        align-items: end !important;
+        gap: 16px !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .form-busqueda {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) auto !important;
+        align-items: end !important;
+        gap: 6px 10px !important;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .form-busqueda > label {
+        grid-column: 1 / -1;
+        margin: 0;
+        color: #526f8e;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .filtro-busqueda {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+        min-height: 43px;
+        padding: 0 12px;
+        border: 1px solid #afc6e5;
+        border-radius: 10px;
+        background: #fbfdff;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .filtro-busqueda input {
+        flex: 1;
+        width: 100%;
+        min-width: 0;
+        margin: 0 !important;
+        padding: 8px 0 !important;
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        outline: none;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .form-filtros {
+        display: grid !important;
+        grid-template-columns: minmax(140px, 1fr) minmax(140px, 1fr) auto auto !important;
+        align-items: end !important;
+        gap: 10px !important;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .filtro-campo {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        min-width: 0;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .filtro-campo label {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #526f8e;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .filtro-campo select {
+        width: 100%;
+        min-height: 43px;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original :is(
+        .btn-buscar,
+        .btn-aplicar-filtros,
+        .btn-limpiar-filtros
+    ) {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 43px !important;
+        white-space: nowrap;
+    }
+
+    /* ZONA DE RESULTADOS */
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .sm-history-ledger {
+        display: block !important;
+        position: static !important;
+        width: 100% !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .historial-resumen-filtros {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 0 2px 12px;
+        color: #647985;
+        font-size: 12px;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .filtro-activo {
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: #e9f6f8;
+        color: #137683;
+        font-weight: 700;
+    }
+
+    /* TABLA ORIGINAL */
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .tabla-contenedor {
+        width: 100%;
+        overflow-x: auto;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 7px 20px rgba(28, 65, 95, 0.12);
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .tabla-historial {
+        width: 100%;
+        min-width: 900px;
+        table-layout: fixed;
+        border-collapse: collapse;
+        background: white;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .tabla-historial th {
+        padding: 14px !important;
+        background: #0f5278 !important;
+        color: white !important;
+        text-align: left;
+        font-weight: 600;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .tabla-historial td {
+        padding: 12px 14px !important;
+        border-bottom: 1px solid #dce6ec;
+        color: #17324d;
+        vertical-align: top;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .tabla-historial tbody tr:hover {
+        background: #f4f9fc;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .columna-id {
+        width: 7%;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .columna-responsable {
+        width: 16%;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .columna-descripcion {
+        width: 59%;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .columna-fecha {
+        width: 18%;
+    }
+
+    /* ID Y RESPONSABLE */
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .historial-id {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 34px;
+        padding: 5px 7px;
+        border-radius: 6px;
+        background: #edf5f9;
+        color: #31566d;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .responsable-historial {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .responsable-icono {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: #eef6fa;
+        font-size: 12px;
+    }
+
+    /* FICHAS ORIGINALES DE USUARIOS */
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .evento-card {
+        width: 100%;
+        padding: 11px 13px;
+        border: 1px solid #dce7ec;
+        border-radius: 9px;
+        background: #fbfdfe;
+        box-sizing: border-box;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .evento-cabecera {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .evento-tipo {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 9px;
+        border-radius: 999px;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .evento-nombre {
+        color: #073b64;
+        font-size: 13px;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .tipo-crear,
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .tipo-reactivar {
+        background: #e7f7ef;
+        color: #18794e;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .tipo-editar {
+        background: #eef3ff;
+        color: #3159b3;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .tipo-desactivar,
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .tipo-eliminar {
+        background: #fff0f0;
+        color: #b42318;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .evento-explicacion {
+        padding: 8px 10px;
+        border-radius: 7px;
+        background: #f2f7f9;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .evento-explicacion p {
+        margin: 4px 0 0;
+        color: #385563;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .evento-label {
+        display: block;
+        color: #71838e;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    /* DATOS DE USUARIO Y ESTADOS */
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .evento-datos {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .evento-datos-dos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .evento-dato {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        min-width: 0;
+        padding: 8px 10px;
+        border-radius: 7px;
+        background: #f1f6f8;
+        font-size: 12px;
+        overflow-wrap: anywhere;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .estado-activo {
+        color: #18794e;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .estado-inactivo {
+        color: #b42318;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .cambio-estado {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .flecha-cambio {
+        color: #1198a5;
+    }
+
+    /* LISTA DE CAMBIOS */
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .cambios-contenedor {
+        margin-top: 8px;
+        padding: 10px;
+        border-radius: 7px;
+        background: #f1f6f8;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .lista-cambios {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-top: 7px;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .cambio-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 7px 9px;
+        border-radius: 6px;
+        background: white;
+        color: #385563;
+        font-size: 12px;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .cambio-icono {
+        color: #1198a5;
+        font-weight: 800;
+    }
+
+    /* EVENTO SIN ESTRUCTURA ESPECIAL */
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .descripcion-simple {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 13px;
+        border: 1px solid #dce7ec;
+        border-radius: 9px;
+        background: #fbfdfe;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .descripcion-simple-icono {
+        font-size: 22px;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .descripcion-simple-contenido {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .descripcion-simple-categoria {
+        color: #315c79;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .descripcion-simple-texto {
+        color: #385563;
+        font-size: 13px;
+    }
+
+    /* FECHA */
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .fecha-historial {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .fecha-dia {
+        color: #244a62;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .fecha-hora {
+        color: #6f818c;
+        font-size: 12px;
+    }
+
+    /* PAGINACION */
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .paginacion {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-top: 25px;
+    }
+
+    /* SIN REGISTROS */
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .sin-registros {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        padding: 28px;
+        border: 1px solid #d8e2e8;
+        border-radius: 10px;
+        background: #f5f8fa;
+        color: #60798b;
+        text-align: center;
+    }
+
+    body.sm-app[data-sm-screen="HistorialUsuarios"]
+    .historial-usuarios-original .contenedor-volver {
+        margin: 30px 0;
+        text-align: center;
+    }
+
+    /* RESPONSIVE */
+
+    @@media screen and (max-width: 1200px) {
+
+        body.sm-app[data-sm-screen="HistorialUsuarios"]
+        .historial-usuarios-original .historial-herramientas {
+            grid-template-columns: minmax(0, 1fr) !important;
+        }
+    }
+
+    @@media screen and (max-width: 700px) {
+
+        body.sm-app[data-sm-screen="HistorialUsuarios"]
+        .historial-usuarios-original .sm-history-console {
+            padding: 16px !important;
+        }
+
+        body.sm-app[data-sm-screen="HistorialUsuarios"]
+        .historial-usuarios-original .form-busqueda,
+        body.sm-app[data-sm-screen="HistorialUsuarios"]
+        .historial-usuarios-original .form-filtros {
+            grid-template-columns: minmax(0, 1fr) !important;
+        }
+
+        body.sm-app[data-sm-screen="HistorialUsuarios"]
+        .historial-usuarios-original :is(
+            .btn-buscar,
+            .btn-aplicar-filtros,
+            .btn-limpiar-filtros
+        ) {
+            width: 100%;
+        }
+
+        body.sm-app[data-sm-screen="HistorialUsuarios"]
+        .historial-usuarios-original .evento-datos,
+        body.sm-app[data-sm-screen="HistorialUsuarios"]
+        .historial-usuarios-original .evento-datos-dos {
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+
+</style>

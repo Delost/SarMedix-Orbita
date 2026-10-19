@@ -1,0 +1,494 @@
+﻿@using Microsoft.AspNetCore.Http
+
+@{
+    string nombre =
+        Context.Session.GetString("Nombre") ?? "";
+
+    string apellido =
+        Context.Session.GetString("Apellido") ?? "";
+
+    string rol =
+        Context.Session.GetString("Rol") ?? "";
+
+
+    int? idUsuario =
+        Context.Session.GetInt32(
+            "IdUsuario"
+        );
+
+
+    string nombreCompleto =
+        (nombre + " " + apellido)
+            .Trim();
+
+
+    string inicial =
+        !string.IsNullOrEmpty(nombre)
+            ? nombre
+                .Substring(
+                    0,
+                    1
+                )
+                .ToUpper()
+            : "U";
+
+
+    /*
+        Ahora utilizamos IdUsuario para determinar
+        si existe una sesión autenticada.
+
+        Esto es más seguro que comprobar únicamente
+        si existe un nombre en Session.
+    */
+
+    bool sesionIniciada =
+        idUsuario.HasValue;
+
+
+    string tituloBarra =
+        ViewData["TituloBarra"]?.ToString()
+        ??
+        "";
+}
+
+
+<!DOCTYPE html>
+
+<html lang="es">
+
+
+<head>
+
+    <meta charset="utf-8" />
+
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+
+    <title>
+
+        @ViewData["Title"] - SARMedix
+
+    </title>
+
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+
+
+    <link rel="stylesheet"
+          href="~/css/sidebar.css"
+          asp-append-version="true" />
+
+
+    <link rel="stylesheet"
+          href="~/LoginSARMedix.styles.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/css/sarmedix-ui.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sarmedix-orbita-v2.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/sarmedix-system.css" asp-append-version="true" />
+</head>
+
+
+<body class="sm-app" data-sm-screen="@ViewData["SmScreen"]" data-sm-family="@ViewData["SmFamily"]">
+    <partial name="_ModuleIcons" />
+    <a class="sm-skip" href="#sm-main" data-orbit-action="navigation">Saltar al contenido</a>
+
+
+    <!-- =========================================================
+         BARRA SUPERIOR
+         ========================================================= -->
+
+    <header class="barra-layout">
+
+
+        <!-- =====================================================
+             LOGO
+             ===================================================== -->
+
+        <a asp-controller="Home"
+           asp-action="Modulos"
+           class="logo-layout" data-orbit-action="navigation">
+
+
+            <div class="logo-cruz-layout">
+            </div>
+
+
+            <div class="logo-texto-layout">
+
+                <span>SAR<span class="sm-brand-light">Medix</span><span class="sm-brand-dot">.</span></span>
+                <small>SAR DE CHIGUAY</small>
+
+            </div>
+
+
+        </a>
+
+
+
+        <!-- =====================================================
+             TITULO CENTRAL
+             ===================================================== -->
+
+        <div class="titulo-layout">
+
+            @tituloBarra
+
+        </div>
+
+
+
+        <!-- =====================================================
+             USUARIO
+             ===================================================== -->
+
+        @if (sesionIniciada)
+        {
+            <div class="usuario-layout">
+                <button class="sm-motion-control" type="button" data-sm-motion-control aria-pressed="false" aria-label="Pausar efectos visuales" hidden data-orbit-action="secondary"><span aria-hidden="true">◌</span><span data-sm-motion-label>Pausar efectos</span></button>
+
+
+                <!-- =================================================
+                     ALERTAS
+                     ================================================= -->
+
+                @await Component.InvokeAsync(
+                    "Alertas"
+                )
+
+
+
+                <!-- =================================================
+                     DATOS DEL USUARIO
+                     ================================================= -->
+
+                <div class="usuario-datos-layout">
+
+
+                    <span class="usuario-nombre-layout">
+
+                        @nombreCompleto
+
+                    </span>
+
+
+                    <span class="usuario-rol-layout">
+
+                        @rol
+
+                    </span>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     INICIAL
+                     ================================================= -->
+
+                <div class="usuario-circulo-layout">
+
+                    @inicial
+
+                </div>
+
+
+
+                <!-- =================================================
+                     CERRAR SESION
+                     ================================================= -->
+
+                <form asp-controller="Home"
+                      asp-action="CerrarSesion"
+                      method="post"
+                      id="formCerrarSesion"
+                      class="form-cerrar-layout" data-orbit-form="_Layout">
+
+
+                    <button type="button"
+                            class="btn-cerrar-layout"
+                            onclick="abrirConfirmacionCerrarSesion()" data-orbit-action="warning">
+
+                        Cerrar sesión
+
+                    </button>
+
+
+                </form>
+
+
+            </div>
+        }
+        else
+        {
+            /*
+                Si no existe sesión:
+
+                - No mostramos usuario.
+                - No mostramos campana.
+                - No ejecutamos el componente de alertas.
+            */
+
+            <div>
+            </div>
+        }
+
+
+    </header>
+
+
+
+    <!-- =========================================================
+         CONTENIDO
+         ========================================================= -->
+
+    @if (sesionIniciada)
+    {
+        <div class="estructura-app">
+
+
+            <!-- =================================================
+                 BARRA LATERAL
+                 ================================================= -->
+
+            <partial name="_Sidebar" />
+
+
+
+            <!-- =================================================
+                 CONTENIDO DE LA VISTA
+                 ================================================= -->
+
+            <div class="contenido-app">
+
+
+                <main role="main" id="sm-main" tabindex="-1"
+                      class="pb-3">
+
+                    <partial name="_ScreenIdentity" />
+                    @RenderBody()
+
+                </main>
+
+
+            </div>
+
+
+        </div>
+    }
+    else
+    {
+        <div class="container contenedor-layout">
+
+
+            <main role="main" id="sm-main" tabindex="-1"
+                  class="pb-3">
+
+                <partial name="_ScreenIdentity" />
+                @RenderBody()
+
+            </main>
+
+
+        </div>
+    }
+
+
+
+    <!-- =========================================================
+         FOOTER
+         ========================================================= -->
+
+    <footer class="footer-layout">
+
+        SARMedix · Sistema de Gestión Farmacéutica · SAR de Chiguay
+        @if (ViewData["SmScreen"]?.ToString() != "ImprimirDosificacion" && ViewData["SmScreen"]?.ToString() != "InformeSalidasTurno")
+        {
+            <partial name="_OrbitPulse" />
+        }
+
+    </footer>
+
+
+
+    <!-- =========================================================
+         CONFIRMACION CERRAR SESION
+         ========================================================= -->
+
+    @if (sesionIniciada)
+    {
+        <div id="modalCerrarSesion"
+             class="modal-fondo-sesion">
+
+
+            <div class="modal-contenido-sesion" data-orbit-dialog="surface">
+
+
+                <div class="modal-icono-sesion">
+
+                    ?
+
+                </div>
+
+
+                <h2>
+
+                    Confirmar acción
+
+                </h2>
+
+
+                <p>
+
+                    ¿Quieres cerrar sesión?
+
+                </p>
+
+
+                <div class="modal-botones-sesion">
+
+
+                    <button type="button"
+                            class="btn-sesion-si"
+                            onclick="confirmarCerrarSesion()" data-orbit-action="warning">
+
+                        Sí
+
+                    </button>
+
+
+                    <button type="button"
+                            class="btn-sesion-no"
+                            onclick="cerrarConfirmacionCerrarSesion()" data-orbit-action="secondary">
+
+                        No
+
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+    }
+
+
+
+    <!-- =========================================================
+         SCRIPTS
+         ========================================================= -->
+
+    <script src="~/lib/jquery/dist/jquery.min.js">
+    </script>
+
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+
+    <script src="~/js/site.js"
+            asp-append-version="true">
+    </script>
+
+
+
+    <script>
+
+        // =====================================================
+        // ABRIR CONFIRMACION
+        // =====================================================
+
+        function abrirConfirmacionCerrarSesion() {
+
+            const modal =
+                document.getElementById(
+                    "modalCerrarSesion"
+                );
+
+
+            if (modal) {
+
+                modal.style.display =
+                    "flex";
+
+            }
+
+        }
+
+
+
+        // =====================================================
+        // CANCELAR
+        // =====================================================
+
+        function cerrarConfirmacionCerrarSesion() {
+
+            const modal =
+                document.getElementById(
+                    "modalCerrarSesion"
+                );
+
+
+            if (modal) {
+
+                modal.style.display =
+                    "none";
+
+            }
+
+        }
+
+
+
+        // =====================================================
+        // CERRAR SESION
+        // =====================================================
+
+        function confirmarCerrarSesion() {
+
+            const formulario =
+                document.getElementById(
+                    "formCerrarSesion"
+                );
+
+
+            if (formulario) {
+
+                formulario.submit();
+
+            }
+
+        }
+
+    </script>
+
+
+
+    @await RenderSectionAsync(
+        "Scripts",
+        required: false
+    )
+
+
+    <script src="~/js/sarmedix-ui.js" asp-append-version="true"></script>
+    <script src="~/js/sarmedix-orbita-v2.js" asp-append-version="true"></script>
+<link rel="stylesheet" href="~/css/sarmedix-global.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/orbit-mini.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/orbit-resources.css" asp-append-version="true" />
+    <partial name="_OrbitMini" />
+    <script src="~/js/orbit-mini.js" asp-append-version="true"></script>
+</body>
+
+</html>

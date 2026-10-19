@@ -1,0 +1,10 @@
+[
+  "LoginSARMedix/Views/Home/CrearLote.cshtml",
+  "LoginSARMedix/Views/Home/CrearProducto.cshtml",
+  "LoginSARMedix/Views/Home/Dosificaciones.cshtml",
+  "LoginSARMedix/Views/Home/EditarLote.cshtml",
+  "LoginSARMedix/Views/Home/EditarProducto.cshtml",
+  "LoginSARMedix/Views/Home/EntregaDosificacion.cshtml",
+  "LoginSARMedix/Views/Home/Productos.cshtml",
+  "LoginSARMedix/Views/Shared/_Layout.cshtml"
+]

@@ -1,0 +1,546 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/css/site.css"><link rel="stylesheet" href="/css/sidebar.css"><link rel="stylesheet" href="/css/sarmedix-ui.css"><link rel="stylesheet" href="/css/sarmedix-orbita-v2.css"><link rel="stylesheet" href="/css/sarmedix-system.css"><link rel="stylesheet" href="/css/sarmedix-structural.css"><link rel="stylesheet" href="/css/sarmedix-refinement.css"><body class="sm-app" data-sm-screen="EditarLote" data-sm-family="products"><div style="padding:10px;background:#fff;color:#385575;font:13px system-ui">Vista estática sin datos · EditarLote · Formularios desconectados</div><main role="main" id="sm-main" style="width:100%;padding:24px;display:block">﻿
+
+
+
+
+
+
+<section class="sm-lot-editor"><header class="sm-edit-heading"><span class="sm-form-eyebrow">ÓRBITA / FICHA DE LOTE</span><h1>Editar lote</h1><p>Identidad, existencias y destino en una sola ficha.</p></header>
+
+
+<form
+     
+      method="post"
+      class="formulario-principal"
+      id="formEditarLote"
+     
+      novalidate data-orbit-form="EditarLote">
+
+
+    <!-- ID DEL LOTE -->
+
+    <input
+           type="hidden" />
+
+
+
+    <!-- MENSAJE -->
+
+    <div class="espacio-mensaje">
+
+        
+
+    </div>
+
+
+
+    <div class="sm-edit-grid"><fieldset class="sm-edit-identity"><legend>01 · Identidad y vigencia</legend>
+    <!-- PRODUCTO -->
+
+    <div>
+
+        <label for="producto">Producto</label>
+
+        <select
+                id="producto">
+
+            
+
+        </select>
+
+    </div>
+
+
+
+    <!-- NUMERO DE LOTE -->
+
+    <div>
+
+        <label for="numeroLote">Número de lote</label>
+
+        <input
+               id="numeroLote" />
+
+    </div>
+
+
+
+    <!-- FECHA DE VENCIMIENTO -->
+
+    <div>
+
+        <label for="fechaVencimiento">Fecha de vencimiento</label>
+
+        <input
+               id="fechaVencimiento"
+               type="date" />
+
+    </div>
+
+
+
+    </fieldset><fieldset class="sm-edit-stock"><legend>02 · Existencias y destino</legend>
+    <!-- CANTIDAD ACTUAL -->
+
+    <div>
+
+        <label for="cantidadActual">Cantidad actual</label>
+
+        <input
+               id="cantidadActual"
+               type="number"
+               min="0" />
+
+    </div>
+
+
+
+    <!-- UBICACION -->
+
+    <div>
+
+        <label for="ubicacion">Ubicación</label>
+
+        <select
+                id="ubicacion">
+
+            
+
+        </select>
+
+    </div>
+
+
+
+    <br />
+
+
+
+    </fieldset></div><footer class="sm-edit-footer"><p>Revisa los datos. La confirmación aparece antes de guardar.</p>
+    <!-- BOTON ACTUALIZAR -->
+
+    <button type="submit" data-orbit-action="primary">
+
+        Actualizar lote
+
+    </button>
+
+
+</footer></form>
+
+
+
+<!-- BOTONES DE NAVEGACION -->
+
+<div class="contenedor-volver">
+
+
+    <a
+      
+       class="btn-volver-listado" data-orbit-action="secondary">
+
+        ← Volver al listado de lotes
+
+    </a>
+
+
+    <a
+      
+       class="btn-volver-productos" data-orbit-action="secondary">
+
+        ← Volver a Productos
+
+    </a>
+
+
+</div>
+
+
+
+</section>
+<!-- VENTANA DE CONFIRMACION -->
+
+<div id="modalConfirmacion"
+     class="modal-fondo sm-confirmation" role="dialog" aria-modal="true" aria-labelledby="smConfirmTitle">
+
+    <div class="modal-contenido" data-orbit-dialog="surface">
+
+
+        <div class="modal-icono">
+
+            ?
+
+        </div>
+
+
+        <h2 id="smConfirmTitle">
+
+            Confirmar acción
+
+        </h2>
+
+
+        <p>
+
+            ¿Quieres actualizar este lote?
+
+        </p>
+
+
+        <div class="sm-confirm-actions"><span class="sm-form-eyebrow">CONFIRMACIÓN</span><div class="modal-botones">
+
+
+            <button type="button"
+                    class="btn-modal-si"
+                    data-orbit-action="primary">
+
+                Sí
+
+            </button>
+
+
+            <button type="button"
+                    class="btn-modal-no"
+                    data-orbit-action="secondary">
+
+                No
+
+            </button>
+
+
+            <button type="button"
+                    class="btn-modal-cancelar"
+                    data-orbit-action="secondary">
+
+                Cancelar
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+</div>
+<style>
+
+    /* MENSAJES */
+
+    .espacio-mensaje {
+        min-height: 48px;
+
+        margin-bottom: 8px;
+    }
+
+
+    .mensaje {
+        width: 100%;
+
+        padding: 12px 15px;
+
+        box-sizing: border-box;
+
+        border-radius: 7px;
+
+        text-align: center;
+
+        font-weight: 600;
+
+        opacity: 1;
+
+        transition: opacity 0.5s ease;
+    }
+
+
+    .mensaje-exito {
+        background-color: #d1e7dd;
+
+        color: #0f5132;
+
+        border: 1px solid #badbcc;
+    }
+
+
+    .mensaje-error {
+        background-color: #f8d7da;
+
+        color: #842029;
+
+        border: 1px solid #f5c2c7;
+    }
+
+
+    .mensaje-oculto {
+        visibility: hidden;
+    }
+
+
+
+    /* BOTONES DE NAVEGACION */
+
+    .contenedor-volver {
+        display: flex;
+
+        justify-content: center;
+
+        gap: 15px;
+
+        flex-wrap: wrap;
+
+        margin-top: 30px;
+
+        margin-bottom: 30px;
+    }
+
+
+    .btn-volver-listado {
+        display: inline-block;
+
+        padding: 12px 22px;
+
+        background-color: #59636b;
+
+        color: white;
+
+        border-radius: 7px;
+
+        text-decoration: none;
+
+        font-weight: 600;
+    }
+
+
+    .btn-volver-listado:hover {
+        background-color: #474f55;
+
+        color: white;
+    }
+
+
+    .btn-volver-productos {
+        display: inline-block;
+
+        padding: 12px 22px;
+
+        background-color: #1198a5;
+
+        color: white;
+
+        border-radius: 7px;
+
+        text-decoration: none;
+
+        font-weight: 600;
+    }
+
+
+    .btn-volver-productos:hover {
+        background-color: #0d8490;
+
+        color: white;
+    }
+
+
+
+    /* VENTANA DE CONFIRMACION */
+
+    .modal-fondo {
+        display: none;
+
+        position: fixed;
+
+        top: 0;
+
+        left: 0;
+
+        width: 100%;
+
+        height: 100%;
+
+        background-color: rgba(0, 0, 0, 0.45);
+
+        align-items: center;
+
+        justify-content: center;
+
+        z-index: 9999;
+    }
+
+
+    .modal-contenido {
+        width: 90%;
+
+        max-width: 430px;
+
+        background-color: white;
+
+        border-radius: 15px;
+
+        padding: 30px;
+
+        text-align: center;
+
+        box-shadow:
+            0 12px 35px
+            rgba(0, 0, 0, 0.25);
+    }
+
+
+    .modal-icono {
+        width: 55px;
+
+        height: 55px;
+
+        margin: 0 auto 15px auto;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        background-color: #1198a5;
+
+        color: white;
+
+        border-radius: 50%;
+
+        font-size: 30px;
+
+        font-weight: bold;
+    }
+
+
+    .modal-contenido h2 {
+        width: auto;
+
+        max-width: none;
+
+        margin: 0;
+
+        padding: 0;
+
+        background: none;
+
+        border-radius: 0;
+
+        box-shadow: none;
+
+        color: #003b64;
+
+        font-size: 25px;
+    }
+
+
+    .modal-contenido h2::before,
+    .modal-contenido h2::after {
+        display: none;
+    }
+
+
+    .modal-contenido p {
+        margin-top: 15px;
+
+        margin-bottom: 25px;
+
+        font-size: 17px;
+
+        color: #444;
+    }
+
+
+    .modal-botones {
+        display: flex;
+
+        justify-content: center;
+
+        gap: 10px;
+
+        flex-wrap: wrap;
+    }
+
+
+    .modal-botones button {
+        min-width: 90px;
+
+        padding: 10px 18px;
+
+        border: none;
+
+        border-radius: 7px;
+
+        color: white;
+
+        font-weight: 600;
+
+        cursor: pointer;
+    }
+
+
+    .btn-modal-si {
+        background-color: #198754;
+    }
+
+
+    .btn-modal-si:hover {
+        background-color: #157347;
+    }
+
+
+    .btn-modal-no {
+        background-color: #c82333;
+    }
+
+
+    .btn-modal-no:hover {
+        background-color: #a91d2a;
+    }
+
+
+    .btn-modal-cancelar {
+        background-color: #59636b;
+    }
+
+
+    .btn-modal-cancelar:hover {
+        background-color: #474f55;
+    }
+
+
+
+    /* CELULAR */
+
+    @media (max-width: 600px) {
+
+        .contenedor-volver {
+            flex-direction: column;
+
+            align-items: center;
+        }
+
+
+        .btn-volver-listado,
+        .btn-volver-productos {
+            width: 90%;
+
+            box-sizing: border-box;
+
+            text-align: center;
+        }
+
+    }
+
+</style>
+
+
+
+
+<link rel="stylesheet" href="/css/sarmedix-refinement.css" />
+
+
+</main><link rel="stylesheet" href="/css/sarmedix-global.css"><script>document.addEventListener("submit",e=>e.preventDefault());document.querySelectorAll("a").forEach(a=>a.removeAttribute("href"));</script></body></html>

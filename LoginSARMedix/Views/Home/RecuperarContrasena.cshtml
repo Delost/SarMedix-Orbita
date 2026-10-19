@@ -1,0 +1,33 @@
+﻿@* SM-ORBITA-METADATA *@
+@{ ViewData["SmScreen"] = "RecuperarContrasena"; ViewData["SmFamily"] = "access"; }
+@{
+    ViewData["Title"] = "Recuperar contraseña";
+}
+
+<section class="orbit-access"><aside class="orbit-access-brand"><span class="orbit-eyebrow">SARMedix / ÓRBITA 2.0</span><div class="orbit-access-art" aria-hidden="true"><partial name="_OrbitInstrument" /></div><h1>Todo conectado.<br />Mejor cuidado.</h1><p>Tu espacio de trabajo farmacéutico.</p></aside><div class="orbit-access-fields"><h2>Recuperar contraseña</h2>
+
+<p>Ingresa tu correo electrónico para recuperar tu contraseña.</p>
+
+@if (ViewBag.Mensaje != null)
+{
+    <p>@ViewBag.Mensaje</p>
+}
+<form asp-controller="Home"
+      asp-action="RecuperarContrasena"
+      method="post" data-orbit-form="RecuperarContrasena">
+
+    <label>Correo electrónico</label>
+
+    <input type="email"
+           name="correo"
+           required />
+
+    <button type="submit" data-orbit-action="primary">
+        Enviar código
+    </button>
+</form></div></section>
+
+<a asp-controller="Home"
+   asp-action="Index" data-orbit-action="secondary">
+    Volver al inicio de sesión
+</a>

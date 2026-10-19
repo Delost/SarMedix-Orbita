@@ -1,0 +1,12 @@
+[
+  "LoginSARMedix/Views/Home/Modulos/MedicamentosControlados.cshtml",
+  "LoginSARMedix/Views/Home/Modulos/MovimientoHistorial.cshtml",
+  "LoginSARMedix/Views/Home/Modulos/Productos.cshtml",
+  "LoginSARMedix/Views/Home/Modulos/UsuariosPermisos.cshtml",
+  "LoginSARMedix/Views/Home/Productos.cshtml",
+  "LoginSARMedix/Views/Shared/_ModuleIcons.cshtml",
+  "LoginSARMedix/Views/Shared/_OrbitCapsule.cshtml",
+  "LoginSARMedix/Views/Shared/_OrbitPulse.cshtml",
+  "LoginSARMedix/wwwroot/css/orbit-resources.css",
+  "LoginSARMedix/wwwroot/css/sarmedix-system.css"
+]

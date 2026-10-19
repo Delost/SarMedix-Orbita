@@ -1,0 +1,55 @@
+/* Isolated decorative family. No selectors for tables, controls or welcome artwork. */
+.sm-mini { --mini-cycle: 12s; display: block; width: 150px; height: 120px; flex: 0 0 150px; pointer-events: none; user-select: none; line-height: 0; }
+.sm-mini[hidden] { display: none !important; }
+.sm-mini svg { display: block; width: 100%; height: 100%; overflow: hidden; }
+.sm-mini-base { fill: #12345b; stroke: #70b6f3; stroke-opacity: .17; }
+.sm-mini-track { stroke: #78bfff; stroke-opacity: .32; stroke-width: .8; transform-origin: 80px 64px; animation: sm-mini-turn var(--mini-cycle) linear infinite; }
+.sm-mini-track > path { stroke: #b8ecff; stroke-opacity: .8; }
+.sm-mini .sm-mini-light { fill: #b0f0ff; stroke: #75c8ff; stroke-width: 3; stroke-opacity: .18; }
+.sm-mini-icon { stroke: #c2eaff; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.sm-mini-marks { stroke: #608db8; stroke-width: .8; opacity: .6; }
+.sm-mini-connection, .sm-mini-ellipses { stroke: #86c9ff; stroke-width: .8; opacity: .35; }
+.sm-mini-node { fill: #b9edff; stroke: #80d6ff; opacity: .35; animation: sm-mini-node 9s ease-in-out infinite; }
+.sm-mini-node-b { animation-delay: -6s; }
+.sm-mini-node-c { animation-delay: -3s; }
+.sm-mini-pulse { animation: sm-mini-pulse 8s ease-in-out infinite; }
+.sm-mini-lock-halo { fill: #64aaff; fill-opacity: .06; stroke: #83beff; stroke-opacity: .2; }
+.sm-mini-scan { stroke: #8deaff; animation: sm-mini-scan 8s ease-in-out infinite; }
+.sm-mini--inventory .sm-mini-icon, .sm-mini--preparation .sm-mini-icon { animation: sm-mini-float 9s ease-in-out infinite; }
+.sm-mini--inventory .sm-mini-track { transform: scaleY(.55) rotate(-25deg); animation-name: sm-mini-ellipse-turn; }
+.sm-mini--preparation .sm-mini-track > circle:first-child { stroke-dasharray: 125 185; }
+.sm-mini--protection { --mini-cycle: 15s; }
+.sm-mini--protection .sm-mini-track { stroke-opacity: .2; }
+.sm-mini--protection .sm-mini-light { animation: sm-mini-pulse 10s ease-in-out infinite; }
+.sm-mini--distribution { --mini-cycle: 15s; }
+.sm-mini-route { animation: sm-mini-route 9s linear infinite; }
+.sm-mini--distribution .sm-mini-node-a { animation: sm-mini-route-node-a 9s linear infinite; }
+.sm-mini--distribution .sm-mini-node-b { animation: sm-mini-route-node-b 9s linear infinite; }
+.sm-mini--distribution .sm-mini-node-c { animation: sm-mini-route-node-c 9s linear infinite; }
+.sm-mini-transfer-a { animation: sm-mini-transfer 10s ease-in-out infinite; }
+.sm-mini-transfer-b { animation: sm-mini-transfer-back 10s ease-in-out infinite; }
+.sm-mini-arrow-a { animation: sm-mini-pulse 10s ease-in-out infinite; }
+.sm-mini-arrow-b { animation: sm-mini-pulse 10s ease-in-out -5s infinite; }
+@keyframes sm-mini-turn { to { transform: rotate(360deg); } }
+@keyframes sm-mini-ellipse-turn { from { transform: rotate(-25deg) scaleY(.55) rotate(0); } to { transform: rotate(-25deg) scaleY(.55) rotate(360deg); } }
+@keyframes sm-mini-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+@keyframes sm-mini-pulse { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+@keyframes sm-mini-node { 0%,22%,100% { opacity: .3; } 11% { opacity: 1; } }
+@keyframes sm-mini-scan { 0%,100% { transform: translateY(0); opacity: .2; } 50% { transform: translateY(10px); opacity: .9; } }
+@keyframes sm-mini-transfer { 0%,100% { transform: translateX(0); opacity: .2; } 50% { transform: translateX(64px); opacity: 1; } }
+@keyframes sm-mini-transfer-back { 0%,100% { transform: translateX(0); opacity: .2; } 50% { transform: translateX(-64px); opacity: 1; } }
+@keyframes sm-mini-route { 0%,100% { transform: translate(0,0); } 25%,75% { transform: translate(34px,14px); } 50% { transform: translate(68px,0); } }
+@keyframes sm-mini-route-node-a { 0%,100% { opacity: 1; } 15%,85% { opacity: .3; } }
+@keyframes sm-mini-route-node-b { 0%,50%,100% { opacity: .3; } 25%,75% { opacity: 1; } }
+@keyframes sm-mini-route-node-c { 0%,35%,65%,100% { opacity: .3; } 50% { opacity: 1; } }
+@media screen and (min-width: 1100px) {
+    body.sm-app[data-sm-family][data-sm-screen] main .sm-mini-host { position: relative; box-sizing: border-box; min-height: 128px; padding-right: calc(var(--sm-mini-original-padding, 0px) + 166px) !important; }
+    .sm-mini-host > .sm-mini { position: absolute; right: 0; top: 50%; margin: 0; transform: translateY(-50%); }
+    .sm-mini-below > .sm-mini { margin: 16px 0 0; }
+    .sm-mini-slot > .sm-mini .sm-mini-base { fill: none; stroke: none; }
+    .sm-mini-slot > .sm-mini { position: absolute; width: 100%; height: 100%; inset: 0; }
+}
+.sm-motion-paused .sm-mini *, .sm-motion-paused .sm-mini *::before, .sm-motion-paused .sm-mini *::after { animation: none !important; transition: none !important; }
+@media (prefers-reduced-motion: reduce) { .sm-mini *, .sm-mini *::before, .sm-mini *::after { animation: none !important; transition: none !important; } }
+@media screen and (max-width: 1099px) { .sm-mini { display: none !important; } }
+@media print { .sm-mini { display: none !important; } }

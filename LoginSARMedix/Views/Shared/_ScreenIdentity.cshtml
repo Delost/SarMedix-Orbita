@@ -1,0 +1,23 @@
+@{
+    var family = ViewData["SmFamily"]?.ToString() ?? "";
+    var screen = ViewData["SmScreen"]?.ToString() ?? "";
+    var identity = family switch
+    {
+        "access" => ("ACCESO A SARMedix", "controlled"),
+        "users" => ("PERSONAS Y ACCESOS", "users"),
+        "products" => ("PRODUCTOS Y EXISTENCIAS", "products"),
+        "sectors" => ("ESPACIOS DE CUIDADO", "sectors"),
+        "movements" => ("FLUJO Y TRAZABILIDAD", "movements"),
+        "dosing" => ("PREPARACIÓN Y ENTREGA", "products"),
+        "controlled" => ("CONTROL FARMACÉUTICO", "controlled"),
+        "history" => ("REGISTRO Y TRAZABILIDAD", "movements"),
+        _ => ("SARMedix", "controlled")
+    };
+}
+@if (family != "" && family != "home" && screen != "Lotes")
+{
+    <div class="sm-screen-identity">
+        <span class="sm-screen-family"><svg class="sm-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#sm-icon-@identity.Item2" /></svg>@identity.Item1</span>
+        <span class="sm-screen-edition" aria-hidden="true">ÓRBITA <span>02</span></span>
+    </div>
+}
