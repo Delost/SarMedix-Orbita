@@ -706,10 +706,18 @@
                 </div>
 
                 <!-- PAGINACION -->
-
                 @if (totalPaginas > 1)
                 {
+                    // Mostrar un máximo de 5 páginas consecutivas.
+                    int inicio = Math.Max(1, paginaActual - 2);
+                    int fin = Math.Min(totalPaginas, inicio + 4);
+
+                    // Ajustar el inicio cuando estamos cerca de la última página.
+                    inicio = Math.Max(1, fin - 4);
+
                     <div class="paginacion">
+
+                        @* BOTÓN ANTERIOR *@
 
                         @if (paginaActual > 1)
                         {
@@ -725,7 +733,30 @@
                             </a>
                         }
 
-                        @for (int i = 1; i <= totalPaginas; i++)
+                        @* PRIMERA PÁGINA *@
+
+                        @if (inicio > 1)
+                        {
+                            <a asp-controller="Home"
+                               asp-action="Historial"
+                               asp-route-pagina="1"
+                               asp-route-buscar="@buscarActual"
+                               asp-route-filtro="@filtroActual"
+                               asp-route-periodo="@periodoActual"
+                               class="pagina-boton"
+                               data-orbit-action="quiet">
+                                1
+                            </a>
+
+                            @if (inicio > 2)
+                            {
+                                <span class="pagina-boton" aria-hidden="true">…</span>
+                            }
+                        }
+
+                        @* PÁGINAS CERCANAS A LA ACTUAL *@
+
+                        @for (int i = inicio; i <= fin; i++)
                         {
                             <a asp-controller="Home"
                                asp-action="Historial"
@@ -734,10 +765,34 @@
                                asp-route-filtro="@filtroActual"
                                asp-route-periodo="@periodoActual"
                                class="pagina-boton @(i == paginaActual ? "pagina-activa" : "")"
+                               aria-current="@(i == paginaActual ? "page" : null)"
                                data-orbit-action="quiet">
                                 @i
                             </a>
                         }
+
+                        @* ÚLTIMA PÁGINA *@
+
+                        @if (fin < totalPaginas)
+                        {
+                            @if (fin < totalPaginas - 1)
+                            {
+                                <span class="pagina-boton" aria-hidden="true">…</span>
+                            }
+
+                            <a asp-controller="Home"
+                               asp-action="Historial"
+                               asp-route-pagina="@totalPaginas"
+                               asp-route-buscar="@buscarActual"
+                               asp-route-filtro="@filtroActual"
+                               asp-route-periodo="@periodoActual"
+                               class="pagina-boton"
+                               data-orbit-action="quiet">
+                                @totalPaginas
+                            </a>
+                        }
+
+                        @* BOTÓN SIGUIENTE *@
 
                         @if (paginaActual < totalPaginas)
                         {
